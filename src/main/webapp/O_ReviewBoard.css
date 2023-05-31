@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+table {
+	border-collapse: collapse;
+	background-color: #f9f9f9;
+}
+
+table th, table td {
+	border: 3px solid #ddd;
+	padding: 8px;
+}
+
+table th {
+	
+	
+	
+	background-color: #333333;
+	color: #FFFFFF;
+	text-align: left;
+}
+
+/* Center align heading */
+.center {
+	text-align: center;
+}
+
+.center-form {
+	display: flex;
+	justify-content: center;
+
+}
+
+.center-form form {
+	padding: 20px;
+	background-color: #f9f9f9;
+}
