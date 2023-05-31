@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+.product-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr); /* 3열 그리드 */
+	gap: 10px; /* 요소 사이 간격 */
+	text-align : center;
+}
+
+.product-item {
+	text-align: center;
+}
+
+.product-item img {
+	width: 50%;
+	height: auto;
+}
+
+.product-item h3 {
+	margin-top: 10px;
+}
+
+.product-item p {
+	margin-top: 5px;
+}
