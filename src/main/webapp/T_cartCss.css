@@ -1,0 +1,158 @@
+@charset "UTF-8";
+
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 75px;
+	color: white;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	text-align: center; /* 가운데 정렬 추가 */
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
+.container {
+  position: relative;
+  min-height: 100%;
+}
+
+.content {
+  /* 여기에 페이지 내용에 해당하는 스타일을 적용하세요 */
+}
+
+		table {
+            margin: 0 auto; /* 가운데 정렬 */
+            width: 60%; /* 테이블 크기 조정 */
+            height: 800px; /* 테이블 높이 조정 */
+        }
+        td {
+    	text-align: center;
+  		}
+  		
+  		table {
+		  border-collapse: collapse;
+		}
+		
+		table tr:first-child {
+		  border-top: 1px solid black;
+		}
+		
+		table tr:last-child {
+		  border-bottom: 1px solid black;
+		}
+		
+		th {
+        height: -20px; /* 원하는 너비로 조정 */
+    	}
+
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	text-align: center; /* 가운데 정렬 추가 */
+	font-size: 20px;
+}
+
+nav li {
+	display: inline-block;
+	margin-right: 40px;
+	font-size: 20px;
+}
+
+nav {
+	text-align: center; /* 가운데 정렬 추가 */
+	padding: 35%;
+}
+
+nav li a {
+	text-decoration: none;
+	color: #000000;
+	font-size: 20px;
+}
+
+nav li img {
+	max-width: 5%;
+	height: auto;
+	float: left;
+}
+
+nav li input[type="button"] {
+	text-align: right;
+	text-decoration: none;
+	color: #000000;
+	font-size: 20px;
+}
+
+/* 메인 스타일 */
+.main {
+  flex : 1;
+  display : flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+footer {
+	position: absolute;
+	width: 100%;
+	padding: 20px 0;
+	background-color: #f1f1f1;
+	display: flex;
+	justify-content: left;
+	align-items: left;
+	flex-wrap: wrap;
+    bottom: 0;
+}
+
+footer p {
+margin: 0;
+font-size: 10px;
+display: flex; 
+justify-content: left;
+color: gray;
+}
+
+footer p span {
+	flex: 1; /* 추가 */
+}
+
+
+footer h1 span {
+	flex: 1; /* 추가 */
+}
+
+.footer-content img {
+	width: 30px; /* 이미지의 너비 조정 */
+	height: auto;
+	margin-right: 10px;
+}
+
+img {
+	min-width: 300px;
+	max-width: 100%;
+	height: auto;
+	object-fit: cover;
+	padding: 0%;
+	display: block;
+	margin: 0 auto;
+}
+
+h1 {
+		position: absolute;
+        top: 50%;
+    	left: 50%;
+    	transform: translate(-50%, -50%);
+        height: 500px; /* 원하는 높이 값으로 변경 */  
+        color: #477a7b;   /* 글씨색깔 */
+        }
+        
+
