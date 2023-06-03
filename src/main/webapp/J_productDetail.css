@@ -1,0 +1,169 @@
+@charset "UTF-8";
+
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 75px;
+	color: white;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	text-align: center; /* 가운데 정렬 추가 */
+}
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	text-align: center; /* 가운데 정렬 추가 */
+	font-size: 20px;
+}
+
+nav li {
+	display: inline-block;
+	margin-right: 40px;
+	font-size: 20px;
+}
+
+nav {
+	text-align: center; /* 가운데 정렬 추가 */
+	padding: 35%;
+}
+
+nav li a {
+	text-decoration: none;
+	color: #000000;
+	font-size: 20px;
+}
+
+nav li img {
+	max-width: 5%;
+	height: auto;
+	float: left;
+}
+
+nav li input[type="button"] {
+	text-align: right;
+	text-decoration: none;
+	color: #000000;
+	font-size: 20px;
+}
+
+/* 메인 스타일 */
+.main {
+  display: grid;
+  grid-template-rows: 1fr 2fr; /* 상단부와 하단부를 화면 높이의 1/3과 2/3로 나눔 */
+  height: calc(100vh - 155px); /* 수정: 헤더와 푸터의 높이를 제외한 높이로 설정 */
+  margin: 50px;
+}
+
+.top-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 상단부를 세로로 두 칸으로 나눔 */
+}
+
+/* 왼쪽 칸 스타일 */
+.top-left {
+  padding: 10px;
+  position: relative;
+  width: 100%;
+  height: auto; 		
+  overflow: hidden;
+}
+
+.slide {
+	position: absolute;
+	width: 100%;
+	height: auto;
+	opacity: 0;
+	transition: opacity 0.5 s ease-in-out;		/* 페이드 인/아웃 효과에 사용되는 트랜지션 속성 */
+	display: flex;
+	justify-content: left;
+	align-items: left;
+}
+
+.slide.active {
+	opacity: 1;
+}
+
+.slide img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+
+
+/* 오른쪽 칸 스타일 */
+.top-right {
+  padding: 50px;
+}
+
+.bottom-section-wrapper {
+	position: relative;
+}
+
+.bottom-section {
+   padding: 50px;	
+}
+
+/* .fixedPurchaseBtn{
+	width: 60%;
+	transition: all 0.3s ease-in-out;
+} */
+
+.fixedPurchaseBtn {
+	position: fixed;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 50%;
+	z-index: 999;		/* 해당 버튼이 다른 요소들의 가장 위에 높이도록 일반적인 값들 중에서 가장 큰 값을 줌. */
+}
+
+footer {
+	position: relative;
+	width: 100%;
+	padding: 20px 0;
+	background-color: #f1f1f1;
+	display: flex;
+	justify-content: left;
+	align-items: left;
+	flex-wrap: wrap;
+}
+
+footer p {
+margin: 0;
+font-size: 10px;
+display: flex; 
+justify-content: left;
+color: gray;
+}
+
+footer p span {
+	flex: 1; /* 추가 */
+}
+
+footer h1 span {
+	flex: 1; /* 추가 */
+}
+
+.footer-content img {
+	width: 30px; /* 이미지의 너비 조정 */
+	height: auto;
+	margin-right: 10px;
+}
+
+img {
+	min-width: 300px;
+	max-width: 100%;
+	height: auto;
+	object-fit: cover;
+	padding: 0%;
+	display: block;
+	margin: 0 auto;
+}
