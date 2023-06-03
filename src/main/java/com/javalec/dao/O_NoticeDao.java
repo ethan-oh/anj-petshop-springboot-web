@@ -84,11 +84,11 @@ public class O_NoticeDao {
 			while(rs.next()) {
 				int seq = rs.getInt(1);
 				String adminid = rs.getString(2);
-				String n_title = rs.getString(3);
-				String n_content = rs.getString(4);
-				Timestamp tmp_writedate = rs.getTimestamp(5);
-				Timestamp tmp_modifydate = rs.getTimestamp(6);
-				int isdelete = rs.getInt(7);
+				String n_title = rs.getString(4);
+				String n_content = rs.getString(5);
+				Timestamp tmp_writedate = rs.getTimestamp(6);
+				Timestamp tmp_modifydate = rs.getTimestamp(7);
+				int isdelete = rs.getInt(8);
 				
 				String writedate = format.format(tmp_writedate);
 				String modifydate = format.format(tmp_modifydate);

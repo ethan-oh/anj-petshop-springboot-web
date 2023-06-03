@@ -84,17 +84,17 @@
 				
 				
 				
-				if(currentPage > 1){
+				if(currentPage > 1){ // 이전 버튼
 					document.write('<a href="O_Notice.do?page=' + (currentPage - 1) + '">이전</a>')
 				}
 				
-				if(totalPages != 1 ){
-					for(var i = calcPage; i <= calcPage + pageSize -1 && i <= totalPages; i++){
+				if(totalPages != 1 ){ // 페이지 번호
+					for(let i = calcPage; i <= calcPage + pageSize -1 && i <= totalPages; i++){
 						document.write('<a href="O_Notice.do?page=' + i + '"> ' + i + ' </a>')
 					}
 				}
 				
-				if((currentPage != totalPages) && totalPages != 1){
+				if((currentPage != totalPages) && totalPages != 1){ // 다음 버튼
 					document.write('<a href="O_Notice.do?page=' + (currentPage + 1) + '"> 다음</a>')
 				}
 				
