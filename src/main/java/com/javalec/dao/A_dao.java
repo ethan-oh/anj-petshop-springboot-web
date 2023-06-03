@@ -75,7 +75,7 @@ public class A_dao {
 
 		try {
 			connection = dataSource.getConnection();
-			String query = "SELECT orders.pid, product.pname, product.pprice, product.pthumbnail FROM orders INNER JOIN product ON orders.pid = product.pid GROUP BY orders.pid ORDER BY COUNT(*) DESC Limit 2";
+			String query = "SELECT orders.pid, product.pname, product.pprice, product.pthumbnail FROM orders INNER JOIN product ON orders.pid = product.pid GROUP BY orders.pid ORDER BY COUNT(*) DESC Limit 3";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 

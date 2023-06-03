@@ -37,9 +37,7 @@
 				<hr>
 
 				<!--(2) 판매량 순으로 데이터 베이스 가져오기 -------------------------------------------->
-				
-				
-				
+
 					<h1 style="text-align: center; color: #477A7B;">Ranking Product</h1>
 				
 						<div class="product-grid" id="ranking-product-grid">
