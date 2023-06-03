@@ -35,7 +35,7 @@ body {
 
 		table {
             margin: 0 auto; /* 가운데 정렬 */
-            width: 85%; /* 테이블 크기 조정 */
+            width: 80%; /* 테이블 크기 조정 */
            
         }
         td {

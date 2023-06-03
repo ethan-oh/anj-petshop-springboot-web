@@ -14,6 +14,10 @@ import com.javalec.command.J_PDExplainCommand;
 import com.javalec.command.J_PDetailCommand;
 import com.javalec.command.O_getNDetailCommand;
 import com.javalec.command.O_getNoticeCommand;
+import com.javalec.command.T_cartlistCommnd;
+import com.javalec.command.T_purchaseCommand;
+import com.javalec.command.T_userinfoCommand;
+import com.javalec.dao.T_Dao;
 
 /**
  * Servlet implementation class Controller
@@ -79,7 +83,46 @@ public class Controller extends HttpServlet {
 			command = new O_getNDetailCommand();
 			command.execute(request, response);
 			viewPage = "O_NDetail.jsp";
-	
+			break;
+		case ("/cart.do"):
+			command = new T_cartlistCommnd();
+			command.execute(request, response);
+			viewPage = "/T_cart.jsp";
+			break;
+		case "/T_cart.do":
+			String pid = request.getParameter("pid"); // pid 값 가져옴
+			String countParam = request.getParameter("count_" + pid); // 해당 pid에 대한 count 값 가져옴
+			if (countParam != null) {
+			int count = Integer.parseInt(countParam);
+			T_Dao dao = new T_Dao();
+			dao.update(pid, count);
+			}
+			viewPage = "cart.do";
+			break;
+			// cart테이블에서 삭제하기
+		case "/delete.do":
+			command = new T_cartlistCommnd();
+			command.execute(request, response);
+			viewPage = "cart.do";
+			break;
+			// 주문하기 누르면 purchase페이지로 가기
+		case "/purchase.do":
+			T_userinfoCommand userinfoCommand = new T_userinfoCommand();
+			userinfoCommand.execute(request, response);
+
+			T_purchaseCommand purchaseCommand = new T_purchaseCommand();
+			purchaseCommand.execute(request, response);
+
+			// 선택 갯수에 비례해서 총 주문금액 맞춰주기위함
+			String[] selectedProducts = request.getParameterValues("selectedProducts");
+			if (selectedProducts != null && selectedProducts.length > 0) { // 선택된 상품들에 대한 처리 로직을 // 예시로 선택된 상품
+				// ID 리스트를 출력하는 코드
+			for (String productId : selectedProducts) {
+				System.out.println("Selected Product ID: " + productId);
+				}
+			}
+			viewPage = "T_purchase.jsp";
+			break;	
 		}
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
