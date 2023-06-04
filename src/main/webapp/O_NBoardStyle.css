@@ -1,8 +1,30 @@
 @charset "utf-8";
 
+a {
+	color: #477A7B;
+}
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+input[type="text"] {
+	font-size: 17px;
+	height: 35px; /* 높이를 원하는 값으로 조정 */
+	width: 1000px; /* 너비를 원하는 값으로 조정 */
+	padding-left: 10px;
+}
+
+textarea {
+	font-size: 17px;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+textarea::placeholder {
+	font-size: 17px;
 }
 
 section.notice {
@@ -36,7 +58,7 @@ section.notice {
 #board-search .search-window .search-wrap input {
 	height: 40px;
 	width: 100%;
-	font-size: 14px;
+	font-size: 17px;
 	padding: 7px 14px;
 	border: 1px solid #ccc;
 }
@@ -58,14 +80,14 @@ section.notice {
 }
 
 .board-table {
-	font-size: 13px;
+	font-size: 17px;
 	width: 100%;
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 }
 
 .board-button {
-	font-size: 13px;
+	font-size: 17px;
 	width: 100%;
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
@@ -89,6 +111,10 @@ section.notice {
 
 .board-table .th-num {
 	width: 50px;
+	text-align: center;
+}
+.board-table .th-wnum { /* 글쓰기 시 제목 너비 */
+	width: 70px;
 	text-align: center;
 }
 
@@ -161,7 +187,7 @@ section.notice {
 .custom-submit-button {
 	display: inline-block;
 	padding: 10px 20px;
-	font-size: 16px;
+	font-size: 17px;
 	font-weight: bold;
 	text-align: center;
 	text-decoration: none;
@@ -183,7 +209,7 @@ section.notice {
 .notice-button {
 	display: inline-block;
 	padding: 6px 10px;
-	font-size: 13px;
+	font-size: 17px;
 	font-weight: bold;
 	text-align: center;
 	text-decoration: none;
@@ -196,7 +222,7 @@ section.notice {
 .list-button {
 	display: inline-block;
 	padding: 6px 10px;
-	font-size: 13px;
+	font-size: 17px;
 	font-weight: bold;
 	text-align: center;
 	text-decoration: none;
@@ -206,3 +232,6 @@ section.notice {
 	cursor: pointer;
 }
 
+.list-button a {
+	color: white;
+}

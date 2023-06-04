@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+a {
+	color: #477A7B;
+}
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -21,14 +25,14 @@ section.notice {
 }
 
 .board-table {
-	font-size: 13px;
+	font-size: 17px;
 	width: 100%;
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 }
 
 .board-button {
-	font-size: 13px;
+	font-size: 17px;
 	width: 100%;
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;

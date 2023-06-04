@@ -72,11 +72,11 @@ public class O_NoticeDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd HH:mm");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from notice where isdelete = 0 and category = '공지' order by writedate limit " + itemPerPage + " offset " + startNum;
+			String query = "select * from notice where isdelete = 0 and category = '공지' order by writedate desc limit " + itemPerPage + " offset " + startNum;
 			ps = connection.prepareStatement(query);
 			rs = ps.executeQuery();
 			
@@ -193,4 +193,33 @@ public class O_NoticeDao {
 		return dtos;
 	}
 
+	public void writeNotice(String adminid, String n_title, String n_content) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "insert into notice (adminid, category, n_title, n_content, writedate, modifydate, isdelete)"
+							+ "values (?,'공지',?,?,now(),now(),0)";
+			ps = connection.prepareStatement(query);
+			
+			ps.setString(1, adminid);
+			ps.setString(2, n_title);
+			ps.setString(3, n_content);
+			
+			ps.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // writeNotice
 }

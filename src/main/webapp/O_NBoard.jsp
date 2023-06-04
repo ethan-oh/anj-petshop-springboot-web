@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>°øÁö»çÇ×</title>
+<title>ê³µì§€ì‚¬í•­</title>
 
 <link rel="stylesheet" href="O_NBoardStyle.css">
 <link rel="stylesheet" href="A_heardCss.css">
@@ -37,7 +37,7 @@
 		<div class="page-title">
 			<div class="container">
 				<h3>
-					<a href="O_Notice.do?page=1">°øÁö»çÇ×</a>
+					<a href="O_Notice.do?page=1">ê³µì§€ì‚¬í•­</a>
 					<a href="O_FAQ.do">FAQ</a>
 				</h3>
 			</div>
@@ -49,8 +49,8 @@
 				<div class="search-window">
 					<form action="">
 						<div class="search-wrap">
-							<label for="search" class="blind">°øÁö»çÇ× ³»¿ë °Ë»ö</label> <input id="search" type="search" name="" placeholder="°Ë»ö¾î¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä." value="">
-							<button type="submit" class="btn btn-dark">°Ë»ö</button>
+							<label for="search" class="blind">ê³µì§€ì‚¬í•­ ë‚´ìš© ê²€ìƒ‰</label> <input id="search" type="search" name="" placeholder="ê²€ìƒ‰ì–´ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”." value="">
+							<button type="submit" class="btn btn-dark">ê²€ìƒ‰</button>
 						</div>
 					</form>
 				</div>
@@ -62,16 +62,16 @@
 			<table class="board-table">
 				<thead>
 					<tr>
-						<th scope="col" class="th-num">¹øÈ£</th>
-						<th scope="col" class="th-title">Á¦¸ñ</th>
-						<th scope="col" class="th-writer">ÀÛ¼ºÀÚ</th>
-						<th scope="col" class="th-date">ÀÛ¼ºÀÏÀÚ</th>
+						<th scope="col" class="th-num">ë²ˆí˜¸</th>
+						<th scope="col" class="th-title">ì œëª©</th>
+						<th scope="col" class="th-writer">ì‘ì„±ì</th>
+						<th scope="col" class="th-date">ì‘ì„±ì¼</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${noticeList}" var="dto">
 						<tr>
-							<td><span class="notice-button">°øÁö</span></td>
+							<td><span class="notice-button">ê³µì§€</span></td>
 							<td><a href="O_NDetail.do?seq=${dto.seq}">${dto.n_title}</a></td>
 							<td>${dto.adminid}</td>
 							<td>${dto.writedate}</td>
@@ -83,44 +83,46 @@
 
 		<div class="container pagination" style="text-align: center;">
 			<script>
-				let pageSize = ${p.pageSize} // ÇÑ ÆäÀÌÁö´ç º¸¿©ÁÙ ÃÖ´ë ÆäÀÌÁö °³¼ö
-				let itemsPerPage = ${p.itemsPerPage} // ÇÑ ÆäÀÌÁö´ç º¸¿©ÁÙ °Ô½Ã¹°ÀÇ ¼ö
-				let totalCount = ${p.totalCount} // ÀüÃ¼ °Ô½Ã¹°ÀÇ ¼ö
-				let currentPage = ${p.currentPage} // ÇöÀç ÆäÀÌÁö
-				let totalPages = ${p.totalPages} // ÀüÃ¼ ÆäÀÌÁöÀÇ ¼ö
-				let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // ÇöÀç ÆäÀÌÁö¿¡¼­ º¸¿©Áú ÆäÀÌÁöÀÇ ½ÃÀÛ°ª °è»ê
+				let pageSize = ${p.pageSize} // í•œ í˜ì´ì§€ë‹¹ ë³´ì—¬ì¤„ ìµœëŒ€ í˜ì´ì§€ ê°œìˆ˜
+				let itemsPerPage = ${p.itemsPerPage} // í•œ í˜ì´ì§€ë‹¹ ë³´ì—¬ì¤„ ê²Œì‹œë¬¼ì˜ ìˆ˜
+				let totalCount = ${p.totalCount} // ì „ì²´ ê²Œì‹œë¬¼ì˜ ìˆ˜
+				let currentPage = ${p.currentPage} // í˜„ì¬ í˜ì´ì§€
+				let totalPages = ${p.totalPages} // ì „ì²´ í˜ì´ì§€ì˜ ìˆ˜
+				let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // í˜„ì¬ í˜ì´ì§€ì—ì„œ ë³´ì—¬ì§ˆ í˜ì´ì§€ì˜ ì‹œì‘ê°’ ê³„ì‚°
 				
 				
 				
-				if(currentPage > 1){ // ÀÌÀü ¹öÆ°
-					document.write('<a href="O_Notice.do?page=' + (currentPage - 1) + '">ÀÌÀü</a>')
+				if(currentPage > 1){ // ì´ì „ ë²„íŠ¼
+					document.write('<a href="O_Notice.do?page=' + (currentPage - 1) + '">ì´ì „</a>')
 				}
 				
-				if(totalPages != 1 ){ // ÆäÀÌÁö ¹øÈ£
+				if(totalPages != 1 ){ // í˜ì´ì§€ ë²ˆí˜¸
 					for(let i = calcPage; i <= calcPage + pageSize -1 && i <= totalPages; i++){
 						document.write('<a href="O_Notice.do?page=' + i + '"> ' + i + ' </a>')
 					}
 				}
 				
-				if((currentPage != totalPages) && totalPages != 1){ // ´ÙÀ½ ¹öÆ°
-					document.write('<a href="O_Notice.do?page=' + (currentPage + 1) + '"> ´ÙÀ½</a>')
+				if((currentPage != totalPages) && totalPages != 1){ // ë‹¤ìŒ ë²„íŠ¼
+					document.write('<a href="O_Notice.do?page=' + (currentPage + 1) + '"> ë‹¤ìŒ</a>')
 				}
 				
 			</script>
 		</div>
-
+		<div class="container" style="text-align: right;">
+			<span class="list-button" ><a href="O_WriteNoticeView.do">ê¸€ì“°ê¸°</a></span>
+		</div>
 
 	</section>
 	<footer>
 		<ul>
 			<li><a href="#">Brand Story</a></li>
-			<li><a href="#">¼­ºñ½ºÀÌ¿ë¾à°ü</a></li>
-			<li><a href="#">°³ÀÎÁ¤º¸Ã³¸®¹æÄ§</a></li>
-			<li><a href="#">ÀüÀÚ±İÀ¶°Å·¡¾à°ü</a></li>
+			<li><a href="#">ì„œë¹„ìŠ¤ì´ìš©ì•½ê´€</a></li>
+			<li><a href="#">ê°œì¸ì •ë³´ì²˜ë¦¬ë°©ì¹¨</a></li>
+			<li><a href="#">ì „ìê¸ˆìœµê±°ë˜ì•½ê´€</a></li>
 		</ul>
 		<div>
 			<p>
-				<img src="LOGO.png" alt="ÇªÅÍ·Î°í">
+				<img src="LOGO.png" alt="í‘¸í„°ë¡œê³ ">
 			</p>
 			<p>
 				<strong>Corporation ANJ.industry</strong> <br> Gangnam-gu, Seoul (Yeoksam-dong The Joy Computer Academy) <br> CEO: Ahn Jae-won <br> Business registration number: 240-81-87676 Business information confirmation <br> Mail-order business report: Gangnam 10238 Fax: 02-000-1234

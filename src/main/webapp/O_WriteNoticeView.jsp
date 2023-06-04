@@ -32,38 +32,49 @@
 		<div class="page-title">
 			<div class="container">
 				<h3>
+					임시 헤더
 					<a href="O_Notice.do?page=1">공지사항</a>
 					<a href="O_FAQ.do">FAQ</a>
-				</h3>
+				</h3><br/>
+				<h3>공지사항 작성</h3>
 			</div>
 		</div>
 
 		<!-- board list area -->
 		<div class="container">
-			<table class="board-table">
-				<thead>
-					<tr>
-						<th scope="col">${NDetail.n_title}</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td scope="col" class="th-left">구분 : 공지사항</td>
-					</tr>
-					<tr>
-						<td scope="col" class="th-left">작성일 : ${NDetail.writedate}</td>
-					</tr>
-					<tr>
-						<td class="th-left">
-							<textarea rows="30" cols="109" wrap="hard" readonly="readonly"><c:out value="${NDetail.n_content}" /></textarea>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<br />
-		<div class="container" style="text-align: right;">
-			<span class="list-button" ><a href="O_Notice.do?page=1">목록</a></span>
+			<form action="O_WriteNotice.do" method="post">
+				<input type="hidden" name="adminid" value="admin">
+				<table class="board-table">
+					<thead>
+						<tr>
+							<th scope="col" class="th-wnum">제목</th>
+							<th scope="col" class="th-num" style="text-align: left;" >
+								<input type="text" name="n_title" placeholder="제목을 입력하세요.">
+							</th>
+						</tr>
+						<tr>
+							<th scope="col" >구분</th>
+							<th scope="col" class="th-left">공지사항</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+						<tr>
+							<td>
+								내용
+							</td>
+							<td style="text-align: left;">
+								<textarea rows="30" cols="109" wrap="hard" name="n_content" placeholder="내용을 입력하세요."></textarea>
+							</td>
+						</tr>
+						<tr style="text-align: right;">
+							<td>
+								<input type="submit" class="list-button" value="등록">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
 		</div>
 	</section>
 	<footer>
