@@ -8,14 +8,15 @@
 <meta charset="utf-8">
 <title>공지사항</title>
 
-<link rel="stylesheet" href="O_NBoardStyle.css">
 <link rel="stylesheet" href="A_heardCss.css">
-<link rel="stylesheet" href="O_PageStyle.css">
-
+<link rel="stylesheet" href="CSS/O_NBoardStyle.css">
+<link rel="stylesheet" href="CSS/O_PageStyle.css">
+<link rel="stylesheet" href="CSS/O_Common.css">
+<script src="JS/O_ScrollTop.js"></script>
 </head>
 
 <body>
-	<header>
+	<header >
 		<nav>
 			<ul>
 				<li><a href="A_MainView.do"><img src="LOGO.png" alt="logo"></a></li>
@@ -29,90 +30,94 @@
 		</nav>
 	</header>
 
+	<div class="page-title" style="background-color: #DFE9E8;">
+		<br><br><br>
+		<h3>CUMMUNITY</h3>
+		<br><br>
+			<a href="O_Notice.do">NOTICE</a> 
+			<a href="O_FAQ.do">FAQ</a> 
+			<a href="O_FAQ.do">Q&A</a> 
+			<a href="O_FAQ.do">REVIEW</a> 
+		<br><br><br>
+	</div>
 
-	<section class="notice">
-		<div class="page-title">
-			<div class="container">
-				<h3>커뮤니티</h3>
-				<br />
-				<h3><a href="O_Notice.do">공지사항</a> <a href="O_FAQ.do">FAQ</a></h3>
-			</div>
-		</div>
-
-		<!-- board seach area -->
-		<div id="board-search">
-			<div class="container">
-				<div class="search-window">
-					<form action="O_Notice.do" method="post">
-						<div class="search-wrap">
-							<select name="query">
-								<option value="n_title">제목</option>
-								<option value="n_content">내용</option>
-							</select>
-							<input id="search" type="search" name="content" placeholder="검색어를 입력해주세요." value="">
-							<button type="submit" class="btn btn-dark">검색</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-
-		<!-- board list area -->
+	<!-- board seach area -->
+	<div id="board-search">
 		<div class="container">
-			<table class="board-table">
-				<thead>
+			<div class="search-window">
+				<form action="O_Notice.do" method="post">
+					<div class="search-wrap">
+						<select name="query">
+							<option value="n_title">제목</option>
+							<option value="n_content">내용</option>
+						</select>
+						<input id="search" type="search" name="content" placeholder="검색어를 입력해주세요.">
+						<button type="submit" class="btn btn-dark">검색</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- board list area -->
+	<div class="container">
+		<table class="board-table">
+			<thead>
+				<tr>
+					<th scope="col" class="th-num">번호</th>
+					<th scope="col" class="th-title">제목</th>
+					<th scope="col" class="th-writer">작성자</th>
+					<th scope="col" class="th-date">작성일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${noticeList}" var="dto">
 					<tr>
-						<th scope="col" class="th-num">번호</th>
-						<th scope="col" class="th-title">제목</th>
-						<th scope="col" class="th-writer">작성자</th>
-						<th scope="col" class="th-date">작성일</th>
+						<td><span class="notice-button">공지</span></td>
+						<td><a href="O_NDetail.do?seq=${dto.seq}">${dto.n_title}</a></td>
+						<td>${dto.adminid}</td>
+						<td>${dto.writedate}</td>
 					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${noticeList}" var="dto">
-						<tr>
-							<td><span class="notice-button">공지</span></td>
-							<td><a href="O_NDetail.do?seq=${dto.seq}">${dto.n_title}</a></td>
-							<td>${dto.adminid}</td>
-							<td>${dto.writedate}</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+	<div class="container" style="text-align: right;">
+		<br>
+		<span class="list-button" ><a href="O_WriteNoticeView.do">글쓰기</a></span>
+	</div>
 
-		<div class="container pagination" style="text-align: center;">
-			<script>
-				let pageSize = ${p.pageSize} // 한 페이지당 보여줄 최대 페이지 개수
-				let itemsPerPage = ${p.itemsPerPage} // 한 페이지당 보여줄 게시물의 수
-				let totalCount = ${p.totalCount} // 전체 게시물의 수
-				let currentPage = ${p.currentPage} // 현재 페이지
-				let totalPages = ${p.totalPages} // 전체 페이지의 수
-				let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // 현재 페이지에서 보여질 페이지의 시작값 계산
-				
-				
-				
-				if(currentPage > 1){ // 이전 버튼
-					document.write('<a href="O_Notice.do?page=' + (currentPage - 1) + '">이전</a>')
+	<div class="container pagination" style="text-align: center;">
+		<script>
+			let pageSize = ${p.pageSize} // 한 페이지당 보여줄 최대 페이지 개수
+			let itemsPerPage = ${p.itemsPerPage} // 한 페이지당 보여줄 게시물의 수
+			let totalCount = ${p.totalCount} // 전체 게시물의 수
+			let currentPage = ${p.currentPage} // 현재 페이지
+			let totalPages = ${p.totalPages} // 전체 페이지의 수
+			let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // 현재 페이지에서 보여질 페이지의 시작값 계산
+			
+			
+			
+			if(currentPage > 1){ // 이전 버튼
+				document.write('<a href="O_Notice.do?page=' + (currentPage - 1) + '">이전</a>')
+			}
+			
+			if(totalPages != 1 ){ // 페이지 번호
+				for(let i = calcPage; i <= calcPage + pageSize -1 && i <= totalPages; i++){
+					document.write('<a href="O_Notice.do?page=' + i + '"> ' + i + ' </a>')
 				}
-				
-				if(totalPages != 1 ){ // 페이지 번호
-					for(let i = calcPage; i <= calcPage + pageSize -1 && i <= totalPages; i++){
-						document.write('<a href="O_Notice.do?page=' + i + '"> ' + i + ' </a>')
-					}
-				}
-				
-				if((currentPage != totalPages) && totalPages != 1){ // 다음 버튼
-					document.write('<a href="O_Notice.do?page=' + (currentPage + 1) + '"> 다음</a>')
-				}
-				
-			</script>
-		</div>
-		<div class="container" style="text-align: right;">
-			<span class="list-button" ><a href="O_WriteNoticeView.do">글쓰기</a></span>
-		</div>
+			}
+			
+			if((currentPage != totalPages) && totalPages != 1){ // 다음 버튼
+				document.write('<a href="O_Notice.do?page=' + (currentPage + 1) + '"> 다음</a>')
+			}
+			
+		</script>
+	</div>
+	
+	
+	<button class="top-button" onclick="scrollToTop()">top</button>
 
-	</section>
 	<footer>
 		<ul>
 			<li><a href="#">Brand Story</a></li>

@@ -8,9 +8,11 @@
 <meta charset="utf-8">
 <title>공지사항</title>
 
-<link rel="stylesheet" href="O_NBoardStyle.css">
+<link rel="stylesheet" href="CSS/O_NBoardStyle.css">
 <link rel="stylesheet" href="A_heardCss.css">
 <link rel="stylesheet" href="A_MainCss.css">
+<link rel="stylesheet" href="CSS/O_Common.css">
+<script src="JS/O_ScrollTop.js"></script>
 
 <script type="text/javascript">
 	function writeCheck(){
@@ -45,45 +47,48 @@
 			</ul>
 		</nav>
 	</header>
-	<!-- ---------------------- -->
-	<section class="notice">
-		<div class="page-title">
-			<div class="container">
-				<h3>커뮤니티</h3>
-				<br />
-				<h3><a href="O_Notice.do">공지사항</a> <a href="O_FAQ.do">FAQ</a></h3>
-			</div>
-		</div>
+	<!----------------------------------------------------------------------------------------------------->
+	<div class="page-title" style="background-color: #DFE9E8;">
+		<br><br><br>
+		<h3>CUMMUNITY</h3>
+		<br><br>
+			<a href="O_Notice.do">NOTICE</a> 
+			<a href="O_FAQ.do">FAQ</a> 
+			<a href="O_FAQ.do">Q&A</a> 
+			<a href="O_FAQ.do">REVIEW</a> 
+		<br><br><br>
+	</div>
 
-		<!-- board list area -->
-		<div class="container">
-			<form name="writeNotice" method="post">
-				<input type="hidden" name="adminid" value="admin">
-				<table class="board-table">
-					<thead>
-						<tr>
-							<th scope="col" class="th-wnum">제목</th>
-							<th scope="col" class="th-num" style="text-align: left;"><input type="text" name="n_title" placeholder="제목을 입력하세요."></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>작성자</td>
-							<td scope="col" class="th-left">admin</td> <!-- 나중에 로그인한 관리자의 세션으로 받아오기 -->
-						</tr>
-						<tr>
-							<td>내용</td>
-							<td style="text-align: left;"><textarea rows="25" cols="109" wrap="hard" name="n_content" placeholder="내용을 입력하세요."></textarea></td>
-						</tr>
-						<tr style="text-align: right;">
-							<td><span class="list-button" ><a href="O_Notice.do">목록</a></span></td>
-							<td style="text-align: right;"><input type="submit" class="list-button" value="등록" onclick="writeCheck()"></td>
-						</tr>
-					</tbody>
-				</table>
-			</form>
-		</div>
-	</section>
+	<!-- board list area -->
+	<div class="container">
+		<form name="writeNotice" method="post">
+			<input type="hidden" name="adminid" value="admin">
+			<table class="board-table">
+				<thead>
+					<tr>
+						<th scope="col" class="th-wnum">제목</th>
+						<th scope="col" class="th-left"><input type="text" name="n_title" placeholder="제목을 입력하세요."></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>작성자</td>
+						<td scope="col" class="th-left">admin</td> <!-- 나중에 로그인한 관리자의 세션으로 받아오기 -->
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td class="th-left"><textarea rows="25" cols="109" wrap="hard" name="n_content" placeholder="내용을 입력하세요."></textarea></td>
+					</tr>
+					<tr class="th-right">
+						<td><span class="list-button" ><a href="O_Notice.do">목록</a></span></td>
+						<td class="th-right"><input type="submit" class="list-button" value="등록" onclick="writeCheck()"></td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</div>
+	<button class="top-button" onclick="scrollToTop()">top</button>
+	<!----------------------------------------------------------------------------------------------------->
 	<footer>
 		<ul>
 			<li><a href="#">Brand Story</a></li>

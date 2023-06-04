@@ -8,9 +8,11 @@
 <meta charset="utf-8">
 <title>공지사항</title>
 
-<link rel="stylesheet" href="O_NBoardStyle.css">
+<link rel="stylesheet" href="CSS/O_NBoardStyle.css">
 <link rel="stylesheet" href="A_heardCss.css">
 <link rel="stylesheet" href="A_MainCss.css">
+<link rel="stylesheet" href="CSS/O_Common.css">
+<script src="JS/O_ScrollTop.js"></script>
 
 </head>
 <body>
@@ -28,47 +30,51 @@
 		</nav>
 	</header>
 	<!-- ---------------------- -->
-	<section class="notice">
-		<div class="page-title">
-			<div class="container">
-				<h3>커뮤니티</h3>
-				<br />
-				<h3><a href="O_Notice.do">공지사항</a> <a href="O_FAQ.do">FAQ</a></h3>
-			</div>
-		</div>
+	<div class="page-title" style="background-color: #DFE9E8;">
+		<br>
+		<br>
+		<br>
+		<h3>CUMMUNITY</h3>
+		<br>
+		<br> <a href="O_Notice.do">NOTICE</a> <a href="O_FAQ.do">FAQ</a> <a href="O_FAQ.do">Q&A</a> <a href="O_FAQ.do">REVIEW</a> <br>
+		<br>
+		<br>
+	</div>
 
-		<!-- board list area -->
-		<div class="container">
-			<table class="board-table">
-				<thead>
-					<tr>
-						<th class="th-wnum">제목</th>
-						<th scope="col" colspan="3">${NDetail.n_title}</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>구분</td>
-						<td scope="col" class="th-left">공지</td>
-					</tr>
-					<tr>
-						<td scope="col">작성일</td>
-						<td scope="col" class="th-left">${NDetail.writedate}</td>
-					</tr>
-					<tr>
-						<td>내용</td>
-						<td>
-							<textarea rows="30" cols="109" wrap="hard" readonly="readonly"><c:out value="${NDetail.n_content}" /></textarea>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<br />
-		<div class="container" style="text-align: right;">
-			<span class="list-button" ><a href="O_Notice.do">목록</a></span>
-		</div>
-	</section>
+	<!-- board list area -->
+	<div class="container">
+		<table class="board-table">
+			<thead>
+				<tr>
+					<th class="th-wnum">제목</th>
+					<th scope="col" colspan="3">${NDetail.n_title}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>구분</td>
+					<td scope="col" class="th-left">공지</td>
+				</tr>
+				<tr>
+					<td scope="col">작성일</td>
+					<td scope="col" class="th-left">${NDetail.writedate}</td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td>
+						<textarea rows="30" cols="109" wrap="hard" readonly="readonly"><c:out value="${NDetail.n_content}" /></textarea>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br />
+	<div class="container" style="text-align: right;">
+		<span class="list-button" ><a href="O_Notice.do">목록</a></span>
+	</div>
+	
+	<button class="top-button" onclick="scrollToTop()">top</button>
+	
 	<footer>
 		<ul>
 			<li><a href="#">Brand Story</a></li>
