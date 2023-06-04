@@ -12,6 +12,24 @@
 <link rel="stylesheet" href="A_heardCss.css">
 <link rel="stylesheet" href="A_MainCss.css">
 
+<script type="text/javascript">
+	function writeCheck(){
+		const form = document.writeNotice
+		const n_title = form.n_title.value
+		const n_content = form.n_content.value
+		
+		if(n_title == ""){
+			alert("제목을 입력해 주세요.")
+			return
+		}
+		if(n_content == ""){
+			alert("내용을 입력해 주세요.")
+			return
+		}
+		form.action = "O_WriteNotice.do";
+		document.productinfo.submit();
+	}
+</script>
 </head>
 <body>
 	<header>
@@ -31,46 +49,35 @@
 	<section class="notice">
 		<div class="page-title">
 			<div class="container">
-				<h3>
-					임시 헤더
-					<a href="O_Notice.do?page=1">공지사항</a>
-					<a href="O_FAQ.do">FAQ</a>
-				</h3><br/>
-				<h3>공지사항 작성</h3>
+				<h3>커뮤니티</h3>
+				<br />
+				<h3><a href="O_Notice.do">공지사항</a> <a href="O_FAQ.do">FAQ</a></h3>
 			</div>
 		</div>
 
 		<!-- board list area -->
 		<div class="container">
-			<form action="O_WriteNotice.do" method="post">
+			<form name="writeNotice" method="post">
 				<input type="hidden" name="adminid" value="admin">
 				<table class="board-table">
 					<thead>
 						<tr>
 							<th scope="col" class="th-wnum">제목</th>
-							<th scope="col" class="th-num" style="text-align: left;" >
-								<input type="text" name="n_title" placeholder="제목을 입력하세요.">
-							</th>
-						</tr>
-						<tr>
-							<th scope="col" >구분</th>
-							<th scope="col" class="th-left">공지사항</th>
+							<th scope="col" class="th-num" style="text-align: left;"><input type="text" name="n_title" placeholder="제목을 입력하세요."></th>
 						</tr>
 					</thead>
 					<tbody>
-						
 						<tr>
-							<td>
-								내용
-							</td>
-							<td style="text-align: left;">
-								<textarea rows="30" cols="109" wrap="hard" name="n_content" placeholder="내용을 입력하세요."></textarea>
-							</td>
+							<td>작성자</td>
+							<td scope="col" class="th-left">admin</td> <!-- 나중에 로그인한 관리자의 세션으로 받아오기 -->
+						</tr>
+						<tr>
+							<td>내용</td>
+							<td style="text-align: left;"><textarea rows="25" cols="109" wrap="hard" name="n_content" placeholder="내용을 입력하세요."></textarea></td>
 						</tr>
 						<tr style="text-align: right;">
-							<td>
-								<input type="submit" class="list-button" value="등록">
-							</td>
+							<td><span class="list-button" ><a href="O_Notice.do">목록</a></span></td>
+							<td style="text-align: right;"><input type="submit" class="list-button" value="등록" onclick="writeCheck()"></td>
 						</tr>
 					</tbody>
 				</table>

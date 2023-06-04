@@ -12,7 +12,7 @@ table {
 input[type="text"] {
 	font-size: 17px;
 	height: 35px; /* 높이를 원하는 값으로 조정 */
-	width: 1000px; /* 너비를 원하는 값으로 조정 */
+	width: 1020px; /* 너비를 원하는 값으로 조정 */
 	padding-left: 10px;
 }
 
@@ -53,6 +53,16 @@ section.notice {
 	margin: 0 auto;
 	width: 80%;
 	max-width: 564px;
+	display: flex;
+ 	align-items: center;
+}
+
+#board-search .search-wrap select {
+  height: 40px;
+  width: 80px;
+  font-size: 15px;
+  padding: 7px 14px;
+  border: 1px solid #ccc;
 }
 
 #board-search .search-window .search-wrap input {
@@ -113,6 +123,7 @@ section.notice {
 	width: 50px;
 	text-align: center;
 }
+
 .board-table .th-wnum { /* 글쓰기 시 제목 너비 */
 	width: 70px;
 	text-align: center;
@@ -132,7 +143,15 @@ section.notice {
 }
 
 .board-table .th-left {
+	padding-left: 20px;
+	padding-right: 20px;
 	text-align: left;
+}
+
+.board-table .th-right {
+	padding-left: 20px;
+	padding-right: 20px;
+	text-align: right;
 }
 
 .board-table th, .board-table td {
@@ -155,6 +174,55 @@ section.notice {
 	display: none;
 }
 
+.btn {
+	display: inline-block;
+	padding: 0 30px;
+	font-size: 15px;
+	font-weight: 400;
+	background: transparent;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	border: 1px solid transparent;
+	text-transform: uppercase;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-ms-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn-dark {
+	background: #555;
+	color: #fff;
+}
+
+.btn-dark:hover, .btn-dark:focus {
+	background: #373737;
+	border-color: #373737;
+	color: #fff;
+}
+
+.btn-dark {
+	background: #555;
+	color: #fff;
+}
+
+.btn-dark:hover, .btn-dark:focus {
+	background: #373737;
+	border-color: #373737;
+	color: #fff;
+}
 /* reset */
 * {
 	list-style: none;

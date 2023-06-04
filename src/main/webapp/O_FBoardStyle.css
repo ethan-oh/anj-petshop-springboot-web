@@ -114,17 +114,10 @@ section.notice {
 }
 
 .toggle-icon-wrapper {
-	margin-right: 15px; /* 여백 추가 */
+	margin-right: 15px;
 	float: right;
 }
 
-.toggle-icon:before {
-	content: "+"; /* 초기에는 "+"로 표시됨 */
-}
-
-.toggle-icon.active:before {
-	content: "-"; /* 토글 시 "-"로 변경 */
-}
 
 .left-tap {
 	margin-left: 30px;

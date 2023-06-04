@@ -65,9 +65,14 @@ public class O_NoticeDao {
 		return count;
 	}
 	
-	public ArrayList<O_NoticeDto> getNoticeList(int startNum, int itemPerPage){
+	public ArrayList<O_NoticeDto> getNoticeList(String queryName, String queryContent, int startNum, int itemPerPage){
 		ArrayList<O_NoticeDto> dtos = new ArrayList<>();
 
+		if(queryName == null){ // 화면이 처음 열릴 때
+			queryName = "n_title";
+			queryContent = "";
+		}
+		
 		Connection connection = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -76,8 +81,10 @@ public class O_NoticeDao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from notice where isdelete = 0 and category = '공지' order by writedate desc limit " + itemPerPage + " offset " + startNum;
-			ps = connection.prepareStatement(query);
+			String query1 = "select * from notice where isdelete = 0 and category = '공지'";
+			String query2 = " and " + queryName + " like '%" + queryContent + "%'";
+			String query3 = " order by writedate desc limit " + itemPerPage + " offset " + startNum + ";";
+			ps = connection.prepareStatement(query1 + query2 + query3);
 			rs = ps.executeQuery();
 			
 			
@@ -119,7 +126,7 @@ public class O_NoticeDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd HH:mm");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
 			connection = dataSource.getConnection();
@@ -160,7 +167,7 @@ public class O_NoticeDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd HH:mm");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
 			connection = dataSource.getConnection();

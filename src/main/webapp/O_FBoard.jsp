@@ -13,23 +13,29 @@
 
 <link rel="stylesheet" href="O_FBoardStyle.css">
 <link rel="stylesheet" href="A_heardCss.css">
-<link rel="stylesheet" href="A_MainCss.css">
 <link rel="stylesheet" href="O_PageStyle.css">
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".hidden_row").hide(); // 페이지 로드 시 숨겨진 행 숨기기
+		$(".toggle-icon").text("+"); // 초기에 토글 아이콘 "+"로 표시
 	});
 
 	function showHiddenRow(row) {
-		// 다른 토글 클릭 시 기존 토글 접히게 설정
-		$(".hidden_row").not("#" + row).hide();
-		$(".toggle-icon").removeClass("active");
+		  // 다른 토글 클릭 시 기존 토글 접히게 설정
+		  $(".hidden_row").not("#" + row).hide();
+		  $(".toggle-icon").removeClass("active");
 
-		$("#" + row).toggle();
-		let icon = $("#" + row).prev("tr").find(".toggle-icon");
-		icon.toggleClass("active"); // 토글 아이콘의 상태 변경
-	}
+		  let $targetRow = $("#" + row);
+		  $targetRow.toggle();
+		  let $toggleIcon = $targetRow.prev("tr").find(".toggle-icon");
+
+		  if ($targetRow.is(":visible")) {
+		    $toggleIcon.text("-"); // 토글 아이콘 텍스트 변경
+		  } else {
+		    $toggleIcon.text("+"); // 토글 아이콘 텍스트 변경
+		  }
+		}
 </script>
 </head>
 <body>
@@ -50,10 +56,9 @@
 	<section class="notice">
 		<div class="page-title">
 			<div class="container">
-				<h3>
-					<a href="O_Notice.do?page=1">공지사항</a>
-					<a href="O_FAQ.do">FAQ</a>
-				</h3>
+				<h3>커뮤니티</h3>
+				<br />
+				<h3><a href="O_Notice.do">공지사항</a> <a href="O_FAQ.do">FAQ</a></h3>
 			</div>
 		</div>
 

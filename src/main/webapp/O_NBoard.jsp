@@ -2,8 +2,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="index" value="0" scope="page" />
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +10,6 @@
 
 <link rel="stylesheet" href="O_NBoardStyle.css">
 <link rel="stylesheet" href="A_heardCss.css">
-<link rel="stylesheet" href="A_MainCss.css">
 <link rel="stylesheet" href="O_PageStyle.css">
 
 </head>
@@ -36,10 +33,9 @@
 	<section class="notice">
 		<div class="page-title">
 			<div class="container">
-				<h3>
-					<a href="O_Notice.do?page=1">공지사항</a>
-					<a href="O_FAQ.do">FAQ</a>
-				</h3>
+				<h3>커뮤니티</h3>
+				<br />
+				<h3><a href="O_Notice.do">공지사항</a> <a href="O_FAQ.do">FAQ</a></h3>
 			</div>
 		</div>
 
@@ -47,9 +43,13 @@
 		<div id="board-search">
 			<div class="container">
 				<div class="search-window">
-					<form action="">
+					<form action="O_Notice.do" method="post">
 						<div class="search-wrap">
-							<label for="search" class="blind">공지사항 내용 검색</label> <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">
+							<select name="query">
+								<option value="n_title">제목</option>
+								<option value="n_content">내용</option>
+							</select>
+							<input id="search" type="search" name="content" placeholder="검색어를 입력해주세요." value="">
 							<button type="submit" class="btn btn-dark">검색</button>
 						</div>
 					</form>

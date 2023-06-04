@@ -31,10 +31,9 @@
 	<section class="notice">
 		<div class="page-title">
 			<div class="container">
-				<h3>
-					<a href="O_Notice.do?page=1">공지사항</a>
-					<a href="O_FAQ.do">FAQ</a>
-				</h3>
+				<h3>커뮤니티</h3>
+				<br />
+				<h3><a href="O_Notice.do">공지사항</a> <a href="O_FAQ.do">FAQ</a></h3>
 			</div>
 		</div>
 
@@ -43,18 +42,22 @@
 			<table class="board-table">
 				<thead>
 					<tr>
-						<th scope="col">${NDetail.n_title}</th>
+						<th class="th-wnum">제목</th>
+						<th scope="col" colspan="3">${NDetail.n_title}</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td scope="col" class="th-left">구분 : 공지사항</td>
+						<td>구분</td>
+						<td scope="col" class="th-left">공지</td>
 					</tr>
 					<tr>
-						<td scope="col" class="th-left">작성일 : ${NDetail.writedate}</td>
+						<td scope="col">작성일</td>
+						<td scope="col" class="th-left">${NDetail.writedate}</td>
 					</tr>
 					<tr>
-						<td class="th-left">
+						<td>내용</td>
+						<td>
 							<textarea rows="30" cols="109" wrap="hard" readonly="readonly"><c:out value="${NDetail.n_content}" /></textarea>
 						</td>
 					</tr>
@@ -63,7 +66,7 @@
 		</div>
 		<br />
 		<div class="container" style="text-align: right;">
-			<span class="list-button" ><a href="O_Notice.do?page=1">목록</a></span>
+			<span class="list-button" ><a href="O_Notice.do">목록</a></span>
 		</div>
 	</section>
 	<footer>
