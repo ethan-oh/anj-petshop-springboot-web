@@ -18,8 +18,7 @@ public class O_NoticeDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public O_NoticeDto(int seq, String adminid, String n_title, String n_content, String writedate, String modifydate,
-			int isdelete) {
+	public O_NoticeDto(int seq, String adminid, String n_title, String n_content, String writedate, String modifydate) {
 		super();
 		this.seq = seq;
 		this.adminid = adminid;
@@ -27,11 +26,27 @@ public class O_NoticeDto {
 		this.n_content = n_content;
 		this.writedate = writedate;
 		this.modifydate = modifydate;
-		this.isdelete = isdelete;
+	}
+	
+	public O_NoticeDto(int seq, String n_title, String n_content) {
+		super();
+		this.seq = seq;
+		this.n_title = n_title;
+		this.n_content = n_content;
+	}
+
+	
+	
+	public O_NoticeDto(String n_title, String n_content, String writedate) {
+		super();
+		this.n_title = n_title;
+		this.n_content = n_content;
+		this.writedate = writedate;
 	}
 
 	// Getter And Setter
 	
+
 	public int getSeq() {
 		return seq;
 	}

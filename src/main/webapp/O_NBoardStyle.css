@@ -129,7 +129,6 @@ section.notice {
 	display: none;
 }
 
-
 /* reset */
 * {
 	list-style: none;
@@ -159,53 +158,51 @@ section.notice {
 	height: 1px;
 }
 
-.content-row {
-  display: none;
-}
-
 .custom-submit-button {
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+	display: inline-block;
+	padding: 10px 20px;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
 }
 
 .custom-submit-button:hover {
-  background-color: #477A7B;
+	background-color: #477A7B;
 }
 
 .custom-submit-button:active {
-  background-color: #577C7C;
+	background-color: #577C7C;
 }
 
 .notice-button {
-  display: inline-block;
-  padding: 6px 10px;
-  font-size: 13px;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  background-color: red;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
+	display: inline-block;
+	padding: 6px 10px;
+	font-size: 13px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	background-color: red;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
 }
+
 .list-button {
-  display: inline-block;
-  padding: 6px 10px;
-  font-size: 13px;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  background-color: #477A7B;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
+	display: inline-block;
+	padding: 6px 10px;
+	font-size: 13px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	background-color: #477A7B;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
 }
+
