@@ -5,8 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>상품 목록</title>
+<meta charset="UTF-8">	
+<title>회원 정보</title>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
     
@@ -22,7 +22,7 @@
 	  display: flex;
 	flex-direction: column;
 	width: 10%;
-	background-color: #f1f1f1;
+	background-color: black;
 	padding: 20px;
 	
 	}
@@ -77,7 +77,7 @@
   </style>
 <link rel="stylesheet" href="W_Header.css">
 </head>
-<body style="height: 830px;  background-color: #f1f1f1;" >
+<body style="height: 830px; background-color: #f1f1f1;">
 
 <header>
 					  <nav>
@@ -114,7 +114,7 @@
 			<br />
 		</div>
 	<div class="container">
-	<h1 style="margin-left: 43%; font-size: 50px">상품 목록</h1><br/>
+	<h1 style="margin-left: 43%; font-size: 50px">회원 정보</h1><br/>
 		<div class="top">
 		<select name="pagesize" id="pagesize">
 			<option value="10" selected="selected">10개씩</option>
@@ -123,10 +123,9 @@
 			<option value="5">5개씩</option>
 			<option value="2">2개씩</option>
 		</select> <select id="selectType">
-			<option value="pid" selected="selected">제품코드</option>
-			<option value="pname">제품명</option>
-			<option value="pcategory">카테고리</option>
-			<option value="available">노출여부</option>
+			<option value="userid" selected="selected">ID</option>
+			<option value="username">이 름</option>
+			<option value="useraddress">주소</option>
 		</select> <input type="text" id="text">
 		<button id="btn" onclick="selectAction()">검색</button>
 	<br/><br/>
@@ -136,13 +135,14 @@
 			<thead>
 				<tr>
 					<th style="width: 40px; height:40px; text-align: center;">순서</th>
-					<th style="width: 100px; text-align: center;">제품 이미지</th>
-					<th style="width: 50px; text-align: center;">제품코드</th>
-					<th style="width: 100px; text-align: center;">제품명</th>
-					<th style="width: 80px; text-align: center;">카테고리</th>
-					<th style="width: 130px; text-align: center;">가격</th>
-					<th style="width: 90px; text-align: center;">재고</th>
-					<th style="width: 50px; text-align: center;">노출 여부</th>
+					<th style="width: 100px; text-align: center;">아이디</th>
+					<th style="width: 50px; text-align: center;">이 름</th>
+					<th style="width: 100px; text-align: center;">전화번호</th>
+					<th style="width: 100px; text-align: center;">이메일</th>
+					<th style="width: 80px; text-align: center;">주소</th>
+					<th style="width: 130px; text-align: center;">포인트</th>
+					<th style="width: 90px; text-align: center;">가입일자</th>
+					<th style="width: 50px; text-align: center;">탈퇴일자</th>
 				</tr>
 			</thead>
 			<tbody class="table_body" style="text-align: center;">
@@ -162,7 +162,7 @@
 	let pagestart = 1;
 	let pageend;
 	let selectText = "";
-	let selectType = "pid";
+	let selectType = "userid";
 	
 	// 검색
 	function selectAction() {
@@ -171,7 +171,7 @@
 		pagenum = 1;
 		$("#pagenum li").remove();
 		$.ajax({
-			url : "selectChange.do",
+			url : "selectUser.do",
 			type : "post",
 			dataType : "JSON",
 			data : {
@@ -189,13 +189,14 @@
 					item = currentItem;
 					str += '<tr>';
 					str += '<td>' + (pagestart++) + '</td>';
-					str += '<td><img src="images/thumbnail/'+ item.pthumbnail+'"></td>';
-					str += '<td>' + item.pid + '</td>';
-					str += '<td><a href="W_ProductUpdate.do?pid=' + item.pid + '">' + item.pname + '</a></td>';
-					str += '<td>' + item.pcategory + '</td>';
-					str += '<td>' + item.pprice + '</td>';
-					str += '<td>' + item.pstock + '</td>';
-					str += '<td>' + item.available + '</td>';
+					str += '<td>'+ item.userid+ '</td>';
+					str += '<td>' + item.username + '</td>';
+					str += '<td>'+ item.usertel + '</td>';
+					str += '<td>' + item.useremail + '</td>';
+					str += '<td>' + item.useraddress + '</td>';
+					str += '<td>' + item.point + '</td>';
+					str += '<td>' + item.insertdate + '</td>';
+					str += '<td>' + item.deletedate + '</td>';
 					str += '</tr>';
 				});
 				$(".table_body").html(str);
@@ -229,7 +230,7 @@
 				};
 				$("#pagenum li").remove();
 				$.ajax({
-					url : "selectChange.do",
+					url : "selectUser.do",
 					type : "post",
 					dataType : "JSON",
 					data : {
@@ -250,13 +251,14 @@
 							item = currentItem;
 							str += '<tr>';
 							str += '<td>' + (pagestart++) + '</td>';
-							str += '<td><img style="width: 70px; height: 40px" src="images/thumbnail/'+ item.pthumbnail+'"></td>';
-							str += '<td>' + item.pid + '</td>';
-							str += '<td><a href="W_ProductUpdate.do?pid='+ item.pid + '">' + item.pname + '</a></td>';
-							str += '<td>' + item.pcategory + '</td>';
-							str += '<td>' + item.pprice + '</td>';
-							str += '<td>' + item.pstock + '</td>';
-							str += '<td>' + item.available + '</td>';
+							str += '<td>'+ item.userid+ '</td>';
+							str += '<td>' + item.username + '</td>';
+							str += '<td>'+ item.usertel + '</td>';
+							str += '<td>' + item.useremail + '</td>';
+							str += '<td>' + item.useraddress + '</td>';
+							str += '<td>' + item.point + '</td>';
+							str += '<td>' + item.insertdate + '</td>';
+							str += '<td>' + item.deletedate + '</td>';
 							str += '</tr>';
 						});
 						$(".table_body").html(str);
@@ -281,7 +283,7 @@
 				
 				$("#pagenum li").remove();
 				$.ajax({
-					url : "selectChange.do",
+					url : "selectUser.do",
 					type : "post",
 					dataType : "JSON",
 					data : {
@@ -299,13 +301,14 @@
 							item = currentItem;
 							str += '<tr>';
 							str += '<td>' + (pagestart++) + '</td>';
-							str += '<td><img style="width: 70px; height: 40px" src="images/thumbnail/'+ item.pthumbnail+'"></td>';
-							str += '<td>' + item.pid + '</td>';
-							str += '<td><a href="W_ProductUpdate.do?pid='+ item.pid + '">' + item.pname + '</a></td>';
-							str += '<td>' + item.pcategory + '</td>';
-							str += '<td>' + item.pprice + '</td>';
-							str += '<td>' + item.pstock + '</td>';
-							str += '<td>' + item.available + '</td>';
+							str += '<td>'+ item.userid+ '</td>';
+							str += '<td>' + item.username + '</td>';
+							str += '<td>'+ item.usertel + '</td>';
+							str += '<td>' + item.useremail + '</td>';
+							str += '<td>' + item.useraddress + '</td>';
+							str += '<td>' + item.point + '</td>';
+							str += '<td>' + item.insertdate + '</td>';
+							str += '<td>' + item.deletedate + '</td>';
 							str += '</tr>';
 						});
 						$(".table_body").html(str);
@@ -328,7 +331,7 @@
 				pagenum = 1;
 				pagesize = $("#pagesize option:selected").val();
 				$.ajax({
-					url : "selectChange.do",
+					url : "selectUser.do",
 					type : "post",
 					dataType : "JSON",
 					data : {
@@ -346,13 +349,14 @@
 							item = currentItem;
 							str += '<tr>';
 							str += '<td>' + (pagestart++) + '</td>';
-							str += '<td><img style="width: 70px; height: 40px" src="images/thumbnail/'+ item.pthumbnail+'"></td>';
-							str += '<td>' + item.pid + '</td>';
-							str += '<td><a href="W_ProductUpdate.do?pid='+ item.pid + '">' + item.pname	+ '</a></td>';
-							str += '<td>' + item.pcategory + '</td>';
-							str += '<td>' + item.pprice + '</td>';
-							str += '<td>' + item.pstock + '</td>';
-							str += '<td>' + item.available + '</td>';
+							str += '<td>'+ item.userid+ '</td>';
+							str += '<td>' + item.username + '</td>';
+							str += '<td>'+ item.usertel + '</td>';
+							str += '<td>' + item.useremail + '</td>';
+							str += '<td>' + item.useraddress + '</td>';
+							str += '<td>' + item.point + '</td>';
+							str += '<td>' + item.insertdate + '</td>';
+							str += '<td>' + item.deletedate + '</td>';
 							str += '</tr>';
 						});
 						$(".table_body").html(str);

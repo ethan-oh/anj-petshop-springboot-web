@@ -37,12 +37,9 @@ public class W_ProductList_Dao {
 
 		if(querySelectType.equals("available") && querySelectText.equals("Y")){
 			querySelectText = "1";
-			System.out.println(querySelectText);
 		}else if(querySelectType.equals("available") && querySelectText.equals("N")) {
 			querySelectText = "0";
-			System.out.println(querySelectText);
 		}
-		System.out.println(querySelectText);
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -90,5 +87,50 @@ public class W_ProductList_Dao {
 	}
 	
 	
+	public ArrayList<W_ProductList_Dto> productUpdataView(String piddata){
+		
+		
+		ArrayList<W_ProductList_Dto> dtos = new ArrayList<>();
+		W_ProductList_Dto dto = null;
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = dataSource.getConnection();
+			String query = "select pid, pname, pcategory, pprice, pstock, available, pthumbnail, pth2, pth3 from product where pid = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, piddata);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				String pid = resultSet.getString(1);
+				String pname = resultSet.getString(2);
+				String pcategory = resultSet.getString(3);
+				int pprice = resultSet.getInt(4);
+				int pstock = resultSet.getInt(5);
+				String available = resultSet.getString(6);
+				String pthumbnail = resultSet.getString(7);
+				String pth2 = resultSet.getString(8);
+				String pth3 = resultSet.getString(9);
+				dto = new W_ProductList_Dto(pthumbnail, pid, pname, pcategory, pprice, pstock, available, pth2, pth3);
+				dtos.add(dto);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dtos;
+	}
 	
-}
+	
+} // End

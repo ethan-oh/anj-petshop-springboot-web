@@ -12,7 +12,8 @@ public class W_ProductList_Dto {
 	int pstock;
 	String available;
 	int count;
-	
+	String pth2;
+	String pth3;
 	public W_ProductList_Dto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -42,6 +43,25 @@ public class W_ProductList_Dto {
 
 
 
+
+
+
+
+
+
+	public W_ProductList_Dto(String pthumbnail, String pid, String pname, String pcategory, int pprice, int pstock,
+			String available, String pth2, String pth3) {
+		super();
+		this.pthumbnail = pthumbnail;
+		this.pid = pid;
+		this.pname = pname;
+		this.pcategory = pcategory;
+		this.pprice = pprice;
+		this.pstock = pstock;
+		this.available = available;
+		this.pth2 = pth2;
+		this.pth3 = pth3;
+	}
 
 
 
@@ -76,6 +96,30 @@ public class W_ProductList_Dto {
 
 
 
+
+
+
+	public String getPth2() {
+		return pth2;
+	}
+
+
+
+	public void setPth2(String pth2) {
+		this.pth2 = pth2;
+	}
+
+
+
+	public String getPth3() {
+		return pth3;
+	}
+
+
+
+	public void setPth3(String pth3) {
+		this.pth3 = pth3;
+	}
 
 
 

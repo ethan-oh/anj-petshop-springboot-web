@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javalec.command.Acommand;
+import com.javalec.command.W_ProductInsertCommand;
 import com.javalec.command.W_ProductLIstCommand;
+import com.javalec.command.W_ProductUpdataActionCommand;
+import com.javalec.command.W_ProductUpdateCommand;
+import com.javalec.command.W_UserLIstCommand;
 
 /**
  * Servlet implementation class W_controll
@@ -46,6 +50,9 @@ public class W_controll extends HttpServlet {
 		case ("/selectChange.do"):
 			selectChangeDo(request, response);
 			break;
+		case ("/selectUser.do"):
+			selectUserDo(request, response);
+			break;
 		
 		default:
 			actionDo(request, response);
@@ -66,15 +73,25 @@ public class W_controll extends HttpServlet {
 		// 각 조원 별 컨트롤러 추가
 		switch (com) {
 		case ("/W_ProductList.do"):
-			System.out.println(com);
 			command = new W_ProductLIstCommand();
 			command.execute(request, response);
 			viewPage = "W_ProductList.jsp";
 			break;
 		case ("/W_ProductUpdate.do"):
+			command = new W_ProductUpdateCommand();
+			command.execute(request, response);
 			viewPage = "W_ProductUpdate.jsp";
 			break;
-			
+		case ("/W_ProductInsert.do"):
+			command = new W_ProductInsertCommand();
+			command.execute(request, response);
+			viewPage = "W_ProductInsert.jsp";
+			break;
+		case ("/W_ProductUpdataAction.do"):
+			command = new W_ProductUpdataActionCommand();
+			command.execute(request, response);
+			viewPage = "W_ProductList.jsp";
+			break;
 			
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
@@ -89,5 +106,12 @@ public class W_controll extends HttpServlet {
 		command.execute(request, response);
 	}
 	
+	private void selectUserDo(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		Acommand command = null;
+		command = new W_UserLIstCommand();
+		command.execute(request, response);
+	}
 		
 }//end

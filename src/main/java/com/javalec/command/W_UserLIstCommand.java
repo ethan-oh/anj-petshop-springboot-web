@@ -9,22 +9,24 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.javalec.dao.W_ProductList_Dao;
+import com.javalec.dao.W_UserList_Dao;
 import com.javalec.dto.W_ProductList_Dto;
+import com.javalec.dto.W_UserList_Dto;
 
-public class W_ProductLIstCommand implements Acommand {
+public class W_UserLIstCommand implements Acommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
 
-		 String pagenum = request.getParameter("pagenum");
+			String pagenum = request.getParameter("pagenum");
 		    String pagesize = request.getParameter("pagesize");
 		    String selectType = request.getParameter("selectType");
 		    String selectText = request.getParameter("selectText");
 		    
-		    W_ProductList_Dao dao = new W_ProductList_Dao();
-
-		    ArrayList<W_ProductList_Dto> dtos = dao.productList(pagenum, pagesize, selectType, selectText);
+		    W_UserList_Dao dao = new W_UserList_Dao();
+		    
+		    ArrayList<W_UserList_Dto> dtos = dao.userList(pagenum, pagesize, selectType, selectText);
+		    		
 		    
 		    // ArrayList를 JSON 형태로 변환
 		    Gson gson = new Gson();
@@ -41,6 +43,8 @@ public class W_ProductLIstCommand implements Acommand {
 		    }
 		
 	}
+		
+		
 	
 
 }
