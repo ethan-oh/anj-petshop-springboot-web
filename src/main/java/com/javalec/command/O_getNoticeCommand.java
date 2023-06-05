@@ -16,7 +16,7 @@ public class O_getNoticeCommand implements Acommand {
 		// TODO Auto-generated method stub
 		O_NoticeDao dao = new O_NoticeDao();
 		
-		int itemsPerPage = 10; // 한 페이지당 출력할 게시글 수
+		int itemsPerPage = 2; // 한 페이지당 출력할 게시글 수
 		// O_Notice.do에서 page값을 전달하지 않았을 때는 default로 1로 세팅해주기 위한 3항 연산자
 		int currentPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
 		int totalCount = dao.getNoticeCount();

@@ -38,7 +38,13 @@
 			<a href="O_FAQ.do">FAQ</a> 
 			<a href="O_FAQ.do">Q&A</a> 
 			<a href="O_FAQ.do">REVIEW</a> 
-		<br><br><br>
+		<br><br>
+	</div>
+	<div class="page-title">
+			<a href="O_Notice.do">목록</a> 
+			<a href="">등록</a> 
+			<a href="">수정</a>
+			<a href="">삭제</a>
 	</div>
 
 	<!-- board seach area -->
@@ -89,33 +95,33 @@
 
 	<div class="container pagination" style="text-align: center;">
 		<script>
-			let pageSize = ${p.pageSize} // 한 페이지당 보여줄 최대 페이지 개수
-			let itemsPerPage = ${p.itemsPerPage} // 한 페이지당 보여줄 게시물의 수
-			let totalCount = ${p.totalCount} // 전체 게시물의 수
-			let currentPage = ${p.currentPage} // 현재 페이지
-			let totalPages = ${p.totalPages} // 전체 페이지의 수
-			let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // 현재 페이지에서 보여질 페이지의 시작값 계산
+			  let pageSize = ${p.pageSize} // 한 페이지당 보여줄 최대 페이지 개수
+			  let itemsPerPage = ${p.itemsPerPage} // 한 페이지당 보여줄 게시물의 수
+			  let totalCount = ${p.totalCount} // 전체 게시물의 수
+			  let currentPage = ${p.currentPage} // 현재 페이지
+			  let totalPages = ${p.totalPages} // 전체 페이지의 수
+			  let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // 현재 페이지에서 보여질 페이지의 시작값 계산
 			
+			  if (currentPage > 1) { // 이전 버튼
+			    document.write('<a href="O_Notice.do?page=' + (currentPage - 1) + '">이전</a>')
+			  }
 			
+			  if (totalPages != 1) { // 페이지 번호
+			    for (let i = calcPage; i <= calcPage + pageSize - 1 && i <= totalPages; i++) {
+			      if (i === currentPage) {
+			    	document.write('<span><a href="O_Notice.do?page=' + i + '">' + i + '</a></span>');
+			      } else {
+			        document.write('<a href="O_Notice.do?page=' + i + '">' + i + '</a>');
+			      }
+			    }
+			  }
 			
-			if(currentPage > 1){ // 이전 버튼
-				document.write('<a href="O_Notice.do?page=' + (currentPage - 1) + '">이전</a>')
-			}
-			
-			if(totalPages != 1 ){ // 페이지 번호
-				for(let i = calcPage; i <= calcPage + pageSize -1 && i <= totalPages; i++){
-					document.write('<a href="O_Notice.do?page=' + i + '"> ' + i + ' </a>')
-				}
-			}
-			
-			if((currentPage != totalPages) && totalPages != 1){ // 다음 버튼
-				document.write('<a href="O_Notice.do?page=' + (currentPage + 1) + '"> 다음</a>')
-			}
-			
+			  if (currentPage != totalPages && totalPages != 1) { // 다음 버튼
+			    document.write('<a href="O_Notice.do?page=' + (currentPage + 1) + '">다음</a>');
+			  }
 		</script>
 	</div>
-	
-	
+
 	<button class="top-button" onclick="scrollToTop()">top</button>
 
 	<footer>

@@ -11,8 +11,8 @@ table {
 
 input[type="text"] {
 	font-size: 17px;
-	height: 35px; /* 높이를 원하는 값으로 조정 */
-	width: 1000px; /* 너비를 원하는 값으로 조정 */
+	height: 35px;
+	width: 955px;
 	padding-left: 10px;
 }
 
@@ -109,7 +109,7 @@ textarea::placeholder {
 }
 
 .board-table .th-wnum { /* 글쓰기 시 제목 너비 */
-	width: 70px;
+	width: 100px;
 	text-align: center;
 }
 

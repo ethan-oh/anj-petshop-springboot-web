@@ -178,10 +178,11 @@ public class O_NoticeDao {
 			
 			while(rs.next()) {
 				int seq = rs.getInt(1);
-				String n_title = rs.getString(4);
-				String n_content = rs.getString(5);
+				String n_title = rs.getString("n_title");
+				String n_content = rs.getString("n_content");
+				int isdelete = rs.getInt("isdelete");
 				
-				O_NoticeDto dto = new O_NoticeDto(seq, n_title, n_content);
+				O_NoticeDto dto = new O_NoticeDto(seq, n_title, n_content, isdelete);
 				dtos.add(dto);
 			}
 			
@@ -198,7 +199,48 @@ public class O_NoticeDao {
 			}
 		}
 		return dtos;
-	}
+	} // getFAQList
+	
+	public ArrayList<O_NoticeDto> getDeletedFAQList(){
+		ArrayList<O_NoticeDto> dtos = new ArrayList<>();
+
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "select * from notice where isdelete = 1 and category = 'FAQ' order by n_title;";
+			ps = connection.prepareStatement(query);
+			rs = ps.executeQuery();
+			
+			
+			while(rs.next()) {
+				int seq = rs.getInt(1);
+				String n_title = rs.getString("n_title");
+				String n_content = rs.getString("n_content");
+				int isdelete = rs.getInt("isdelete");
+				
+				O_NoticeDto dto = new O_NoticeDto(seq, n_title, n_content, isdelete);
+				dtos.add(dto);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dtos;
+	} // getDeletedFAQList
 
 	public void writeNotice(String adminid, String n_title, String n_content) {
 		Connection connection = null;
@@ -229,4 +271,62 @@ public class O_NoticeDao {
 			}
 		}
 	} // writeNotice
+	
+	public void writeFAQ(String adminid, String n_title, String n_content) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "insert into notice (adminid, category, n_title, n_content, writedate, modifydate, isdelete)"
+					+ "values (?,'FAQ',?,?,now(),now(),0)";
+			ps = connection.prepareStatement(query);
+			
+			ps.setString(1, adminid);
+			ps.setString(2, n_title);
+			ps.setString(3, n_content);
+			
+			ps.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // writeNotice
+	
+	public void changeFAQStatus(int seq, int status) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "update notice set isdelete = ? where seq = ?";
+			preparedStatement = connection.prepareStatement(query);
+			
+			preparedStatement.setInt(1, status);
+			preparedStatement.setInt(2, seq);
+
+			preparedStatement.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // deleteFAQ
 }

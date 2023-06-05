@@ -28,11 +28,12 @@ public class O_NoticeDto {
 		this.modifydate = modifydate;
 	}
 	
-	public O_NoticeDto(int seq, String n_title, String n_content) {
+	public O_NoticeDto(int seq, String n_title, String n_content, int isdelete) {
 		super();
 		this.seq = seq;
 		this.n_title = n_title;
 		this.n_content = n_content;
+		this.isdelete = isdelete;
 	}
 
 	

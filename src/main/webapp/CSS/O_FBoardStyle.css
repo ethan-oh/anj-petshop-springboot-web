@@ -9,6 +9,29 @@ table {
 	border-spacing: 0;
 }
 
+.qna select {
+  height: 40px;
+  width: 100px;
+  font-size: 12px;
+  padding: 7px 14px;
+  border: 1px solid #ccc;
+}
+
+.longSelect select {
+  height: 40px;
+  width: 1000px;
+  font-size: 16px;
+  padding: 7px 14px;
+  border: 1px solid #ccc;
+}
+
+.qna input[type="text"] {
+	font-size: 17px;
+	height: 35px;
+	width: 950px;
+	padding-left: 10px;
+}
+
 section.notice {
 	padding: 80px 0;
 }
@@ -32,6 +55,9 @@ section.notice {
 }
 
 .board-table th {
+	text-align: center;
+}
+.board-table td {
 	text-align: center;
 }
 

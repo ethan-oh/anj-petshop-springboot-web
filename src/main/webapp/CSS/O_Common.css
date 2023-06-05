@@ -24,11 +24,17 @@
 
 .page-title {
 	text-align: center;
-	margin-bottom: 80px;
+	margin-bottom: 60px;
 }
 
 .page-title h3 {
 	font-size: 40px;
+	color: #477A7B;
+	font-weight: 800;
+}
+
+.page-title h4 {
+	font-size: 30px;
 	color: #477A7B;
 	font-weight: 800;
 }
@@ -72,5 +78,38 @@
 }
 
 .list-button a {
+	color: white;
+}
+.update-button {
+	display: inline-block;
+	padding: 6px 10px;
+	font-size: 17px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	background-color: #407A7B;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.update-button a {
+	color: white;
+}
+
+.delete-button {
+	display: inline-block;
+	padding: 6px 10px;
+	font-size: 17px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	background-color: #477A13;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.delete-button a {
 	color: white;
 }

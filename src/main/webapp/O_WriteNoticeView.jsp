@@ -56,7 +56,13 @@
 			<a href="O_FAQ.do">FAQ</a> 
 			<a href="O_FAQ.do">Q&A</a> 
 			<a href="O_FAQ.do">REVIEW</a> 
-		<br><br><br>
+		<br><br>
+	</div>
+	<div class="page-title">
+			<a href="O_Notice.do">목록</a> 
+			<a href="">등록</a> 
+			<a href="">수정</a>
+			<a href="">삭제</a>
 	</div>
 
 	<!-- board list area -->
@@ -72,15 +78,15 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>작성자</td>
+						<td class="th-wnum">작성자</td>
 						<td scope="col" class="th-left">admin</td> <!-- 나중에 로그인한 관리자의 세션으로 받아오기 -->
 					</tr>
 					<tr>
-						<td>내용</td>
-						<td class="th-left"><textarea rows="25" cols="109" wrap="hard" name="n_content" placeholder="내용을 입력하세요."></textarea></td>
+						<td class="th-wnum">내용</td>
+						<td class="th-left"><textarea rows="25" cols="102" wrap="hard" name="n_content" placeholder="내용을 입력하세요."></textarea></td>
 					</tr>
-					<tr class="th-right">
-						<td><span class="list-button" ><a href="O_Notice.do">목록</a></span></td>
+					<tr>
+						<td class="th-wnum"><span class="list-button"><a href="O_Notice.do">목록</a></span></td>
 						<td class="th-right"><input type="submit" class="list-button" value="등록" onclick="writeCheck()"></td>
 					</tr>
 				</tbody>

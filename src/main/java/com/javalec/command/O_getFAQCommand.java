@@ -18,10 +18,12 @@ public class O_getFAQCommand implements Acommand {
 		O_NoticeDao dao = new O_NoticeDao();
 
 
-		ArrayList<O_NoticeDto> dtos = dao.getFAQList();
+		ArrayList<O_NoticeDto> dtos1 = dao.getFAQList();
+		ArrayList<O_NoticeDto> dtos2 = dao.getDeletedFAQList();
 
 
-		request.setAttribute("FAQList", dtos);
+		request.setAttribute("FAQList", dtos1);
+		request.setAttribute("DeletedFAQList", dtos2);
 
 	}
 

@@ -31,14 +31,20 @@
 	</header>
 	<!-- ---------------------- -->
 	<div class="page-title" style="background-color: #DFE9E8;">
-		<br>
-		<br>
-		<br>
+		<br><br><br>
 		<h3>CUMMUNITY</h3>
-		<br>
-		<br> <a href="O_Notice.do">NOTICE</a> <a href="O_FAQ.do">FAQ</a> <a href="O_FAQ.do">Q&A</a> <a href="O_FAQ.do">REVIEW</a> <br>
-		<br>
-		<br>
+		<br><br>
+			<a href="O_Notice.do">NOTICE</a> 
+			<a href="O_FAQ.do">FAQ</a> 
+			<a href="O_FAQ.do">Q&A</a> 
+			<a href="O_FAQ.do">REVIEW</a> 
+		<br><br>
+	</div>
+	<div class="page-title">
+			<a href="O_Notice.do">목록</a> 
+			<a href="">등록</a> 
+			<a href="">수정</a>
+			<a href="">삭제</a>
 	</div>
 
 	<!-- board list area -->
@@ -52,11 +58,11 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>구분</td>
+					<td class="th-wnum">구분</td>
 					<td scope="col" class="th-left">공지</td>
 				</tr>
 				<tr>
-					<td scope="col">작성일</td>
+					<td scope="col" class="th-wnum">작성일</td>
 					<td scope="col" class="th-left">${NDetail.writedate}</td>
 				</tr>
 				<tr>
