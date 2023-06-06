@@ -60,8 +60,9 @@
 	text-decoration: none;
 	background-color: red;
 	color: white;
-	border-radius: 5px;
+	border-radius: 3px;
 	cursor: pointer;
+	border: none;
 }
 
 .list-button {
@@ -73,8 +74,9 @@
 	text-decoration: none;
 	background-color: #477A7B;
 	color: white;
-	border-radius: 5px;
+	border-radius: 3px;
 	cursor: pointer;
+	border: none;
 }
 
 .list-button a {
@@ -89,8 +91,9 @@
 	text-decoration: none;
 	background-color: #407A7B;
 	color: white;
-	border-radius: 5px;
+	border-radius: 3px;
 	cursor: pointer;
+	border: none;
 }
 
 .update-button a {
@@ -106,8 +109,9 @@
 	text-decoration: none;
 	background-color: #477A13;
 	color: white;
-	border-radius: 5px;
+	border-radius: 3px;
 	cursor: pointer;
+	border: none;
 }
 
 .delete-button a {

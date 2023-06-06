@@ -112,11 +112,11 @@
 			<a href="O_deleteViewFAQ.do">삭제</a>
 	</div>
 	
-	<div class="page-title">
-		<h4>FAQ 목록</h4>
-	</div>
-	
 	<!-- board list area -->
+	<div class="page-title">
+		<h4>FAQ 수정아직구현안됨</h4>
+	</div>
+
 	<div class="container">
 		<table class="board-table">
 			<thead>

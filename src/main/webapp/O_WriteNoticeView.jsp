@@ -58,13 +58,10 @@
 			<a href="O_FAQ.do">REVIEW</a> 
 		<br><br>
 	</div>
-	<div class="page-title">
-			<a href="O_Notice.do">목록</a> 
-			<a href="">등록</a> 
-			<a href="">수정</a>
-			<a href="">삭제</a>
-	</div>
 
+	<div class="page-title">
+		<h4>공지사항 등록</h4>
+	</div>
 	<!-- board list area -->
 	<div class="container">
 		<form name="writeNotice" method="post">

@@ -112,36 +112,63 @@
 			<a href="O_deleteViewFAQ.do">삭제</a>
 	</div>
 	
+	<!-- board list area -->
 	<div class="page-title">
-		<h4>FAQ 목록</h4>
+		<h4>FAQ 삭제</h4>
+	</div>
+
+	<div class="container">
+		<form action="O_changeFAQStatus.do" method="post">
+			<input type="hidden" name="status" value="1">
+			<table class="board-table">
+				<thead>
+					<tr>
+						<th scope="col">
+							<div class="qna longSelect">
+								<select name="seq">
+									<c:forEach items="${FAQList}" var="dto">
+										<option value="${dto.seq}">${dto.n_title}</option>
+									</c:forEach>
+								</select>
+							</div>
+						</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="container" style="text-align: right;">
+				<br>
+				<input type="submit" class="list-button th-right" value="삭제">
+			</div>
+		</form>
 	</div>
 	
-	<!-- board list area -->
+	<div class="page-title">
+		<h4>삭제된 FAQ 복구</h4>
+	</div>
+
 	<div class="container">
-		<table class="board-table">
-			<thead>
-				<tr>
-					<th scope="col" colspan="1">내용</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${FAQList}" var="dto">
-					<!-- 제목 클릭 시 hidden_row 토글 -->
-					<tr class="tr-background" onclick="showHiddenRow('row_${dto.seq}');">
-						<td class="custom-padding th-left" data-padding="20">${dto.n_title}
-							<span class="toggle-icon-wrapper">
-								<span class="toggle-icon" style="float: right;"></span>
-							</span>
-						</td>
+		<form action="O_changeFAQStatus.do" method="post">
+		<input type="hidden" name="status" value="0">
+			<table class="board-table">
+				<thead>
+					<tr>
+						<th scope="col">
+							<div class="qna longSelect">
+								<select name="seq">
+									<c:forEach items="${DeletedFAQList}" var="dto">
+										<option value="${dto.seq}">${dto.n_title}</option>
+									</c:forEach>
+								</select>
+							</div>
+						</th>
 					</tr>
-					<!-- id를 게시글의 seq로 부여 -->
-					<tr id="row_${dto.seq}" class="hidden_row">
-						<td class="custom-padding th-left" data-padding="60"><pre>${dto.n_content}</pre></td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-		<br><br><br>
+				</thead>
+			</table>
+			<div class="container" style="text-align: right;">
+				<br>
+				<input type="submit" class="list-button th-right" value="복구">
+			</div>
+		</form>
 	</div>
 	
 	<button class="top-button" onclick="scrollToTop()">top</button>

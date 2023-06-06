@@ -94,12 +94,10 @@ public class O_NoticeDao {
 				String n_title = rs.getString(4);
 				String n_content = rs.getString(5);
 				Timestamp tmp_writedate = rs.getTimestamp(6);
-				Timestamp tmp_modifydate = rs.getTimestamp(7);
 				
 				String writedate = format.format(tmp_writedate);
-				String modifydate = format.format(tmp_modifydate);
 				
-				O_NoticeDto dto = new O_NoticeDto(seq, adminid, n_title, n_content, writedate, modifydate);
+				O_NoticeDto dto = new O_NoticeDto(seq, adminid, n_title, n_content, writedate);
 				dtos.add(dto);
 			}
 			
@@ -249,8 +247,8 @@ public class O_NoticeDao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "insert into notice (adminid, category, n_title, n_content, writedate, modifydate, isdelete)"
-							+ "values (?,'공지',?,?,now(),now(),0)";
+			String query = "insert into notice (adminid, category, n_title, n_content, writedate, isdelete)"
+							+ "values (?,'공지',?,?,now(),0)";
 			ps = connection.prepareStatement(query);
 			
 			ps.setString(1, adminid);
@@ -271,6 +269,35 @@ public class O_NoticeDao {
 			}
 		}
 	} // writeNotice
+	
+	public void updateNotice(int seq, String n_title, String n_content) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "update notice set n_title = ?, n_content = ?, writedate = now() where seq = ?";
+			preparedStatement = connection.prepareStatement(query);
+			
+			preparedStatement.setString(1, n_title);
+			preparedStatement.setString(2, n_content);
+			preparedStatement.setInt(3, seq);
+
+			preparedStatement.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // deleteFAQ
 	
 	public void writeFAQ(String adminid, String n_title, String n_content) {
 		Connection connection = null;

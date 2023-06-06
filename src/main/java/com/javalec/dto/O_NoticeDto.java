@@ -10,7 +10,6 @@ public class O_NoticeDto {
 	String n_title;
 	String n_content;
 	String writedate;
-	String modifydate;
 	int isdelete;
 	
 	// Constructor
@@ -18,14 +17,13 @@ public class O_NoticeDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public O_NoticeDto(int seq, String adminid, String n_title, String n_content, String writedate, String modifydate) {
+	public O_NoticeDto(int seq, String adminid, String n_title, String n_content, String writedate) {
 		super();
 		this.seq = seq;
 		this.adminid = adminid;
 		this.n_title = n_title;
 		this.n_content = n_content;
 		this.writedate = writedate;
-		this.modifydate = modifydate;
 	}
 	
 	public O_NoticeDto(int seq, String n_title, String n_content, int isdelete) {
@@ -86,14 +84,6 @@ public class O_NoticeDto {
 
 	public void setWritedate(String writedate) {
 		this.writedate = writedate;
-	}
-
-	public String getModifydate() {
-		return modifydate;
-	}
-
-	public void setModifydate(String modifydate) {
-		this.modifydate = modifydate;
 	}
 
 	public int getIsdelete() {

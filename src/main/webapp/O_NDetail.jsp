@@ -14,6 +14,37 @@
 <link rel="stylesheet" href="CSS/O_Common.css">
 <script src="JS/O_ScrollTop.js"></script>
 
+<script type="text/javascript">
+	function updateCheck(){
+		const form = document.NDetail
+		const n_title = form.n_title.value
+		const n_content = form.n_content.value
+		
+		if(n_title == ""){
+			alert("제목을 입력해 주세요.")
+			return
+		}
+		if(n_content == ""){
+			alert("내용을 입력해 주세요.")
+			return
+		}
+		if(confirm("수정하시겠습니까?") == true){
+		form.action = "O_updateNotice.do";
+		form.submit();
+		}
+	}
+	
+	function deleteCheck(){
+		const form = document.NDetail
+		
+		if(confirm("정말 삭제하시겠습니까?") == true){
+			const form = document.NDetail
+			form.action = "O_changeNoticeStatus.do";
+			form.submit();
+			}
+	}
+</script>
+
 </head>
 <body>
 	<header>
@@ -41,42 +72,46 @@
 		<br><br>
 	</div>
 	<div class="page-title">
-			<a href="O_Notice.do">목록</a> 
-			<a href="">등록</a> 
-			<a href="">수정</a>
-			<a href="">삭제</a>
+		<h4>공지사항 상세</h4>
 	</div>
 
 	<!-- board list area -->
 	<div class="container">
-		<table class="board-table">
-			<thead>
-				<tr>
-					<th class="th-wnum">제목</th>
-					<th scope="col" colspan="3">${NDetail.n_title}</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="th-wnum">구분</td>
-					<td scope="col" class="th-left">공지</td>
-				</tr>
-				<tr>
-					<td scope="col" class="th-wnum">작성일</td>
-					<td scope="col" class="th-left">${NDetail.writedate}</td>
-				</tr>
-				<tr>
-					<td>내용</td>
-					<td>
-						<textarea rows="30" cols="109" wrap="hard" readonly="readonly"><c:out value="${NDetail.n_content}" /></textarea>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<br />
-	<div class="container" style="text-align: right;">
-		<span class="list-button" ><a href="O_Notice.do">목록</a></span>
+		<form name="NDetail" method="post"> <!-- 유저용에서는 이 폼태그 빼고 제목을 input타입 빼고 그냥 적기, textarea readonly 속성 넣어주기 -->
+			<input type="hidden" name="status" value="1">
+			<input type="hidden" name="seq" value="${seq }">
+			<table class="board-table">
+				<thead>
+					<tr>
+						<th class="th-wnum">제목</th>
+						<th scope="col" colspan="3"><input type="text" name="n_title" value="${NDetail.n_title}"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="th-wnum">구분</td>
+						<td scope="col" class="th-left">공지</td>
+					</tr>
+					<tr>
+						<td scope="col" class="th-wnum">작성일</td>
+						<td scope="col" class="th-left">${NDetail.writedate}</td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td>
+							<textarea rows="25" cols="109" wrap="hard" name="n_content"><c:out value="${NDetail.n_content}" /></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td class="th-wnum"><span class="list-button"><a href="O_Notice.do">목록</a></span></td>
+						<td class="th-right">
+							<input type="submit" class="list-button" value="수정" onclick="updateCheck()">
+							<input type="submit" class="list-button" value="삭제" onclick="deleteCheck()">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
 	</div>
 	
 	<button class="top-button" onclick="scrollToTop()">top</button>

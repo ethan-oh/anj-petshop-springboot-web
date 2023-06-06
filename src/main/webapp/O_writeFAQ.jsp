@@ -112,36 +112,45 @@
 			<a href="O_deleteViewFAQ.do">삭제</a>
 	</div>
 	
+	<!-- board list area -->
+
 	<div class="page-title">
-		<h4>FAQ 목록</h4>
+		<h4>FAQ 신규 등록</h4>
 	</div>
 	
-	<!-- board list area -->
 	<div class="container">
-		<table class="board-table">
-			<thead>
-				<tr>
-					<th scope="col" colspan="1">내용</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${FAQList}" var="dto">
-					<!-- 제목 클릭 시 hidden_row 토글 -->
-					<tr class="tr-background" onclick="showHiddenRow('row_${dto.seq}');">
-						<td class="custom-padding th-left" data-padding="20">${dto.n_title}
-							<span class="toggle-icon-wrapper">
-								<span class="toggle-icon" style="float: right;"></span>
-							</span>
-						</td>
+		<form  name="writeFAQ" method="post">
+			<input type="hidden" name="adminid" value="admin">
+			<table class="board-table">
+				<thead>
+					<tr>
+						<th scope="col">
+							<div class="qna">
+								<select name="qCategory">
+									<option value="[회원]">회원</option>
+									<option value="[배송]">배송</option>
+									<option value="[주문/결제]">주문/결제</option>
+									<option value="[교환/반품]">교환/반품</option>
+								</select>
+							</div>
+						</th>
+						<th scope="col">
+							<span class="qna"><input type="text" name="n_title" placeholder="제목을 입력하세요."></span>
+						</th>
 					</tr>
-					<!-- id를 게시글의 seq로 부여 -->
-					<tr id="row_${dto.seq}" class="hidden_row">
-						<td class="custom-padding th-left" data-padding="60"><pre>${dto.n_content}</pre></td>
+				</thead>
+				<tbody>
+					<tr>
+						<td>내용</td>
+						<td><textarea rows="5" cols="100" wrap="hard" name="n_content" placeholder="내용을 입력하세요."></textarea></td>
 					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-		<br><br><br>
+				</tbody>
+			</table>
+			<div class="container" style="text-align: right;">
+				<br>
+				<input type="submit" class="list-button th-right" value="등록" onclick="writeCheck()">
+			</div>
+		</form>
 	</div>
 	
 	<button class="top-button" onclick="scrollToTop()">top</button>
