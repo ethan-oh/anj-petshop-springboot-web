@@ -61,6 +61,23 @@ nav li input[type="button"] {
   margin: 50px;
 }
 
+#cartModal.modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+  border-radius: 10px;
+	
+}
+
 .top-section {
   display: grid;
   grid-template-columns: 1fr 1fr; /* 상단부를 세로로 두 칸으로 나눔 */

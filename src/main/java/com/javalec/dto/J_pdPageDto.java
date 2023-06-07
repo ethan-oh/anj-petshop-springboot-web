@@ -1,6 +1,6 @@
 package com.javalec.dto;
 
-public class J_pdPageDto { 		// ANJ pet shop 프로젝트
+public class J_pdPageDto { 		// ANJ pet shop 프로젝트 - product table dto
 	
 	// Field 
 	String pid;

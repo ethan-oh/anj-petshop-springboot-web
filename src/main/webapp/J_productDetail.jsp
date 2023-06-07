@@ -11,12 +11,6 @@
 
 </head>
 <body>
-<%
-	/* 상품 리스트에서 사용자가 선택한 제품 아이디 받아오기 */
-	String pid = request.getParameter("pid");
-	String USERID = (String) session.getAttribute("USERID");
-	
-%>
 						<!-- <header>
 							<nav>
 								<ul>
@@ -31,7 +25,7 @@
 						<br/><br/>
 	<main class="main">
 		<div class="top-section">
-			<div class="top-left"> 			<!-- 이미지 뜨는 섹션 -->
+			<div class="top-left"> 			<!-- 이미지 뜨는 섹션 --> 	<!-- 1. 슬라이드 효과 2. 몇 번째 사진이 넘어가는지 밑에 바(-)로 알려주기 -->
 				<div class="slide">
 					<img alt="제품 이미지를 준비중 입니다." src="${productDetail.pthumbnail }">
 				</div>
@@ -57,16 +51,31 @@
 				<h3 style="text-align: right;"> <span id="resultPrice"><fmt:formatNumber value="${productDetail.pprice }" pattern="#,###" /> 원</span></h3>
 				<h5 style="text-align: right;"> <span id="resultRewards"> (적립금 : + ${productDetail.pprice * 0.01 } 원) </span></h5>
 				<div style="display: flex;">
-					<form action="<!-- 태영이 장바구니 넘기기.do -->" name="basket" method="get" style="display: inline; width: 50%;">
-						<input type="hidden" name="userid" value="<%=USERID%>">
-						<input type="hidden" name="pid" value="<%=pid%>">
+					
+					
+					<form action="cart.do" name="basket" method="get" style="display: inline; width: 50%;">
+						<input type="hidden" name="pid" value="${productDetail.pid }">
 						<input type="hidden" name="qty">
-						<input type="button" value="장바구니 담기" onclick="sendToCart()" style="font-size: 25px; color: #477A7B; background-color: #DFE9E8; border: none; width: 100%; height: 60px">
+						<button type="submit" id="btnCart" value="장바구니 담기" onclick="sendToCart(); openCartModal();" style="font-size: 25px; color: #477A7B; background-color: #DFE9E8; border: none; width: 100%; height: 60px">장바구니 담기</button>
+							
 					</form>
-					<form action="<!-- 태영이 구매.do -->" name="purchase" method="get" style="display: inline; width: 50%;">
-						<input type="button" value="즉시 구매하기" onclick="sendToPay()" style="font-size: 25px; color: white; background-color: #477A7B; border: none; width: 100%; height: 60px">
+					<form action="purchase.do" name="purchase" method="get" style="display: inline; width: 50%;">
+						<input type="hidden" name="pid" value="${productDetail.pid }">
+						<input type="hidden" name="qty">
+						<input type="button" value="즉시 구매하기" onclick="sendToPay(); closeCartModal()" style="font-size: 25px; color: white; background-color: #477A7B; border: none; width: 100%; height: 60px">
 					</form>
 				</div>
+			</div>
+		</div>
+		<div id="cartModal" class="modal" style="display: none;"> 		<!-- 장바구니 클릭시 띄워줄 모달창 -->
+			<div class="title" style="background-color: #477A7B">
+				<h2 style="font-size: 25px; color: white; display: inline;">장바구니 담기</h2>
+				<span id="closeModal" onclick="closeCartModal()" style="font-size: 30px; color: white; display: inline;">&times;</span>
+			</div>
+			<div class="content">
+				<p>제품이 장바구니에 정상적으로 추가되었습니다. <br/> 장바구니로 이동하시겠습니까? </p>
+				<a href="cart.do"><button style="display:inline; font-size: 20px; color: white; background-color: #477A7B;"> 장바구니로 이동</button></a> 
+				<button onclick="closeCartModal()" style="display: inline; font-size: 20px; color: #477A7B; background-color: #DFE9E8;">계속 쇼핑하기</button>
 			</div>
 		</div>
 		<div class="bottom-section-wrapper">
@@ -143,18 +152,36 @@ function resetSelection() {
 	  
 }
 	
-	function sendToCart() {			/* 사용자가 선택한 수량 넘겨주기 */
-		const qty = document.selectedOption.qty.value;
+	function sendToCart() {			/* 사용자가 선택한 수량 장바구니에 넘겨주기 */
+		openCartModal();
+	}
+	
+	function sendToPay() { 			/* 사용자가 선택한 수량 구매 페이지에 넘겨주기 */
+		const qty = document.getElementById('quantity').value;
+		document.purchase.qty.value = qty;
+		document.purchase.submit();
+		
+	}
+	
+	const modal = document.getElementById("modal")=
+	const btnCart = document.getElementById('btnCart')
+	btnCart.addEventListener("click", e => {
+		modal.style.display = "flex"
+	})
+	
+	function openCartModal() {
+		var cartModal = document.getElementById("cartModal");
+		cartModal.style.display = "block";
+		
+		const qty = document.getElementById('quantity').value;
 		document.basket.qty.value = qty;
 		document.basket.submit();
 	}
 	
-	function sendToPay() { 			/* 사용자가 선택한 수량 넘겨주기 */
-		const qty = document.selectedOption.qty.value;
-		document.basket.qty.value = qty;
-		document.basket.submit();
-		
-	}
+	function closeCartModal() {
+		var cartModal = document.getElementById("cartModal");
+		cartModal.style.display = "none";
+}
 
 	/* 사진 넘기는 효과주기 */
 	const slides = document.querySelectorAll('.slide');
