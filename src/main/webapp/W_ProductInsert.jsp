@@ -11,7 +11,7 @@
 <style type="text/css">
 .rowdata {
 	display: flex;
-	background-color: black;
+	background-color: f1f1f1;
 	margin-top: 5%;
 }
 
@@ -19,7 +19,7 @@
 	display: flex;
 	flex-direction: column;
 	width: 10%;
-	background-color: black;
+	background-color: f1f1f1;
 	padding: 20px;
 }
 
@@ -61,20 +61,20 @@
 		<nav>
 			<ul>
 				<li><a href="W_AdminMain.jsp">HOME</a></li>
-				<li><a href="W_ProductList.do">상품 관리</a>
+				<li><a href="W_ProductList.jsp">상품 관리</a>
 					<ul>
 						<li><a href="W_ProductList.jsp">상품 목록</a></li>
 						<li><a href="W_ProductInsert.jsp">상품 등록</a></li>
 					</ul></li>
 				<li><a href="A_introduction.jsp">주문 관리</a></li>
-				<li><a href="A_introduction.jsp">회원 관리</a></li>
+				<li><a href="W_UserList.jsp">회원 관리</a></li>
 				<li><a href="A_introduction.jsp">게시판 관리</a>
 					<ul>
 						<li><a href="A_ProductView.do">공지사항</a></li>
 						<li><a href="A_ProductView.do">Q & A</a></li>
 						<li><a href="A_ProductView.do">리뷰</a></li>
 					</ul></li>
-				<li><a href="A_introduction.jsp">매출현황</a></li>
+				<li><a href="W_Sales.jsp">매출현황</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -89,7 +89,7 @@
 			<br />
 		</div>
 		<div class="container">
-			<form action="W_ProductInsert.do">
+			<form action="W_ProductInsert.do" method="post" enctype="multipart/form-data">
 		
 		<h1 style="margin-left: 300px; font-size: 50px">상품 등록</h1><br/>
 		

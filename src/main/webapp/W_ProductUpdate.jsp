@@ -12,14 +12,14 @@
 	.rowdata{
 	
 	display: flex;
-	 background-color: blue;
+	 background-color: f1f1f1;
 	  margin-top: 5%;
 	}
 	.sidebar{
 	   display: flex;
 	flex-direction: column;
 	width: 10%;
-	background-color: black;
+	background-color: f1f1f1;
 	padding: 20px;
 	}
     .container {
@@ -61,14 +61,14 @@
 					  <nav>
 					    <ul>
 					      <li><a href="W_AdminMain.jsp">HOME</a></li>
-					      <li><a href="W_ProductList.do">상품 관리</a>
+					      <li><a href="W_ProductList.jsp">상품 관리</a>
 					      	<ul>
 					      		<li><a href="W_ProductList.jsp">상품 목록</a></li>
 					      		<li><a href="W_ProductInsert.jsp">상품 등록</a></li>
 					      	</ul>
 					      </li>
 					      <li><a href="A_introduction.jsp">주문 관리</a></li>
-					      <li><a href="A_introduction.jsp">회원 관리</a></li>
+					      <li><a href="W_UserList.jsp">회원 관리</a></li>
 					      <li><a href="A_introduction.jsp">게시판 관리</a>
 					      	<ul>
 					      		<li><a href="A_ProductView.do">공지사항</a></li>
@@ -76,7 +76,7 @@
 					      		<li><a href="A_ProductView.do">리뷰</a></li>
 					      	</ul>
 					      	</li>
-					      <li><a href="A_introduction.jsp">매출현황</a></li>
+					      <li><a href="W_Sales.jsp">매출현황</a></li>
 					    </ul>
 					  </nav>
 				</header>
@@ -127,9 +127,9 @@
 	<br/>
 	<table>
 		<tr>
-			<th><img id="preview" style="width: 250px; height: 150px" src="images/thumbnail/${W_UpdataView[0].pthumbnail}"></th>
-			<th><img id="preview2" style="width: 250px; height: 150px" src="images/thumbnail/${W_UpdataView[0].pth2}"></th>
-			<th><img id="preview3" style="width: 250px; height: 150px" src="images/thumbnail/${W_UpdataView[0].pth3}"></th>
+			<th><img id="preview" style="width: 250px; height: 150px" src="images/thumbnail/${W_UpdataView[0].pthumbnail}.png"></th>
+			<th><img id="preview2" style="width: 250px; height: 150px" src="images/thumbnail/${W_UpdataView[0].pth2}.png"></th>
+			<th><img id="preview3" style="width: 250px; height: 150px" src="images/thumbnail/${W_UpdataView[0].pth3}.png"></th>
 		</tr>
 		<tr>
 		<th>메인 이미지  </th>
@@ -159,14 +159,13 @@ var pthumbnailValue3 = "${W_UpdataView[0].pth3}";
 
 function readURL(input) {
 	  if (input.files && input.files[0]) {
-		  console.log(input);
 	    var reader = new FileReader();
 	    reader.onload = function(e) {
 	      document.getElementById('preview').src = e.target.result;
 	    };
 	    reader.readAsDataURL(input.files[0]);
 	  } else {
-		  document.getElementById('preview').src = e.target.result;
+		  document.getElementById('preview').src = pthumbnailValue;
 	  }
 	}
 function readURL2(input) {

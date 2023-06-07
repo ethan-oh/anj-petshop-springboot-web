@@ -15,7 +15,7 @@
       .rowdata{
 	
 	 display: flex;
-	 background-color: blue;
+	 background-color: f1f1f1;
 	  margin-top: 5%;
 	}
 	.sidebar{
@@ -83,14 +83,14 @@
 					  <nav>
 					    <ul>
 					      <li><a href="W_AdminMain.jsp">HOME</a></li>
-					      <li><a href="W_ProductList.do">상품 관리</a>
+					      <li><a href="W_ProductList.jsp">상품 관리</a>
 					      	<ul>
 					      		<li><a href="W_ProductList.jsp">상품 목록</a></li>
 					      		<li><a href="W_ProductInsert.jsp">상품 등록</a></li>
 					      	</ul>
 					      </li>
 					      <li><a href="A_introduction.jsp">주문 관리</a></li>
-					      <li><a href="A_introduction.jsp">회원 관리</a></li>
+					      <li><a href="W_UserList.jsp">회원 관리</a></li>
 					      <li><a href="A_introduction.jsp">게시판 관리</a>
 					      	<ul>
 					      		<li><a href="A_ProductView.do">공지사항</a></li>
@@ -98,7 +98,7 @@
 					      		<li><a href="A_ProductView.do">리뷰</a></li>
 					      	</ul>
 					      	</li>
-					      <li><a href="A_introduction.jsp">매출현황</a></li>
+					      <li><a href="W_Sales.jsp">매출현황</a></li>
 					    </ul>
 					  </nav>
 				</header>
@@ -171,7 +171,7 @@
 		pagenum = 1;
 		$("#pagenum li").remove();
 		$.ajax({
-			url : "selectChange.do",
+			url : "./productlist",
 			type : "post",
 			dataType : "JSON",
 			data : {
@@ -189,7 +189,7 @@
 					item = currentItem;
 					str += '<tr>';
 					str += '<td>' + (pagestart++) + '</td>';
-					str += '<td><img src="images/thumbnail/'+ item.pthumbnail+'"></td>';
+					str += '<td><img src="images/thumbnail/'+ item.pthumbnail+'.png"></td>';
 					str += '<td>' + item.pid + '</td>';
 					str += '<td><a href="W_ProductUpdate.do?pid=' + item.pid + '">' + item.pname + '</a></td>';
 					str += '<td>' + item.pcategory + '</td>';
@@ -229,7 +229,7 @@
 				};
 				$("#pagenum li").remove();
 				$.ajax({
-					url : "selectChange.do",
+					url : "./productlist",
 					type : "post",
 					dataType : "JSON",
 					data : {
@@ -250,7 +250,7 @@
 							item = currentItem;
 							str += '<tr>';
 							str += '<td>' + (pagestart++) + '</td>';
-							str += '<td><img style="width: 70px; height: 40px" src="images/thumbnail/'+ item.pthumbnail+'"></td>';
+							str += '<td><img style="width: 70px; height: 40px" src="images/thumbnail/'+ item.pthumbnail+'.png"></td>';
 							str += '<td>' + item.pid + '</td>';
 							str += '<td><a href="W_ProductUpdate.do?pid='+ item.pid + '">' + item.pname + '</a></td>';
 							str += '<td>' + item.pcategory + '</td>';
@@ -281,7 +281,7 @@
 				
 				$("#pagenum li").remove();
 				$.ajax({
-					url : "selectChange.do",
+					url : "./productlist",
 					type : "post",
 					dataType : "JSON",
 					data : {
@@ -299,7 +299,7 @@
 							item = currentItem;
 							str += '<tr>';
 							str += '<td>' + (pagestart++) + '</td>';
-							str += '<td><img style="width: 70px; height: 40px" src="images/thumbnail/'+ item.pthumbnail+'"></td>';
+							str += '<td><img style="width: 70px; height: 40px" src="images/thumbnail/'+ item.pthumbnail+'.png"></td>';
 							str += '<td>' + item.pid + '</td>';
 							str += '<td><a href="W_ProductUpdate.do?pid='+ item.pid + '">' + item.pname + '</a></td>';
 							str += '<td>' + item.pcategory + '</td>';
@@ -328,7 +328,7 @@
 				pagenum = 1;
 				pagesize = $("#pagesize option:selected").val();
 				$.ajax({
-					url : "selectChange.do",
+					url : "./productlist",
 					type : "post",
 					dataType : "JSON",
 					data : {
@@ -346,7 +346,7 @@
 							item = currentItem;
 							str += '<tr>';
 							str += '<td>' + (pagestart++) + '</td>';
-							str += '<td><img style="width: 70px; height: 40px" src="images/thumbnail/'+ item.pthumbnail+'"></td>';
+							str += '<td><img style="width: 70px; height: 40px" src="images/thumbnail/'+ item.pthumbnail+'.png"></td>';
 							str += '<td>' + item.pid + '</td>';
 							str += '<td><a href="W_ProductUpdate.do?pid='+ item.pid + '">' + item.pname	+ '</a></td>';
 							str += '<td>' + item.pcategory + '</td>';

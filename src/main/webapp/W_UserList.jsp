@@ -15,14 +15,14 @@
       .rowdata{
 	
 	 display: flex;
-	 background-color: blue;
+	 background-color: f1f1f1;
 	  margin-top: 5%;
 	}
 	.sidebar{
 	  display: flex;
 	flex-direction: column;
 	width: 10%;
-	background-color: black;
+	background-color: f1f1f1;
 	padding: 20px;
 	
 	}
@@ -98,7 +98,7 @@
 					      		<li><a href="A_ProductView.do">리뷰</a></li>
 					      	</ul>
 					      	</li>
-					      <li><a href="A_introduction.jsp">매출현황</a></li>
+					      <li><a href="W_Sales.jsp">매출현황</a></li>
 					    </ul>
 					  </nav>
 				</header>
@@ -171,7 +171,7 @@
 		pagenum = 1;
 		$("#pagenum li").remove();
 		$.ajax({
-			url : "selectUser.do",
+			url : "./userlist",
 			type : "post",
 			dataType : "JSON",
 			data : {
@@ -230,7 +230,7 @@
 				};
 				$("#pagenum li").remove();
 				$.ajax({
-					url : "selectUser.do",
+					url : "./userlist",
 					type : "post",
 					dataType : "JSON",
 					data : {
@@ -283,7 +283,7 @@
 				
 				$("#pagenum li").remove();
 				$.ajax({
-					url : "selectUser.do",
+					url : "./userlist",
 					type : "post",
 					dataType : "JSON",
 					data : {
@@ -331,7 +331,7 @@
 				pagenum = 1;
 				pagesize = $("#pagesize option:selected").val();
 				$.ajax({
-					url : "selectUser.do",
+					url : "./userlist",
 					type : "post",
 					dataType : "JSON",
 					data : {
