@@ -28,7 +28,7 @@
 			alert("내용을 입력해 주세요.")
 			return
 		}
-		form.action = "O_WriteNotice.do";
+		form.action = "O_writeNotice.do";
 		document.productinfo.submit();
 	}
 </script>
@@ -54,7 +54,7 @@
 		<br><br>
 			<a href="O_Notice.do">NOTICE</a> 
 			<a href="O_FAQ.do">FAQ</a> 
-			<a href="O_FAQ.do">Q&A</a> 
+			<a href="O_QNA.do">Q&A</a> 
 			<a href="O_FAQ.do">REVIEW</a> 
 		<br><br>
 	</div>

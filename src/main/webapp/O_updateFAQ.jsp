@@ -32,7 +32,7 @@
 			alert("내용을 입력해 주세요.")
 			return
 		}
-		form.action = "O_WriteFAQ.do";
+		/* orm.action = "O_WriteFAQ.do"; */
 		document.productinfo.submit();
 	}
 </script>
@@ -100,8 +100,8 @@
 		<h3>CUMMUNITY</h3>
 		<br><br>
 			<a href="O_Notice.do">NOTICE</a> 
-			<a href="O_FAQ.do">FAQ</a> 
-			<a href="O_FAQ.do">Q&A</a> 
+			<span class="selected"><a href="O_FAQ.do">FAQ</a></span>
+			<a href="O_QNA.do">Q&A</a> 
 			<a href="O_FAQ.do">REVIEW</a> 
 		<br><br>
 	</div>

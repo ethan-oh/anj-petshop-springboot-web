@@ -100,7 +100,7 @@
 		<h3>CUMMUNITY</h3>
 		<br><br>
 			<a href="O_Notice.do">NOTICE</a> 
-			<a href="O_FAQ.do">FAQ</a> 
+			<span class="selected"><a href="O_FAQ.do">FAQ</a></span>
 			<a href="O_FAQ.do">Q&A</a> 
 			<a href="O_FAQ.do">REVIEW</a> 
 		<br><br>

@@ -306,8 +306,8 @@ public class O_NoticeDao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "insert into notice (adminid, category, n_title, n_content, writedate, modifydate, isdelete)"
-					+ "values (?,'FAQ',?,?,now(),now(),0)";
+			String query = "insert into notice (adminid, category, n_title, n_content, writedate, isdelete)"
+					+ "values (?,'FAQ',?,?,now(),0)";
 			ps = connection.prepareStatement(query);
 			
 			ps.setString(1, adminid);

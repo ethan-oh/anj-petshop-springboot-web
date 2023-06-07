@@ -27,7 +27,7 @@
 	margin-bottom: 60px;
 }
 
-.page-title h3 {
+.page-title h3 { 
 	font-size: 40px;
 	color: #477A7B;
 	font-weight: 800;
@@ -49,6 +49,23 @@
 	color: #477A7B;
 	border-radius: 40%;
 	cursor: pointer;
+}
+
+.page-title .selected a {
+	display: inline-block;
+	padding: 8px 12px;
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: none;
+	background-color: #477A7B;
+	color: white;
+	border-radius: 40%;
+	cursor: pointer;
+}
+
+.page-title a:hover {
+  background-color: #477A7B;
+  color: white;
 }
 
 .notice-button {
