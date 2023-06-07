@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -150,6 +151,7 @@ public class T_Dao {
 		            String usertel2 = resultSet.getString("usertel").substring(4, 8);
 		            String usertel3 = resultSet.getString("usertel").substring(9);
 		            String useremail = resultSet.getString("useremail");
+		            int point = resultSet.getInt("point");
 
 		            dto = new T_userinfoDto();
 		            dto.setUserid(fixedUserId); // 고정값으로 설정된 변수를 사용
@@ -159,6 +161,7 @@ public class T_Dao {
 		            dto.setUserdetailaddress(userdetailaddress);
 		            dto.setUsertel(usertel1 + "-" + usertel2 + "-" + usertel3);
 		            dto.setUseremail(useremail);
+		            dto.setPoint(point);
 		        }
 		    } catch (Exception e) {
 		        e.printStackTrace();
@@ -177,7 +180,101 @@ public class T_Dao {
 		    return dto;
 		}
 
+		// 주문하기
+		//private String userid = "do"; // 사용자 ID를 여기에 설정
 
+		public void orders(List<String> pidList, int count, String username, String userpostcode, String useraddress, String userdetailaddress, String phone1, String phone2, String phone3, String useremail, String ordermessage, String payment, String userid) {
+		    Connection connection = null;
+		    PreparedStatement preparedStatement = null;
+
+		    try {
+		        connection = dataSource.getConnection();
+		        String query = "INSERT INTO orders (ordernum, count, orderprice, username, userpostcode, shipaddress, usertel, orderdate, pid, ordermessage, payment)"
+		            + " SELECT CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'), LAST_INSERT_ID()), ?, p.pprice*count, ?, ?, ?, ?, NOW(), ?, ?, ?"
+		            + " FROM cart c"
+		            + " JOIN user u ON u.userid = c.userid "
+		            + " JOIN product p ON p.pid = c.pid"
+		            + " WHERE u.userid = ? AND p.pid = ?"
+		            + " LIMIT 1;";
+
+		        preparedStatement = connection.prepareStatement(query);
+		        preparedStatement.setInt(1, count);
+		        preparedStatement.setString(2, username);
+		        preparedStatement.setString(3, userpostcode);
+		        preparedStatement.setString(4, useraddress + userdetailaddress);
+		        preparedStatement.setString(5, phone1 + phone2 + phone3); // Combine phone1, phone2, phone3
+		        preparedStatement.setString(6, useremail);
+		        preparedStatement.setString(7, ordermessage);
+		        preparedStatement.setString(8, payment);
+		        preparedStatement.setString(9, userid);
+
+		        for (int i = 0; i < pidList.size(); i++) {
+		            String pid = pidList.get(i);
+		            preparedStatement.setString(10, pid);
+		            preparedStatement.addBatch();
+		        }
+
+		        preparedStatement.executeBatch();
+
+		        String query1 = "DELETE FROM cart WHERE userid = ?";
+		        preparedStatement = connection.prepareStatement(query1);
+		        preparedStatement.setString(1, userid);
+		        preparedStatement.executeUpdate();
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    } finally {
+		        try {
+		            if (preparedStatement != null)
+		                preparedStatement.close();
+		            if (connection != null)
+		                connection.close();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+		// 주문하면 pstock에서 count만큼 빼주기
+//		public void updatePstock(List<String> pidList, int count) {
+//		    Connection connection = null;
+//		    PreparedStatement preparedStatement = null;
+//
+//		    try {
+//		        connection = dataSource.getConnection();
+//		        String query = "UPDATE product p " +
+//		                "JOIN orders o ON p.pid = o.pid " +
+//		                "SET p.pstock = p.pstock - o.count " +
+//		                "WHERE o.oderseq = o.oderseq AND p.pid = ?";
+//		        preparedStatement = connection.prepareStatement(query);
+//
+//		        for (String pid : pidList) {
+//		            preparedStatement.setString(1, pid);
+//		            preparedStatement.executeUpdate();
+//		        }
+//		    } catch (Exception e) {
+//		        e.printStackTrace();
+//		    } finally {
+//		        try {
+//		            if (preparedStatement != null)
+//		                preparedStatement.close();
+//		            if (connection != null)
+//		                connection.close();
+//		        } catch (Exception e) {
+//		            e.printStackTrace();
+//		        }
+//		    }
+//		}
 	
 	
 	

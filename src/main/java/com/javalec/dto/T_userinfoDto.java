@@ -9,18 +9,20 @@ public class T_userinfoDto {
     private String userpostcode;
     private String useraddress;
     private String userdetailaddress;
+    private int point;
 
     // Constructors
     public T_userinfoDto() {
     }
 
-    public T_userinfoDto(String username, String userpostcode, String useraddress, String userdetailaddress, String usertel, String useremail) {
+    public T_userinfoDto(String username, String userpostcode, String useraddress, String userdetailaddress, String usertel, String useremail, int point) {
         this.username = username;
         this.userpostcode = userpostcode;
         this.useraddress = useraddress;
         this.userdetailaddress = userdetailaddress;
         this.usertel = usertel;
         this.useremail = useremail;
+        this.point = point;
     }
 
     // Getters and Setters
@@ -82,4 +84,13 @@ public class T_userinfoDto {
     public void setUseremail(String useremail) {
         this.useremail = useremail;
     }
+    
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
+
 }

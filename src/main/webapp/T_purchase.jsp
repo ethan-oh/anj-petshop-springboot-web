@@ -2,41 +2,164 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="T_cartCss.css">
 
 <head>
+<link rel="stylesheet" href="A_heardCss.css">
+<link rel="stylesheet" href="T_cartCss.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>주문/결제</title>
-</head>
 
-<style type="text/css">
-@import
-	url(https://fonts.googleapis.com/css?family=Advent+Pro:100,300,600);
+<script type="text/javascript">
+	// 숫자 단위정리
+	function numberWithCommas(x) {
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 
-@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+	
+	// 페이지 로드 시 총 주문금액 초기화
+	window.addEventListener("load", calculateTotalAmount);	
+	
 
-@import
-	url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+	function userpoint() {
+		var pointInput = document.getElementsByName("point")[0];
+		pointInput.value = serverData.point;
+	}
 
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+	function submitForm() {
+		  var form = document.createElement("form");
+		  form.action = "order.do";
+		  form.method = "post";
 
-@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+		  var pidInputs = document.getElementsByName("pid");
+		  var countInputs = document.getElementsByName("count");
 
-@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+		  // 추가 정보 가져오기
+		  var usernameInput = document.getElementsByName("username")[0];
+		  var userpostcodeInput = document.getElementsByName("userpostcode")[0];
+		  var useraddressInput = document.getElementsByName("useraddress")[0];
+		  var userdetailaddressInput = document.getElementsByName("userdetailaddress")[0];
+		  var phone1Input = document.getElementsByName("phone1")[0];
+		  var phone2Input = document.getElementsByName("phone2")[0];
+		  var phone3Input = document.getElementsByName("phone3")[0];
+		  var useremailInput = document.getElementsByName("useremail")[0];
+		  var ordermessageInput = document.getElementsByName("ordermessage")[0];
 
-@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+		  // 추가 정보를 폼 데이터로 추가
+		  var usernameHiddenInput = document.createElement("input");
+		  usernameHiddenInput.type = "hidden";
+		  usernameHiddenInput.name = "username";
+		  usernameHiddenInput.value = usernameInput.value;
+		  form.appendChild(usernameHiddenInput);
 
-@import
-	url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
-</style>
+		  var userpostcodeHiddenInput = document.createElement("input");
+		  userpostcodeHiddenInput.type = "hidden";
+		  userpostcodeHiddenInput.name = "userpostcode";
+		  userpostcodeHiddenInput.value = userpostcodeInput.value;
+		  form.appendChild(userpostcodeHiddenInput);
 
-<!-- 주소api -->
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		  var useraddressHiddenInput = document.createElement("input");
+		  useraddressHiddenInput.type = "hidden";
+		  useraddressHiddenInput.name = "useraddress";
+		  useraddressHiddenInput.value = useraddressInput.value;
+		  form.appendChild(useraddressHiddenInput);
 
-<script>
+		  var userdetailaddressHiddenInput = document.createElement("input");
+		  userdetailaddressHiddenInput.type = "hidden";
+		  userdetailaddressHiddenInput.name = "userdetailaddress";
+		  userdetailaddressHiddenInput.value = userdetailaddressInput.value;
+		  form.appendChild(userdetailaddressHiddenInput);
+
+		  var phone1HiddenInput = document.createElement("input");
+		  phone1HiddenInput.type = "hidden";
+		  phone1HiddenInput.name = "phone1";
+		  phone1HiddenInput.value = phone1Input.value;
+		  form.appendChild(phone1HiddenInput);
+
+		  var phone2HiddenInput = document.createElement("input");
+		  phone2HiddenInput.type = "hidden";
+		  phone2HiddenInput.name = "phone2";
+		  phone2HiddenInput.value = phone2Input.value;
+		  form.appendChild(phone2HiddenInput);
+
+		  var phone3HiddenInput = document.createElement("input");
+		  phone3HiddenInput.type = "hidden";
+		  phone3HiddenInput.name = "phone3";
+		  phone3HiddenInput.value = phone3Input.value;
+		  form.appendChild(phone3HiddenInput);
+
+		  var useremailHiddenInput = document.createElement("input");
+		  useremailHiddenInput.type = "hidden";
+		  useremailHiddenInput.name = "useremail";
+		  useremailHiddenInput.value = useremailInput.value;
+		  form.appendChild(useremailHiddenInput);
+
+		  var ordermessageHiddenInput = document.createElement("input");
+		  ordermessageHiddenInput.type = "hidden";
+		  ordermessageHiddenInput.name = "ordermessage";
+		  ordermessageHiddenInput.value = ordermessageInput.value;
+		  form.appendChild(ordermessageHiddenInput);
+
+		  var paymentInput = document.querySelector('input[name="payment"]:checked');
+		  var paymentValue = paymentInput.value;
+
+		  var paymentHiddenInput = document.createElement("input");
+		  paymentHiddenInput.type = "hidden";
+		  paymentHiddenInput.name = "payment";
+		  paymentHiddenInput.value = paymentValue;
+		  form.appendChild(paymentHiddenInput);
+
+		  // pid와 count를 폼 데이터로 추가
+		  for (var i = 0; i < pidInputs.length; i++) {
+		    var pidInput = document.createElement("input");
+		    pidInput.type = "hidden";
+		    pidInput.name = "pid";
+		    pidInput.value = pidInputs[i].value;
+		    form.appendChild(pidInput);
+
+		    var countInput = document.createElement("input");
+		    countInput.type = "hidden";
+		    countInput.name = "count";
+		    countInput.value = countInputs[i].value;
+		    form.appendChild(countInput);
+		  }
+
+		  document.body.appendChild(form);
+		  form.submit();
+		}
+
+
+
+
+	function confirmPurchase() {
+		var confirmed = confirm("구매하시겠습니까?");
+		if (confirmed) {
+			alert("구매가 완료되었습니다.");
+			submitForm(); // 구매를 확인한 경우에만 submitForm() 함수 호출
+		}
+	}
+
+	// 주문 상품 목록의 가격 합계 계산
+	var totalAmount = 0;
+	var productElements = document.getElementsByClassName("pid");
+	var priceElements = document.getElementsByClassName("pprice");
+	var countElements = document.getElementsByName("count");
+
+	for (var i = 0; i < productElements.length; i++) {
+		var price = parseInt(priceElements[i].innerHTML.replace(/[^0-9]/g, ""));
+		var count = parseInt(countElements[i].value);
+		totalAmount += price * count;
+	}
+</script>
+
+
+	
+	<!-- 주소api -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	
+	<script>
 	function sample6_execDaumPostcode() {
 		new daum.Postcode(
 				{
@@ -91,166 +214,114 @@
 	}
 </script>
 
-<script>
-	// 숫자 단위정리
-	function numberWithCommas(x) {
-		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+<script type="text/javascript">
+//서버에서 전달된 JSON 값
+// 체크박스 클릭 시 데이터 채우기
+var serverData = {
+	username : "${delivery_View.username}",
+	userpostcode : "${delivery_View.userpostcode}",
+	useraddress : "${delivery_View.useraddress}",
+	userdetailaddress : "${delivery_View.userdetailaddress}",
+	usertel : "${delivery_View.usertel}",
+	useremail : "${delivery_View.useremail}",
+	point : "${delivery_View.point}"
+};
+
+
+
+/* fillUserInfo(document.getElementsByName("checkbox")[0]); */
+
+function fillUserInfo(checkbox) {
+	var usernameInput = document.getElementsByName("username")[0];
+	var userpostcodeInput = document.getElementsByName("userpostcode")[0];
+	var useraddressInput = document.getElementsByName("useraddress")[0];
+	var userdetailaddressInput = document
+			.getElementsByName("userdetailaddress")[0];
+	var usertelInput1 = document.getElementsByName("phone1")[0];
+	var usertelInput2 = document.getElementsByName("phone2")[0];
+	var usertelInput3 = document.getElementsByName("phone3")[0];
+	var useremailInput = document.getElementsByName("useremail")[0];
+
+	if (checkbox.checked) {
+		// 체크박스가 선택된 경우 데이터 채우기
+		usernameInput.value = serverData.username;
+		userpostcodeInput.value = serverData.userpostcode;
+		useraddressInput.value = serverData.useraddress;
+		userdetailaddressInput.value = serverData.userdetailaddress;
+		usertelInput1.value = serverData.usertel.substring(0, 3);
+		usertelInput2.value = serverData.usertel.substring(4, 8);
+		usertelInput3.value = serverData.usertel.substring(9);
+		useremailInput.value = serverData.useremail;
+	} else {
+		// 체크박스가 선택되지 않은 경우 데이터 비우기
+		usernameInput.value = "";
+		userpostcodeInput.value = "";
+		useraddressInput.value = "";
+		userdetailaddressInput.value = "";
+		usertelInput1.value = "";
+		usertelInput2.value = "";
+		usertelInput3.value = "";
+		useremailInput.value = "";
 	}
+}
 
-	// 변경된 총 주문금액 재계산
-	function calculateTotalPrice(selectElement, rowId) {
-		var selectedCount = selectElement.value;
-		var originalCount = selectElement.getAttribute("data-original-count");
-		if (selectedCount !== originalCount) {
-			var priceText = selectElement.getAttribute("data-price");
-			var price = parseInt(priceText);
-			var newTotalPrice = selectedCount * price;
-			document.getElementById(rowId).textContent = numberWithCommas(newTotalPrice)
-					+ "원";
-			calculateTotalAmount(); // 주문금액 변경 시 총 주문금액 재계산
-		}
-	}
+//페이지 로드 시 자동으로 데이터 비우기
+fillUserInfo(document.getElementById("checkboxId"));
 
-	// 합계구하기
-	function submitForm(pid, selectedCount) {
-		var form = document.getElementById("form_" + pid);
-		form.elements["count_" + pid].value = selectedCount;
-		form.submit();
-	}
+var formattedPrice = ...; // 적절한 방법으로 formattedPrice 변수를 설정해야 합니다.
+var savingAmount = formattedPrice * 0.1;
 
-	// 총 주문금액 계산하기
-	function calculateTotalAmount() {
-		var totalAmount = 0;
-		var totalPriceElements = document.querySelectorAll("[id^='total_']");
+var savingAmountElement = document.createElement("span");
+savingAmountElement.textContent = savingAmount + "원";
 
-		totalPriceElements.forEach(function(element) {
-			var priceText = element.textContent.replace(/[^0-9]/g, "");
-			var price = parseInt(priceText);
-
-			if (!isNaN(price)) {
-				totalAmount += price;
-			}
-		});
-
-		var totalAmountElement = document.getElementById("totalAmount");
-		totalAmountElement.textContent = numberWithCommas(totalAmount) + "원";
-	}
-
-	// 페이지 로드 시 총 주문금액 초기화
-	window.addEventListener("load", calculateTotalAmount);
-
-	// 서버에서 전달된 JSON 값
-	// 체크박스 클릭 시 데이터 채우기
-	var serverData = {
-		username : "${delivery_View.username}",
-		userpostcode : "${delivery_View.userpostcode}",
-		useraddress : "${delivery_View.useraddress}",
-		userdetailaddress : "${delivery_View.userdetailaddress}",
-		usertel : "${delivery_View.usertel}",
-		useremail : "${delivery_View.useremail}"
-	};
-
-	//페이지 로드 시 자동으로 데이터 비우기
-	fillUserInfo(document.getElementById("checkboxId"));
-
-	function fillUserInfo(checkbox) {
-		var usernameInput = document.getElementsByName("username")[0];
-		var userpostcodeInput = document.getElementsByName("userpostcode")[0];
-		var useraddressInput = document.getElementsByName("useraddress")[0];
-		var userdetailaddressInput = document.getElementsByName("userdetailaddress")[0];
-		var usertelInput1 = document.getElementsByName("phone1")[0];
-		var usertelInput2 = document.getElementsByName("phone2")[0];
-		var usertelInput3 = document.getElementsByName("phone3")[0];
-		var useremailInput = document.getElementsByName("useremail")[0];
-
-		if (checkbox.checked) {
-			// 체크박스가 선택된 경우 데이터 채우기
-			usernameInput.value = serverData.username;
-			userpostcodeInput.value = serverData.userpostcode;
-			useraddressInput.value = serverData.useraddress;
-			userdetailaddressInput.value = serverData.userdetailaddress;
-			usertelInput1.value = serverData.usertel.substring(0, 3);
-			usertelInput2.value = serverData.usertel.substring(4, 8);
-			usertelInput3.value = serverData.usertel.substring(9);
-			useremailInput.value = serverData.useremail;
-		} else {
-			// 체크박스가 선택되지 않은 경우 데이터 비우기
-			usernameInput.value = "";
-			userpostcodeInput.value = "";
-			useraddressInput.value = "";
-			userdetailaddressInput.value = "";
-			usertelInput1.value = "";
-			usertelInput2.value = "";
-			usertelInput3.value = "";
-			useremailInput.value = "";
-		}
-	}
-
-	function submitForm() {
-		var form = document.createElement("form");
-		form.action = "order.do";
-		form.method = "post";
-
-		var pidInputs = document.getElementsByName("pid");
-		var countInputs = document.getElementsByName("count");
-
-		for (var i = 0; i < pidInputs.length; i++) {
-			var pidInput = document.createElement("input");
-			pidInput.type = "hidden";
-			pidInput.name = "pid";
-			pidInput.value = pidInputs[i].value;
-			form.appendChild(pidInput);
-
-			var countInput = document.createElement("input");
-			countInput.type = "hidden";
-			countInput.name = "count";
-			countInput.value = countInputs[i].value;
-			form.appendChild(countInput);
-		}
-
-		document.body.appendChild(form);
-		form.submit();
-	}
-
-	function confirmPurchase() {
-		var confirmed = confirm("구매하시겠습니까?");
-		if (confirmed) {
-			alert("구매가 완료되었습니다.");
-			submitForm(); // 구매를 확인한 경우에만 submitForm() 함수 호출
-		}
-	}
 </script>
+
+</head>
+
+
+
+
+
+
 
 <body>
 
 	<!-- <header>
-		<nav>
-			<ul>
-				<li><a href="A_mainView.do">SHOP</a></li>
-				<li><a href="A_ProductView.do">ANJLIFE</a></li>
-				<li><a href="A_introduction.jsp">COMMUNITY</a></li>
-				<li><a href="A_introduction.jsp">CART</a></li>
-			</ul>
-		</nav>
-	</header> -->
+				  <nav>
+				    <ul>
+				      <li><a href="A_MainView.do"><img src="LOGO.png" alt="logo"></a></li>
+				      <li><a href="A_ProductView.do">SHOP</a></li>
+				      <li><a href="#">ANJLIFE</a></li>
+				      <li><a href="#">COMMUNITY</a></li>
+				      <li><a href="#">CART</a></li>
+				      <li class="right-align"><a href="A_introduction.jsp">Login</a></li>
+				      <li class="right-align"><a href="A_introduction.jsp">New</a></li>
+				    </ul>
+				  </nav>
+				</header>
+				<br/><br/><br/><br/><br/>
+				<img src="image_08.png" alt="My Image"> -->
 
 	<main class="main">
 
-		<h1 style="font-family: 'font-family: ' Nanum Pen Script ', cursive;">ORDER</h1>
+		<h1
+			style="font-family: 'font-family: ' Nanum Pen Script ', cursive; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); height: 500px; /* 원하는 높이 값으로 변경 */ color: #477a7b;">ORDER</h1>
 		<br> <br> <br> <br> <br> <br> <br>
-		<br>
-
+		<br> <br>
 	</main>
 
-	<form id="orderForm" method="post">
+	<form id="orderForm" action="order.do" method="post">
 		<hr width="80%" color="#477a7b" size="2">
 		<table border="0">
 			<tr>
 				<td
-					style="height: 10px; text-align: left; border-bottom: 1px solid #E8E8E8;; color: #477a7b;">주문상품<br>
-				<br></td>
+					style="height: 10px; text-align: left; border-bottom: 1px solid #E8E8E8;; color: #477a7b; border: none;">주문상품<br>
+					<br></td>
 			</tr>
 		</table>
+		<c:set var="totalPrice" value="0" />
+		<!-- 누적 변수 초기화 -->
+
 		<c:forEach items="${list}" var="dto">
 			<table border="0" style="border-top: 1px solid #E8E8E8;">
 				<tr>
@@ -261,6 +332,9 @@
 					<td style="width: 130px;">${dto.count}개</td>
 					<td id="total_${dto.pid}" style="width: 100px;"><fmt:formatNumber
 							value="${dto.pprice * dto.count}" pattern="#,##0" />원</td>
+					<c:set var="totalPrice"
+						value="${totalPrice + (dto.pprice * dto.count)}" />
+					<!-- 누적 계산 -->
 				</tr>
 			</table>
 
@@ -270,87 +344,339 @@
 
 		<table border="0">
 			<tr>
-				<td style="text-align: left;">총 주문금액 :</td>
-				<td style="text-align: right;"><span id="totalAmount"> <fmt:formatNumber
-							value="${totalAmount}" pattern="#,##0" />
-				</span></td>
+				<td style="text-align: left;">총 주문금액</td>
+				<td style="text-align: right;"><fmt:formatNumber
+						value="${totalPrice}" var="formattedPrice" pattern="#,##0" /> <c:out
+						value="${formattedPrice}" />원</td>
+			</tr>
+		</table>
+		<br>
+	<!-- </form> -->
+	<!-- 누적된 값을 출력 -->
+
+	<br>
+	<br>
+	<hr width="80%" color="#477a7b" size="2">
+
+	<!-- 주문자 정보 -->
+	<!-- 배송지 정보 -->
+		<table border="0" id="userDeliveryTable">
+			<tr>
+				<td
+					style="height: 10px; font-size: 15px; text-align: left; color: #477a7b;">배송정보<br>
+					<br></td>
+			</tr>
+			<tr>
+				<td style="height: 10px; font-size: 15px; text-align: left;">배송지
+					선택 <input type="checkbox" name="checkbox"
+					style="position: absolute; left: 350px; background-color: #DFE9E8;"
+					onchange="fillUserInfo(this)"> <label for="checkbox"
+					style="position: absolute; left: 370px;">회원 정보와 동일</label> <br>
+				</td>
+			</tr>
+			<tr>
+				<td
+					style="font-size: 15px; order: bottom: 1px solid black; text-align: left;"><p>받으시는
+						분</p></td>
+				<td>
+					<div style="text-align: left;">
+						<input type="text" name="username" size="18" dir="ltr"
+							style="font-size: 15px; height: 30px; background-color: #DFE9E8; border: none; border-color: white;">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td style="font-size: 15px; vertical-align: top; text-align: left;"><p>배송지
+						주소</p></td>
+				<td>
+					<div style="text-align: left;">
+						<input type="text" id="sample6_postcode" placeholder="우편번호"
+							name="userpostcode" 
+							style="height: 30px; background-color: #DFE9E8; border-color: white; border-color: white;">
+						<input type="button" onclick="sample6_execDaumPostcode()"
+							value="우편번호 찾기"
+							style="height: 30px; background-color: #477a7b; border: none; color: white;"><br>
+						<input type="text" id="sample6_address" placeholder="주소"
+							name="useraddress"
+							style="height: 30px; background-color: #DFE9E8; border-color: white;"
+							size="50"><br> <input type="text"
+							id="sample6_detailAddress" placeholder="상세주소"
+							name="userdetailaddress"
+							style="height: 30px; background-color: #DFE9E8; border-color: white;"
+							size="50"><br>
+						<p style="font-size: 7px; text-align: left;">※상세주소(아파트 동, 호수)꼭
+							기재 부탁드립니다.</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td
+					style="font-size: 15px; order: bottom: 1px solid black; text-align: left;"><p>휴대전화</p></td>
+				<td>
+					<div style="text-align: left;">
+						<select name="phone1"
+							style="height: 30px; background-color: #DFE9E8; border-color: white;">
+							<option value="010">010</option>
+							<option value="011">011</option>
+							<option value="016">016</option>
+							<option value="017">017</option>
+							<option value="019">019</option>
+						</select> - <input type="text" maxlength="4" size="4" name="phone2"
+							style="height: 30px; background-color: #DFE9E8; border: none;">
+						- <input type="text" maxlength="4" size="4" name="phone3"
+							style="height: 30px; background-color: #DFE9E8; border: none;">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td style="font-size: 15px; vertical-align: top; text-align: left;"><p>이메일</p></td>
+				<td>
+					<div style="text-align: left;">
+						<input type="text" name="useremail" size="50"
+							style="height: 30px; font-size: 15px; background-color: #DFE9E8; border: none;"><br>
+						<p style="font-size: 7px; text-align: left;">
+							※이메일을 통해 주문처리과정을 보내드립니다.<br>
+						</p>
+						<p style="font-size: 7px; text-align: left;">※이메일 주소란에는 반드시
+							수신가능한 이메일주소를 입력해 주세요</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td style="font-size: 15px; vertical-align: top; text-align: left;"><p>배송
+						메세지</p></td>
+				<td>
+					<div style="text-align: left;">
+						<textarea rows="5" cols="50" name="ordermessage"
+							style="font-size: 15px; background-color: #DFE9E8; border: none;"></textarea>
+					</div>
+				</td>
 			</tr>
 		</table>
 		<br>
 
-		
 
+	<hr width="80%" color="#477a7b" size="2">
+	<!-- <form action="order.do" method="get"> -->
+		<table border="0">
+			<tr>
+				<td colspan="2"
+					style="height: 10px; font-size: 15px; text-align: left; color: #477a7b;">결제예정금액<br>
+				<br></td>
+			</tr>
+			<tr>
+				<td style="font-size: 15px; vertical-align: top; text-align: left;">주문
+					금액</td>
+				<td style="text-align: right;"><fmt:formatNumber
+						value="${totalPrice}" var="formattedPrice" pattern="#,##0" /> <c:out
+						value="${formattedPrice}" />원<br>
+				<br></td>
+			</tr>
+			<tr>
+				<td style="font-size: 15px; vertical-align: top; text-align: left;">마일리지</td>
+				<td style="text-align: right;">보유 <fmt:formatNumber
+						value="${delivery_View.point}" pattern="#,##0" />원<br> <input type="text" name="point" id="pointInput" size="20" dir="ltr" style="font-size: 15px; height: 30px; background-color: #DFE9E8; border-color: white; text-align: right;" 
+  						inputmode="numeric" oninput="formatNumberInput(this)" onblur="checkEnteredPoints()" value="0">원&nbsp;
+
+<button type="button" id="clearButton" style="display: none; height: 30px; background-color: #477a7b; border: none; color: white;" onclick="clearPointInput()">X</button>
+
+					<button type="button"
+						style="height: 30px; background-color: #477a7b; border: none; color: white;"
+						onclick="useAllPoints()">전액사용</button>
+					<br> 남은 적립금 <span id="remainingPoints"></span>원<br>
+					적립 예정 금액<input id="savingAmountContainer" value="${ }" >
+				</td>
+			</tr>
+			<tr>
+				<td style="font-size: 15px; vertical-align: top; text-align: left;">총 결제 금액<br>
+				<br>
+				</td>
+				<td style="text-align: right;"><input type="hidden"
+					id="originalTotalPrice" value="${totalPrice}">
+					<span id="remainingTotalPrice" ></span>원<br></td>
+			</tr>
+		</table>
+
+
+
+
+	<hr width="80%" color="#477a7b" size="2">
+	<table border="0">
+		<tr>
+			<td colspan="2"
+				style="height: 10px; font-size: 15px; text-align: left; color: #477a7b;">결제수단<br>
+			<br></td>
+		</tr>
+		<tr>
+			<td style="text-align: left;">
+			<input type="radio" name="payment" value="카드결제" checked="checked">카드 결제&nbsp;
+			<input type="radio" name="payment" value="가상계좌">에스크로(가상계좌)&nbsp;
+			<input	type="radio" name="payment" value="실시간계좌">에스크로(실시간계좌이체)&nbsp;
+			<input type="radio" name="payment" value="카카오페이">카카오페이(간편결제)<br>
+			<br></td>
+		</tr>
+		<tr>
+			<td style="text-align: right;">
+				<button type="button" class="submit-button"
+					style="width: 300px; height: 40px; background-color: #477A7B; border: none; color: white;"
+					onclick="confirmPurchase()">결제하기</button>
+			</td>
+		</tr>
+
+	</table>
 	</form>
-
-
 	<br>
 	<br>
-	<hr width="80%" color="#477a7b" size="1">
+	<br>
+	<br>
 
-	<!-- 주문자 정보 -->
-	<!-- 배송지 정보 -->
-	<form>
-		<table border="1" id="userDeliveryTable">
-    <tr>
-        <td style="height: 10px; font-size: 15px; text-align: left; color: #477a7b;">배송정보<br><br></td>
-    </tr>
-    <tr>
-        <td style="height: 10px; font-size: 15px; text-align: left;">배송지 선택
-            <input type="checkbox" name="checkbox" style="position: absolute; left: 380px;" onchange="fillUserInfo(this)">
-            <label for="checkbox" style="position: absolute; left: 400px;">회원 정보와 동일</label> <br>
-        </td>
-    </tr>
-    <tr>
-        <td style="font-size: 15px; order: bottom: 1px solid black; text-align: left;"><p>받으시는 분</p></td>
-        <td><input type="text" name="username" size="20" dir="ltr" style="font-size: 15px;"></td>
-    </tr>
-    <tr>
-        <td style="font-size: 15px; text-align: left;"><p>배송지 주소</p></td>
-        <td >
-            <input type="text" id="sample6_postcode" placeholder="우편번호" name="userpostcode">
-            <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-            <input type="text" id="sample6_address" placeholder="주소" name="useraddress"><br>
-            <input type="text" id="sample6_detailAddress" placeholder="상세주소" name="userdetailaddress"><br>
-            <p style="font-size: 7px; text-align: left;">※상세주소(아파트 동, 호수) 꼭 기재 부탁드립니다.</p>
-        </td>
-    </tr>
-    <tr>
-        <td style="font-size: 15px; order: bottom: 1px solid black; text-align: left;"><p>휴대전화</p></td>
-        <td>
-            <select name="phone1" style="text-align: left;">
-                <option value="010">010</option>
-                <option value="011">011</option>
-                <option value="016">016</option>
-                <option value="017">017</option>
-                <option value="019">019</option>
-            </select>
-            -
-            <input type="text" maxlength="4" size="4" name="phone2" style="text-align: left;">
-            -
-            <input type="text" maxlength="4" size="4" name="phone3" style="text-align: left;">
-        </td>
-    </tr>
-    <tr>
-        <td style="font-size: 15px; text-align: left;"><p>이메일</p></td>
-        <td><input type="text" name="useremail" size="50" style="font-size: 15px;"><br>
-        <p style="font-size: 7px; text-align: left;">※이메일을 통해 주문처리과정을 보내드립니다.<br></p>
-        <p style="font-size: 7px; text-align: left;">※이메일 주소란에는 반드시 수신가능한 이메일주소를 입력해 주세요</p>
-        </td>
-    </tr>
-</table>
-		<br> <br>
-	</form>
+	<footer>
+		<ul>
+			<li><a href="#">Brand Story</a></li>
+			<li><a href="#">서비스이용약관</a></li>
+			<li><a href="#">개인정보처리방침</a></li>
+			<li><a href="#">전자금융거래약관</a></li>
+		</ul>
+		<div>
+			<p>
+				<img src="LOGO.png" alt="푸터로고">
+			</p>
+			<p>
+				<strong>Corporation ANJ.industry</strong> <br> Gangnam-gu,
+				Seoul (Yeoksam-dong The Joy Computer Academy) <br> CEO: Ahn
+				Jae-won <br> Business registration number: 240-81-87676
+				Business information confirmation <br> Mail-order business
+				report: Gangnam 10238 Fax: 02-000-1234
+			</p>
+			<p>
+				<strong>customer service center</strong> <br> Tel :
+				Representative number 1234-5678 (Weekdays 09:00~18:00) <br>
+				Dedicated to the future: 1522-5700 (365 days 09:00-18:00) <br>
+				Gangnam-gu, Seoul (Yeoksam-dong The Joy Computer Academy) <br>
+				Fax : 02-000-1234 | Mail : ajw0376@gmail.com <br>
+			</p>
+		</div>
+	</footer>
+
+
 	
-	
-	
-	
-	
-	
-	
-	<button type="button" class="submit-button"
-			style="display: block; position: absolute; right: 305px; width: 120px; height: 30px; background-color: black; color: white;"
-			onclick="confirmPurchase()">주문하기</button>
-			
-			<br> <br><br> <br>
+
 </body>
+
+<!-- 마일리지  -->
+<script type="text/javascript">
+		var totalPrice = parseInt("${totalPrice}");
+		var deliveryPoint = parseInt("${delivery_View.point}");
+
+		function useAllPoints() {
+			  var pointInput = document.getElementById("pointInput");
+			  var enteredPoints = deliveryPoint; // "${delivery_View.point}" 값을 사용
+
+			  if (enteredPoints > deliveryPoint) {
+			    alert("입력한 값이 보유 적립금보다 큽니다.");
+			    return;
+			  }
+
+			  if (enteredPoints > totalPrice) {
+			    enteredPoints = totalPrice;
+			  }
+
+			  pointInput.value = numberWithCommas(enteredPoints);
+			  calculateRemainingTotalPrice();
+
+			  // x버튼 보이기
+			  var clearButton = document.getElementById("clearButton");
+			  clearButton.style.display = "inline";
+			}
+
+		function checkEnteredPoints() {
+			var pointInput = document.getElementById("pointInput");
+			var enteredPoints = parseInt(pointInput.value
+					.replace(/[^0-9]/g, "")); // 입력된 값을 정수로 변환
+
+			if (enteredPoints > deliveryPoint || enteredPoints > totalPrice) {
+				if (!pointInput.getAttribute("data-shown-warning")) {
+					alert("입력한 값이 보유 적립금보다 크거나 주문 금액을 초과합니다.");
+					pointInput.setAttribute("data-shown-warning", "true");
+					pointInput.value = "0"; // 입력 값을 0으로 변경
+					pointInput.focus(); // 입력 요소에 다시 포커스를 설정하여 수정 가능하도록 함
+				}
+			} else {
+				pointInput.removeAttribute("data-shown-warning");
+				pointInput.value = numberWithCommas(enteredPoints); // 포맷이 적용된 값으로 변경
+				calculateRemainingTotalPrice(); // 값이 유효한 경우에만 남은 총 가격 계산
+			}
+		}
+
+		function calculateRemainingTotalPrice() {
+			var pointInput = parseInt(document.getElementById("pointInput").value
+					.replace(/[^0-9]/g, ""));
+			var remainingTotalPrice = totalPrice - pointInput;
+
+			if (remainingTotalPrice < 0) {
+				remainingTotalPrice = 0;
+			}
+
+			document.getElementById("remainingTotalPrice").textContent = numberWithCommas(remainingTotalPrice);
+		}
+
+		function numberWithCommas(value) {
+			return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+
+		function calculateRemainingTotalPrice() {
+			var pointInput = parseInt(document.getElementById("pointInput").value
+					.replace(/[^0-9]/g, ""));
+			var remainingPoints = deliveryPoint - pointInput;
+			var remainingTotalPrice = totalPrice - pointInput;
+
+			document.getElementById("remainingTotalPrice").textContent = numberWithCommas(remainingTotalPrice);
+			document.getElementById("remainingPoints").textContent = numberWithCommas(remainingPoints);
+		}
+		
+		// x버튼
+		function showClearButton() {
+			  var pointInput = document.getElementById("pointInput");
+			  var clearButton = document.getElementById("clearButton");
+
+			  if (pointInput.value !== "0") {
+			    clearButton.style.display = "inline";
+			  } else {
+			    clearButton.style.display = "none";
+			  }
+			}
+
+			function clearPointInput() {
+			  var pointInput = document.getElementById("pointInput");
+			  pointInput.value = "0";
+			  showClearButton();
+			  calculateRemainingTotalPrice();
+			}
+
+			// input 필드에 값이 입력되는 이벤트를 감지하여 showClearButton 함수 호출
+			document.getElementById("pointInput").addEventListener("input", showClearButton);
+
+			// 초기화 버튼 클릭 이벤트 처리
+			document.getElementById("clearButton").addEventListener("click", clearPointInput);
+
+
+		// 초기화
+		calculateRemainingTotalPrice();
+
+		// input 필드에 값이 입력되는 이벤트를 감지하여 checkEnteredPoints 함수 호출
+		document.getElementById("pointInput").addEventListener("input",
+				checkEnteredPoints);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</script>
+
 </html>
