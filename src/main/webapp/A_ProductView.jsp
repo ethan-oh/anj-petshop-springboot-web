@@ -57,30 +57,8 @@
 
 </script>
 <body>
-<!-- 
-				 <header>
-				  <nav>
-				    <ul>
-				      <li><a href="A_MainView.do"><img src="LOGO.png" alt="logo"></a></li>
-				      <li><a href="A_ProductView.do">SHOP</a></li>
-				      <li><a href="#">ANJLIFE</a></li>
-				      <li><a href="#">COMMUNITY</a></li>
-				      <li><a href="#">NOTICE</a></li>
-				      <li>	<form action="A_ProductView.do" class="center" method="get">
-						<select name="query">
-							<option value="pname" selected="selected">Product</option>
-							<option value="pprice">price</option>
-						</select> 
-						      <input type="text" name="content" size="60"> 
-							  <input type="submit" value="serach"> </li>
-				      <li class="right-align">
-				        <button class="btn-login">Abandoned dog</button>
-				        <button class="btn-login">Login</button>
-				        <button class="btn-new">New</button>
-				      </li>
-				    </ul>
-				  </nav>
-				</header> -->
+
+				
 				
 						 <header>
 						        <div class="head-wrap">
@@ -117,30 +95,31 @@
 				<!-- 검색 및 상품정렬 -->
 			
 						<div style="text-align: right;">
-							<form action="A_ProductView.do" class="center" method="get">
-								<select name="query">
-									<option value="pname" selected="selected">Product</option>
-									<option value="pprice">price</option>
-								</select> 
-								      <input type="text" name="content" size="30"> 
-									  <input type="submit" value="serach"> 
-									<select id="sortOrder" name="sortOrder" onchange="handleSortOrderChange()">
-									<option value="">가격순 정렬</option>
-									<option value="highprice">높은 가격순</option>
-									<option value="lowprice">낮은 가격순</option>
-								</select>
-							</form>
-						</div><br/>
+						  <form class="search-form">
+              	  <select name="query">
+		                    <option value="pname" selected="selected">Product</option>
+		                    <option value="pprice">Price</option>
+		                </select>
+			                <input type="text" name="content" size="30">
+			                <input type="submit" value="Search">
+			              <select id="sortOrder" name="sortOrder" onchange="handleSortOrderChange()">
+		                    <option value="">Price Sort</option>
+		                    <option value="highprice">Highest Price</option>
+		                    <option value="lowprice">Lowest Price</option>
+              		  </select>
+				            </form>
+				        </div>
+						<br/>
 						
 
 							 <li class="center-align">
-						            <button class="btn-login btn-dog">DOG</button>
-						             <button class="btn-login btn-new">CAT</button>
-                                     <button class="btn-login">ALL</button>
-                           </li><br><br>
+						            <button class="btn-login btn-dog">Food</button>
+						             <button class="btn-login btn-new">Clean</button>
+                                     <button class="btn-login">Living</button>
+                             </li><br><br>
 				
 				<!-- 전체 상품목록 -->
-							<h1 style="text-align: center; color: #477A7B;">ANJ's Pick</h1>
+							<h1 style="text-align: center; color: #477A7B;">ANJ's Pick</h1><br>
 						
 							<div class="product-grid">
 								<c:forEach items="${A_ProductView}" var="dto">

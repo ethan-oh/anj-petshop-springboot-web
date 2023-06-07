@@ -21,39 +21,12 @@ $(function(){
 	    })
 	    .mouseleave(function(){
 	        $header.stop().animate({height:'50px'},200);
-	    })
-	    
-	    
-	});
+	    }) 
+		});
 </script>
 <body>
 
 
-			 <!-- <header>
-				  <nav>
-				    <ul>
-				      <li><a href="A_MainView.do"><img src="LOGO.png" alt="logo"></a></li>
-				      <li><a href="A_ProductView.do">SHOP</a></li>
-				      <li><a href="#">ANJLIFE</a></li>
-				      <li><a href="#">COMMUNITY</a></li>
-				      <li><a href="#">NOTICE</a></li>
-				      <li>	<form action="A_ProductView.do" class="center" method="get">
-						<select name="query">
-							<option value="pname" selected="selected">Product</option>
-							<option value="pprice">price</option>
-						</select> 
-						      <input type="text" name="content" size="60"> 
-							  <input type="submit" value="serach"> </li>
-				      <li class="right-align">
-				        <button class="btn-login">Abandoned dog</button>
-				        <button class="btn-login">Login</button>
-				        <button class="btn-new">New</button>
-				      </li>
-				    </ul>
-				  </nav>
-				</header>
-				<br><br><br><br/><hr>
- -->
 
 			 <header>
 		        <div class="head-wrap">
@@ -61,7 +34,7 @@ $(function(){
 		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
 		            	</div>
 		           	 <div class="head-wrap-sub">
-		           	  <h3>ANJ PET SHOP</h3>
+		           	    <h3 class="shop-name">ANJ PET SHOP</h3>
 		                <nav class="head-menu-main-nav">
 		                    <ul>
 		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
@@ -168,7 +141,7 @@ $(function(){
 			
   				<!-- (1) 전체상품 목록 데이터 베이스 가져오기  ------------------------------------------>
 				
-		<%-- 		<hr>
+				<%-- 		<hr>
 				<h1 style="text-align: center; color: #477A7B;">ALL Product</h1>
 					
 						<div class="product-grid">
