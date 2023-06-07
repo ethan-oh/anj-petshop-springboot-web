@@ -5,10 +5,10 @@ public class O_QnaDto {
 	// Field
 	int seq;
 	String category;
-	String question;
-	String answer;
-	String q_date;
-	String a_date;
+	String qna_title;
+	String qna_content;
+	int parentseq;
+	String writedate;
 	String userid;
 	String adminid;
 	
@@ -17,19 +17,19 @@ public class O_QnaDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public O_QnaDto(int seq, String category, String question, String answer, String q_date, String a_date,
+	public O_QnaDto(int seq, String category, String qna_title, String qna_content, int parentseq, String writedate,
 			String userid, String adminid) {
 		super();
 		this.seq = seq;
 		this.category = category;
-		this.question = question;
-		this.answer = answer;
-		this.q_date = q_date;
-		this.a_date = a_date;
+		this.qna_title = qna_title;
+		this.qna_content = qna_content;
+		this.parentseq = parentseq;
+		this.writedate = writedate;
 		this.userid = userid;
 		this.adminid = adminid;
 	}
-	
+
 	// Getter And Setter
 	public int getSeq() {
 		return seq;
@@ -47,36 +47,36 @@ public class O_QnaDto {
 		this.category = category;
 	}
 
-	public String getQuestion() {
-		return question;
+	public String getQna_title() {
+		return qna_title;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
+	public void setQna_title(String qna_title) {
+		this.qna_title = qna_title;
 	}
 
-	public String getAnswer() {
-		return answer;
+	public String getQna_content() {
+		return qna_content;
 	}
 
-	public void setAnswer(String answer) {
-		this.answer = answer;
+	public void setQna_content(String qna_content) {
+		this.qna_content = qna_content;
 	}
 
-	public String getQ_date() {
-		return q_date;
+	public String getWritedate() {
+		return writedate;
 	}
 
-	public void setQ_date(String q_date) {
-		this.q_date = q_date;
+	public void setWritedate(String writedate) {
+		this.writedate = writedate;
 	}
 
-	public String getA_date() {
-		return a_date;
+	public int getParentseq() {
+		return parentseq;
 	}
 
-	public void setA_date(String a_date) {
-		this.a_date = a_date;
+	public void setParentseq(int parentseq) {
+		this.parentseq = parentseq;
 	}
 
 	public String getUserid() {

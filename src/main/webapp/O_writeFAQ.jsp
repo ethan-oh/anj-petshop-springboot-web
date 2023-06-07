@@ -97,7 +97,7 @@
 
 	<div class="page-title" style="background-color: #DFE9E8;">
 		<br><br><br>
-		<h3>CUMMUNITY</h3>
+		<h3>COMMUNITY</h3>
 		<br><br>
 			<a href="O_Notice.do">NOTICE</a> 
 			<span class="selected"><a href="O_FAQ.do">FAQ</a></span>

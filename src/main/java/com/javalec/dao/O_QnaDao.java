@@ -3,6 +3,7 @@ package com.javalec.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,9 +80,9 @@ public class O_QnaDao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query1 = "select * from qna where ";
+			String query1 = "select * from qna where  ";
 			String query2 = queryName + " like '%" + queryContent + "%'";
-			String query3 = " order by q_date desc limit " + itemPerPage + " offset " + startNum + ";";
+			String query3 = " order by parentseq desc limit " + itemPerPage + " offset " + startNum + ";";
 			ps = connection.prepareStatement(query1 + query2 + query3);
 			rs = ps.executeQuery();
 			
@@ -89,17 +90,16 @@ public class O_QnaDao {
 			while(rs.next()) {
 				int seq = rs.getInt("seq");
 				String category = rs.getString("category");
-				String question = rs.getString("question");
-				String answer = rs.getString("question");
-				Timestamp tmp_q_date  = rs.getTimestamp("q_date");
-				Timestamp tmp_a_date  = rs.getTimestamp("a_date");
+				String qna_title = rs.getString("qna_title");
+				String qna_content = rs.getString("qna_content");
+				int parentseq = rs.getInt("parentseq");
+				Timestamp tmp_writedate  = rs.getTimestamp("writedate");
 				String userid = rs.getString("userid");
 				String adminid  = rs.getString("adminid");
 				
-				String q_date = format.format(tmp_q_date);
-				String a_date = format.format(tmp_a_date);
+				String writedate = format.format(tmp_writedate);
 				
-				O_QnaDto dto = new O_QnaDto(seq, category, question, answer, q_date, a_date, userid, adminid);
+				O_QnaDto dto = new O_QnaDto(seq, category, qna_title, qna_content, parentseq, writedate, userid, adminid);
 				dtos.add(dto);
 			}
 			
@@ -117,5 +117,99 @@ public class O_QnaDao {
 		}
 		return dtos;
 	}
+	
+	public O_QnaDto getQnaDetail(int nSeq){
+
+		O_QnaDto dto = null;
+		
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "select * from qna where seq = " + nSeq;
+			ps = connection.prepareStatement(query);
+			rs = ps.executeQuery();
+			
+			
+			if(rs.next()) {
+				int seq = rs.getInt("seq");
+				String category = rs.getString("category");
+				String qna_title = rs.getString("qna_title");
+				String qna_content = rs.getString("qna_content");
+				int parentseq = rs.getInt("parentseq");
+				Timestamp tmp_writedate  = rs.getTimestamp("writedate");
+				String userid = rs.getString("userid");
+				String adminid  = rs.getString("adminid");
+				
+				String writedate = format.format(tmp_writedate);
+				
+				dto = new O_QnaDto(seq, category, qna_title, qna_content, parentseq, writedate, userid, adminid);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dto;
+	}
+	
+	public void writeQnA(String category, String title, String content, String userid, String adminid) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "INSERT INTO qna (category, qna_title, qna_content, writedate, userid, adminid) "
+					+ "VALUES (?, ?, ?, NOW(), ?, ?)"; // parentseq를 제외한 데이터들을 입력해준다.
+			ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); // ai로 자동생성된 seq값을 받아온다.
+			
+			ps.setString(1, category);
+			ps.setString(2, title);
+			ps.setString(3, content);
+			ps.setString(4, userid);
+			ps.setString(5, adminid);
+			
+			ps.executeUpdate();
+			
+			rs = ps.getGeneratedKeys(); // 방금 insert된 데이터를 들고온다.
+			int seq = 0; // seq 초기화
+			if (rs.next()) {
+				seq = rs.getInt(1); // 방금 insert된 로우의 seq값을 가져온다.
+			}
+			
+			ps.close();
+			
+			String query2 = "UPDATE qna SET parentseq = ? WHERE seq = ?";
+			ps = connection.prepareStatement(query2);
+			ps.setInt(1, seq);
+			ps.setInt(2, seq);
+			
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (ps != null) ps.close();
+				if (connection != null) connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // writeQnA
 	
 }

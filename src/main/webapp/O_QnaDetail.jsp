@@ -16,7 +16,7 @@
 
 <script type="text/javascript">
 	function updateCheck(){
-		const form = document.NDetail
+		const form = document.QnaDetail
 		const n_title = form.n_title.value
 		const n_content = form.n_content.value
 		
@@ -29,17 +29,17 @@
 			return
 		}
 		if(confirm("수정하시겠습니까?") == true){
-		form.action = "O_updateNotice.do";
+		form.action = "O_updateQnA.do";
 		form.submit();
 		}
 	}
 	
 	function deleteCheck(){
-		const form = document.NDetail
+		const form = document.QnaDetail
 		
 		if(confirm("정말 삭제하시겠습니까?") == true){
-			const form = document.NDetail
-			form.action = "O_changeNoticeStatus.do";
+			const form = document.QnaDetail
+			form.action = "O_deleteQnA.do";
 			form.submit();
 			}
 	}
@@ -65,10 +65,10 @@
 		<br><br><br>
 		<h3>COMMUNITY</h3>
 		<br><br>
-			<a href="O_Notice.do">NOTICE</a> 
+			<a href="O_Notice.do">NOTICE</a>
 			<a href="O_FAQ.do">FAQ</a> 
-			<a href="O_QNA.do">Q&A</a> 
-			<a href="O_FAQ.do">REVIEW</a> 
+			<span class="selected"><a href="O_QNA.do">Q&A</a></span>
+			<a href="O_FAQ.do">REVIEW</a>
 		<br><br>
 	</div>
 	<div class="page-title">
@@ -77,14 +77,14 @@
 
 	<!-- board list area -->
 	<div class="container">
-		<form name="NDetail" method="post"> <!-- 유저용에서는 이 폼태그 빼고 제목을 input타입 빼고 그냥 적기, textarea readonly 속성 넣어주기 -->
+		<form name="QnaDetail" method="post"> <!-- 유저용에서는 이 폼태그 빼고 제목을 input타입 빼고 그냥 적기, textarea readonly 속성 넣어주기 -->
 			<input type="hidden" name="status" value="1">
 			<input type="hidden" name="seq" value="${seq }">
 			<table class="board-table">
 				<thead>
 					<tr>
 						<th class="th-wnum">제목</th>
-						<th scope="col" colspan="3"><input type="text" name="n_title" value="${NDetail.n_title}"></th>
+						<th scope="col" colspan="3"><input type="text" name="qna_title" value="${qnaDetail.qna_title}"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -94,16 +94,16 @@
 					</tr>
 					<tr>
 						<td scope="col" class="th-wnum">작성일</td>
-						<td scope="col" class="th-left">${NDetail.writedate}</td>
+						<td scope="col" class="th-left">${qnaDetail.writedate}</td>
 					</tr>
 					<tr>
 						<td>내용</td>
 						<td>
-							<textarea rows="25" cols="109" wrap="hard" name="n_content"><c:out value="${NDetail.n_content}" /></textarea>
+							<textarea rows="25" cols="109" wrap="hard" name="qna_content"><c:out value="${qnaDetail.qna_content}" /></textarea>
 						</td>
 					</tr>
 					<tr>
-						<td class="th-wnum"><span class="list-button"><a href="O_Notice.do">목록</a></span></td>
+						<td class="th-wnum"><span class="list-button"><a href="O_QNA.do">목록</a></span></td>
 						<td class="th-right">
 							<input type="submit" class="list-button" value="수정" onclick="updateCheck()">
 							<input type="submit" class="list-button" value="삭제" onclick="deleteCheck()">

@@ -18,7 +18,7 @@ public class O_getQnaCommand implements Acommand {
 		// TODO Auto-generated method stub
 		O_QnaDao dao = new O_QnaDao();
 		
-		int itemsPerPage = 3; // 한 페이지당 출력할 게시글 수
+		int itemsPerPage = 10; // 한 페이지당 출력할 게시글 수
 		// O_Notice.do에서 page값을 전달하지 않았을 때는 default로 1로 세팅해주기 위한 3항 연산자
 		int currentPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
 		int totalCount = dao.getQnaCount(); // 전체 게시물 수 검색
@@ -38,6 +38,8 @@ public class O_getQnaCommand implements Acommand {
 		
 		String queryName = request.getParameter("query");
 		String queryContent = request.getParameter("content");
+		System.out.println("queryName: " + queryName);
+		System.out.println("queryContent: " + queryContent);
 		
 		ArrayList<O_QnaDto> dtos = dao.getQnaList(queryName, queryContent, startIndex, itemsPerPage); // 검색결과 불러와 저장
 		
