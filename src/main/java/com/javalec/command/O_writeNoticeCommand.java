@@ -1,23 +1,26 @@
 package com.javalec.command;
 
+import java.awt.TextArea;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javalec.dao.O_NoticeDao;
-import com.javalec.dto.O_NoticeDto;
 
-public class O_getNDetailCommand implements Acommand {
+public class O_writeNoticeCommand implements Acommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		int seq = Integer.parseInt(request.getParameter("seq"));
-		
 		O_NoticeDao dao = new O_NoticeDao();
-		O_NoticeDto dto = dao.getNoticeDetail(seq);
+		String adminid = request.getParameter("adminid");
+		String n_title = request.getParameter("n_title");
+		String n_content = request.getParameter("n_content");
 		
-		request.setAttribute("NDetail", dto);
-		request.setAttribute("seq", seq);
+		// textArea로 저장된 값에서 
+		
+		dao.writeNotice(adminid, n_title, n_content);
+		
 	}
 
 }

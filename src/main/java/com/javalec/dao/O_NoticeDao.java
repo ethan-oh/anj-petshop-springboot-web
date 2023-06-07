@@ -41,7 +41,7 @@ public class O_NoticeDao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select count(*) from notice where isdelete = 0";
+			String query = "select count(*) from notice where category = '공지' and isdelete = 0";
 			ps = connection.prepareStatement(query);
 			rs = ps.executeQuery();
 			
@@ -65,19 +65,26 @@ public class O_NoticeDao {
 		return count;
 	}
 	
-	public ArrayList<O_NoticeDto> getNoticeList(int startNum, int itemPerPage){
+	public ArrayList<O_NoticeDto> getNoticeList(String queryName, String queryContent, int startNum, int itemPerPage){
 		ArrayList<O_NoticeDto> dtos = new ArrayList<>();
 
+		if(queryName == null){ // 화면이 처음 열릴 때
+			queryName = "n_title";
+			queryContent = "";
+		}
+		
 		Connection connection = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd HH:mm");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from notice where isdelete = 0 order by writedate limit " + itemPerPage + " offset " + startNum;
-			ps = connection.prepareStatement(query);
+			String query1 = "select * from notice where isdelete = 0 and category = '공지'";
+			String query2 = " and " + queryName + " like '%" + queryContent + "%'";
+			String query3 = " order by writedate desc limit " + itemPerPage + " offset " + startNum + ";";
+			ps = connection.prepareStatement(query1 + query2 + query3);
 			rs = ps.executeQuery();
 			
 			
@@ -87,13 +94,10 @@ public class O_NoticeDao {
 				String n_title = rs.getString(4);
 				String n_content = rs.getString(5);
 				Timestamp tmp_writedate = rs.getTimestamp(6);
-				Timestamp tmp_modifydate = rs.getTimestamp(7);
-				int isdelete = rs.getInt(8);
 				
 				String writedate = format.format(tmp_writedate);
-				String modifydate = format.format(tmp_modifydate);
 				
-				O_NoticeDto dto = new O_NoticeDto(seq, adminid, n_title, n_content, writedate, modifydate, isdelete);
+				O_NoticeDto dto = new O_NoticeDto(seq, adminid, n_title, n_content, writedate);
 				dtos.add(dto);
 			}
 			
@@ -120,28 +124,23 @@ public class O_NoticeDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd HH:mm");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from notice where seq = " + nSeq;
+			String query = "select n_title, n_content, writedate from notice where seq = " + nSeq;
 			ps = connection.prepareStatement(query);
 			rs = ps.executeQuery();
 			
 			
 			if(rs.next()) {
-				int seq = rs.getInt(1);
-				String adminid = rs.getString(2);
-				String n_title = rs.getString(3);
-				String n_content = rs.getString(4);
-				Timestamp tmp_writedate = rs.getTimestamp(5);
-				Timestamp tmp_modifydate = rs.getTimestamp(6);
-				int isdelete = rs.getInt(7);
+				String n_title = rs.getString(1);
+				String n_content = rs.getString(2);
+				Timestamp tmp_writedate = rs.getTimestamp(3);
 				
 				String writedate = format.format(tmp_writedate);
-				String modifydate = format.format(tmp_modifydate);
 				
-				dto = new O_NoticeDto(seq, adminid, n_title, n_content, writedate, modifydate, isdelete);
+				dto = new O_NoticeDto(n_title, n_content, writedate);
 			}
 			
 		}catch (Exception e) {
@@ -158,5 +157,203 @@ public class O_NoticeDao {
 		}
 		return dto;
 	}
+	
+	public ArrayList<O_NoticeDto> getFAQList(){
+		ArrayList<O_NoticeDto> dtos = new ArrayList<>();
 
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "select * from notice where isdelete = 0 and category = 'FAQ' order by n_title;";
+			ps = connection.prepareStatement(query);
+			rs = ps.executeQuery();
+			
+			
+			while(rs.next()) {
+				int seq = rs.getInt(1);
+				String n_title = rs.getString("n_title");
+				String n_content = rs.getString("n_content");
+				int isdelete = rs.getInt("isdelete");
+				
+				O_NoticeDto dto = new O_NoticeDto(seq, n_title, n_content, isdelete);
+				dtos.add(dto);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dtos;
+	} // getFAQList
+	
+	public ArrayList<O_NoticeDto> getDeletedFAQList(){
+		ArrayList<O_NoticeDto> dtos = new ArrayList<>();
+
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "select * from notice where isdelete = 1 and category = 'FAQ' order by n_title;";
+			ps = connection.prepareStatement(query);
+			rs = ps.executeQuery();
+			
+			
+			while(rs.next()) {
+				int seq = rs.getInt(1);
+				String n_title = rs.getString("n_title");
+				String n_content = rs.getString("n_content");
+				int isdelete = rs.getInt("isdelete");
+				
+				O_NoticeDto dto = new O_NoticeDto(seq, n_title, n_content, isdelete);
+				dtos.add(dto);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dtos;
+	} // getDeletedFAQList
+
+	public void writeNotice(String adminid, String n_title, String n_content) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "insert into notice (adminid, category, n_title, n_content, writedate, isdelete)"
+							+ "values (?,'공지',?,?,now(),0)";
+			ps = connection.prepareStatement(query);
+			
+			ps.setString(1, adminid);
+			ps.setString(2, n_title);
+			ps.setString(3, n_content);
+			
+			ps.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // writeNotice
+	
+	public void updateNotice(int seq, String n_title, String n_content) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "update notice set n_title = ?, n_content = ?, writedate = now() where seq = ?";
+			preparedStatement = connection.prepareStatement(query);
+			
+			preparedStatement.setString(1, n_title);
+			preparedStatement.setString(2, n_content);
+			preparedStatement.setInt(3, seq);
+
+			preparedStatement.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // deleteFAQ
+	
+	public void writeFAQ(String adminid, String n_title, String n_content) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "insert into notice (adminid, category, n_title, n_content, writedate, isdelete)"
+					+ "values (?,'FAQ',?,?,now(),0)";
+			ps = connection.prepareStatement(query);
+			
+			ps.setString(1, adminid);
+			ps.setString(2, n_title);
+			ps.setString(3, n_content);
+			
+			ps.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // writeNotice
+	
+	public void changeFAQStatus(int seq, int status) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "update notice set isdelete = ? where seq = ?";
+			preparedStatement = connection.prepareStatement(query);
+			
+			preparedStatement.setInt(1, status);
+			preparedStatement.setInt(2, seq);
+
+			preparedStatement.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // deleteFAQ
 }

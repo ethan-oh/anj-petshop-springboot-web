@@ -15,8 +15,8 @@
 <script src="JS/O_ScrollTop.js"></script>
 
 <script type="text/javascript">
-	function updateCheck(){
-		const form = document.NDetail
+	function writeCheck(){
+		const form = document.writeNotice
 		const n_title = form.n_title.value
 		const n_content = form.n_content.value
 		
@@ -28,23 +28,10 @@
 			alert("내용을 입력해 주세요.")
 			return
 		}
-		if(confirm("수정하시겠습니까?") == true){
-		form.action = "O_updateNotice.do";
-		form.submit();
-		}
-	}
-	
-	function deleteCheck(){
-		const form = document.NDetail
-		
-		if(confirm("정말 삭제하시겠습니까?") == true){
-			const form = document.NDetail
-			form.action = "O_changeNoticeStatus.do";
-			form.submit();
-			}
+		form.action = "O_writeNotice.do";
+		document.productinfo.submit();
 	}
 </script>
-
 </head>
 <body>
 	<header>
@@ -60,7 +47,7 @@
 			</ul>
 		</nav>
 	</header>
-	<!-- ---------------------- -->
+	<!----------------------------------------------------------------------------------------------------->
 	<div class="page-title" style="background-color: #DFE9E8;">
 		<br><br><br>
 		<h3>CUMMUNITY</h3>
@@ -71,51 +58,40 @@
 			<a href="O_FAQ.do">REVIEW</a> 
 		<br><br>
 	</div>
-	<div class="page-title">
-		<h4>공지사항 상세</h4>
-	</div>
 
+	<div class="page-title">
+		<h4>공지사항 등록</h4>
+	</div>
 	<!-- board list area -->
 	<div class="container">
-		<form name="NDetail" method="post"> <!-- 유저용에서는 이 폼태그 빼고 제목을 input타입 빼고 그냥 적기, textarea readonly 속성 넣어주기 -->
-			<input type="hidden" name="status" value="1">
-			<input type="hidden" name="seq" value="${seq }">
+		<form name="writeNotice" method="post">
+			<input type="hidden" name="adminid" value="admin">
 			<table class="board-table">
 				<thead>
 					<tr>
-						<th class="th-wnum">제목</th>
-						<th scope="col" colspan="3"><input type="text" name="n_title" value="${NDetail.n_title}"></th>
+						<th scope="col" class="th-wnum">제목</th>
+						<th scope="col" class="th-left"><input type="text" name="n_title" placeholder="제목을 입력하세요."></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class="th-wnum">구분</td>
-						<td scope="col" class="th-left">공지</td>
+						<td class="th-wnum">작성자</td>
+						<td scope="col" class="th-left">admin</td> <!-- 나중에 로그인한 관리자의 세션으로 받아오기 -->
 					</tr>
 					<tr>
-						<td scope="col" class="th-wnum">작성일</td>
-						<td scope="col" class="th-left">${NDetail.writedate}</td>
-					</tr>
-					<tr>
-						<td>내용</td>
-						<td>
-							<textarea rows="25" cols="109" wrap="hard" name="n_content"><c:out value="${NDetail.n_content}" /></textarea>
-						</td>
+						<td class="th-wnum">내용</td>
+						<td class="th-left"><textarea rows="25" cols="102" wrap="hard" name="n_content" placeholder="내용을 입력하세요."></textarea></td>
 					</tr>
 					<tr>
 						<td class="th-wnum"><span class="list-button"><a href="O_Notice.do">목록</a></span></td>
-						<td class="th-right">
-							<input type="submit" class="list-button" value="수정" onclick="updateCheck()">
-							<input type="submit" class="list-button" value="삭제" onclick="deleteCheck()">
-						</td>
+						<td class="th-right"><input type="submit" class="list-button" value="등록" onclick="writeCheck()"></td>
 					</tr>
 				</tbody>
 			</table>
 		</form>
 	</div>
-	
 	<button class="top-button" onclick="scrollToTop()">top</button>
-	
+	<!----------------------------------------------------------------------------------------------------->
 	<footer>
 		<ul>
 			<li><a href="#">Brand Story</a></li>

@@ -4,20 +4,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javalec.dao.O_NoticeDao;
-import com.javalec.dto.O_NoticeDto;
 
-public class O_getNDetailCommand implements Acommand {
+public class O_writeFAQCommand implements Acommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		int seq = Integer.parseInt(request.getParameter("seq"));
+		String adminid = request.getParameter("adminid");
+		String qCategory = request.getParameter("qCategory");
+		String n_title = request.getParameter("n_title");
+		String n_content = request.getParameter("n_content");
 		
 		O_NoticeDao dao = new O_NoticeDao();
-		O_NoticeDto dto = dao.getNoticeDetail(seq);
 		
-		request.setAttribute("NDetail", dto);
-		request.setAttribute("seq", seq);
+		dao.writeFAQ(adminid, qCategory + " " + n_title, n_content);
+		
+		
 	}
 
 }

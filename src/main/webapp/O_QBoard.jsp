@@ -34,15 +34,15 @@
 		<br><br><br>
 		<h3>CUMMUNITY</h3>
 		<br><br>
-			<span class="selected"><a href="O_Notice.do">NOTICE</a></span>
+			<a href="O_Notice.do">NOTICE</a>
 			<a href="O_FAQ.do">FAQ</a> 
-			<a href="O_QNA.do">Q&A</a> 
+			<span class="selected"><a href="O_FAQ.do">Q&A</a></span>
 			<a href="O_FAQ.do">REVIEW</a> 
 		<br><br>
 	</div>
 
 	<div class="page-title">
-		<h4>공지사항</h4>
+		<h4>QnA 게시판</h4>
 	</div>
 	<!-- board seach area -->
 	<div id="board-search">
@@ -87,7 +87,7 @@
 	</div>
 	<div class="container" style="text-align: right;">
 		<br>
-		<span class="list-button" ><a href="O_writeNoticeView.do">글쓰기</a></span>
+		<span class="list-button" ><a href="O_WriteNoticeView.do">글쓰기</a></span>
 	</div>
 
 	<div class="container pagination" style="text-align: center;">

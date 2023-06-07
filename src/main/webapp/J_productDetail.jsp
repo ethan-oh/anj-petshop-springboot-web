@@ -54,8 +54,8 @@
 				<input type="button" onclick="clickPlus()" value=" + " style="font-size: 23px; color: #477A7B; background-color: #DFE9E8; border: none; ">
 				<input type="button" onclick="resetSelection()" value="♺" style="font-size: 19px; color: #477A7B; background-color: #DFE9E8; border: none; ">
 				<h3 style="text-align: right;">TOTAL </h3>
-				<h3 style="text-align: right;"> <span id="resultPrice">${productDetail.pprice } 원</span></h3>
-				<h5 style="text-align: right;"> <span id="resultRewards"><%-- (적립금 : + <%=Integer.parseInt(${productDetail.pprice})*0.01%> 원) --%></span></h5>
+				<h3 style="text-align: right;"> <span id="resultPrice"><fmt:formatNumber value="${productDetail.pprice }" pattern="#,###" /> 원</span></h3>
+				<h5 style="text-align: right;"> <span id="resultRewards"> (적립금 : + ${productDetail.pprice * 0.01 } 원) </span></h5>
 				<div style="display: flex;">
 					<form action="<!-- 태영이 장바구니 넘기기.do -->" name="basket" method="get" style="display: inline; width: 50%;">
 						<input type="hidden" name="userid" value="<%=USERID%>">
@@ -76,6 +76,7 @@
 				<img alt="제품 사진을 준비 중 입니다." src="${pdExplain.p_filename3 }"><br/>
 				<img alt="제품 사진을 준비 중 입니다." src="${pdExplain.p_filename4 }"><br/>
 				<img alt="제품 사진을 준비 중 입니다." src="${pdExplain.p_filename5 }"><br/>
+				
 			</div>
 			
 			<!-- 고정된 구매하기 버튼 --><%-- 
