@@ -19,6 +19,9 @@ import com.javalec.command.O_getNoticeCommand;
 import com.javalec.command.T_cartlistCommnd;
 import com.javalec.command.T_purchaseCommand;
 import com.javalec.command.T_userinfoCommand;
+import com.javalec.command.W_ProductInsertCommand;
+import com.javalec.command.W_ProductUpdataActionCommand;
+import com.javalec.command.W_ProductUpdateCommand;
 import com.javalec.dao.T_Dao;
 
 /**
@@ -140,6 +143,21 @@ public class Controller extends HttpServlet {
 				}
 			}
 			viewPage = "T_purchase.jsp";
+			break;
+		case ("/W_ProductUpdate.do"):
+			command = new W_ProductUpdateCommand();
+			command.execute(request, response);
+			viewPage = "W_ProductUpdate.jsp";
+			break;
+		case ("/W_ProductInsert.do"):
+			command = new W_ProductInsertCommand();
+			command.execute(request, response);
+			viewPage = "W_ProductInsert.jsp";
+			break;
+		case ("/W_ProductUpdataAction.do"):
+			command = new W_ProductUpdataActionCommand();
+			command.execute(request, response);
+			viewPage = "W_ProductList.jsp";
 			break;
 		}
 
