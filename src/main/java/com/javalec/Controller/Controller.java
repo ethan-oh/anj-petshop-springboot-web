@@ -14,6 +14,7 @@ import com.javalec.command.A_ProductCommand;
 import com.javalec.command.Acommand;
 import com.javalec.command.J_PDExplainCommand;
 import com.javalec.command.J_PDetailCommand;
+import com.javalec.command.J_userOrderCommand;
 import com.javalec.command.O_getNDetailCommand;
 import com.javalec.command.O_getNoticeCommand;
 import com.javalec.command.T_cartlistCommnd;
@@ -47,7 +48,6 @@ public class Controller extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		actionDo(request, response);
-		System.out.println("요긴가??");
 	}
 
 	/**
@@ -58,7 +58,6 @@ public class Controller extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		actionDo(request, response);
-		System.out.println("아니면 여긴가!");
 	}
 
 	private void actionDo(HttpServletRequest request, HttpServletResponse response)
@@ -95,6 +94,13 @@ public class Controller extends HttpServlet {
 			command1.execute(request, response);
 			viewPage = "J_productDetail.jsp"; // 제품 상세 페이지 보여주기
 			break;
+			
+		case ("/j_userPage.do") : 
+			command = new J_userOrderCommand();
+			command.execute(request, response);
+			viewPage = "J_userMyPage.jsp";
+			break;
+			
 		case ("/O_Notice.do"):
 			command = new O_getNoticeCommand();
 			command.execute(request, response);

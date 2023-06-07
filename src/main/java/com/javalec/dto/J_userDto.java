@@ -7,26 +7,38 @@ public class J_userDto {		// user table dto
 	String userpasswd;
 	String username;
 	String usertel;
-	String usermail;
+	String useremail;
 	String userpostcode;
 	String useraddress;
-	int point; 		// 사용자가 사용 가능한 적립금
+	String userdetailaddress;
+	int mileage; 		// 사용자가 사용 가능한 적립금
+	int usedmileage; 		// 사용자가 사용 완료한 적립금
 	
 	public J_userDto() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public J_userDto(String userid, String userpasswd, String username, String usertel, String usermail,
-			String userpostcode, String useraddress, int point) {
+	public J_userDto(String userid, String userpasswd, String username, String usertel, String useremail,
+			String userpostcode, String useraddress, String userdetailaddress, int mileage, int usedmileage) {
 		super();
 		this.userid = userid;
 		this.userpasswd = userpasswd;
 		this.username = username;
 		this.usertel = usertel;
-		this.usermail = usermail;
+		this.useremail = useremail;
 		this.userpostcode = userpostcode;
 		this.useraddress = useraddress;
-		this.point = point;
+		this.userdetailaddress = userdetailaddress;
+		this.mileage = mileage;
+		this.usedmileage = usedmileage;
+	}
+	
+	// 4. user 테이블에서 사용 가능한 적립금과 사용한 적립금 띄워주기
+	public J_userDto(String userid, int mileage, int usedmileage) {
+		super();
+		this.userid = userid;
+		this.mileage = mileage;
+		this.usedmileage = usedmileage;
 	}
 
 	public String getUserid() {
@@ -61,12 +73,12 @@ public class J_userDto {		// user table dto
 		this.usertel = usertel;
 	}
 
-	public String getUsermail() {
-		return usermail;
+	public String getUseremail() {
+		return useremail;
 	}
 
-	public void setUsermail(String usermail) {
-		this.usermail = usermail;
+	public void setUseremail(String useremail) {
+		this.useremail = useremail;
 	}
 
 	public String getUserpostcode() {
@@ -85,17 +97,30 @@ public class J_userDto {		// user table dto
 		this.useraddress = useraddress;
 	}
 
-	public int getPoint() {
-		return point;
+	public String getUserdetailaddress() {
+		return userdetailaddress;
 	}
 
-	public void setPoint(int point) {
-		this.point = point;
+	public void setUserdetailaddress(String userdetailaddress) {
+		this.userdetailaddress = userdetailaddress;
+	}
+
+	public int getMileage() {
+		return mileage;
+	}
+
+	public void setMileage(int mileage) {
+		this.mileage = mileage;
+	}
+
+	public int getUsedmileage() {
+		return usedmileage;
+	}
+
+	public void setUsedmileage(int usedmileage) {
+		this.usedmileage = usedmileage;
 	}
 	
 	
 	
-	
-
-
 }

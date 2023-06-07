@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,7 @@
 </head>
 <body>
 
-	<header>
+<!-- 	<header>
 	  <nav>
 	    <ul>
 	      <li><a href="A_MainView.do"><img src="LOGO.png" alt="logo"></a></li>
@@ -23,7 +24,7 @@
 	    </ul>
 	  </nav>
 	</header>
-	<br/><br/><br/><br/><br/>
+	<br/><br/><br/><br/><br/> -->
 	
 
 	<main class="main">
@@ -34,17 +35,20 @@
 	<div class="userExpense"> 		<!-- 사용자 마일리지 및 총 구매 금액 보여주는 테이블 -->
 		<table class="mileage">
 			<tr>
+				<td> 사용 가능하신 적립금 	<!-- 총 제품 구매 적립금 - 사용한 적립금 --> </td>
+				<td><fmt:formatNumber value="${userMileage.mileage }" pattern="#,###" /> 원 
+				<input type="button" value="조회"> </td>		<!-- **버튼 누르면 조회페이지로 넘어가도록!!! -->
+				<td> 총 제품구매 적립금	<!-- 모든 적립금 내역들의 합계 --> </td>
+				<td><fmt:formatNumber value="${orderMileage.totalMileage}" pattern="#,###" /> 원 </td>
+				
+			</tr>
+			<tr>
+				<td> 사용하신 적립금 </td>
+				<td> <fmt:formatNumber value="${userMileage.usedmileage }" pattern="#,###" /> 원 </td>
+				<td> 총 주문 금액  </td>
 				<td>
-				사용 가능하신 적립금 	<!-- 총 제품 구매 적립금 - 사용 제품 구매 적립금 -->&nbsp;&nbsp;&nbsp;
-				${userPage.point } 원 &nbsp;&nbsp;&nbsp;
-				<input type="button" value="조회"> <br/><br/>			<!-- **버튼 누르면 조회페이지로 넘어가도록!!! -->
-				사용하신 적립금 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				($$$$) 원 
-				</td>
-				<td>
-				총 제품구매 적립금   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	<!-- 모든 적립금 내역들의 합계 -->
-				($$$$) 원 &nbsp;&nbsp;&nbsp; <br/><br/>
-				총 주문 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ($$$$$)원 ($회)
+				<fmt:formatNumber value="${orderMileage.totalPrice}" pattern="#,###" /> 원
+				(<fmt:formatNumber value="${orderMileage.ordercount}" pattern="#,###" />회)
 				</td>
 			</tr>
 		</table>

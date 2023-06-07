@@ -113,8 +113,10 @@ public class J_Dao {
 		
 	}
 	
-	// 3. 샤용자 페이지 - 주문 정보 테이블의 데이터들 불러오기 : 유저아이디로, 사용 적립금 내역들 띄워주기 
-	public J_userOrderDto userOrderView (String getUserid) { 		// have to modify SQL query!!
+	//------------------- userPage(order, user table) ---------------------------
+	
+	// 3. order 테이블의 데이터들 불러오기 : 유저아이디로 총 적립금, 총 구매 금액, 총 구매 횟수 띄워주기 
+	public J_userOrderDto userOrderMileage (String getUserid) { 		
 		J_userOrderDto dto = null;
 		
 		Connection connection = null;
@@ -123,26 +125,19 @@ public class J_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from orders where userid = '" + getUserid + "'";
+			String query = "select userid, count(orderseq) as ordercount, cast(sum(orderprice)*0.01 as unsigned) as total_Mileage, sum(orderprice) as total_Price "
+					+ " from orders where userid = '" + getUserid + "' group by userid";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) { 		// db에서 한 줄에 있는 데이터를 열마다 분리해서 할당하는 과정.
-				String ordernum = resultSet.getString("ordernum");
-				int count = resultSet.getInt("count");
-				int orderprice = resultSet.getInt("orderpricef");
-				String username = resultSet.getString("username");
-				String userrpostcode = resultSet.getString("userpostcode");
-				String shipaddress = resultSet.getString("shipaddress");
-				String usertel = resultSet.getString("usertel");
 				String userid = resultSet.getString("userid");
-				String pid = resultSet.getString("pid");
-				String ordermessage = resultSet.getString("ordermessage");
-				String payment = resultSet.getString("payment");
-				int point = resultSet.getInt("point");
+				int ordercount = resultSet.getInt("ordercount");
+				int totalMileage = resultSet.getInt("total_Mileage");
+				int totalPrice = resultSet.getInt("total_Price");
 				
-				dto = new J_userOrderDto(ordernum, count, orderprice, username, userrpostcode, shipaddress, usertel, userid, pid, ordermessage, payment, point);
-				
+				dto = new J_userOrderDto(userid, ordercount, totalMileage, totalPrice);
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -160,9 +155,8 @@ public class J_Dao {
 		
 	}
 	
-	
-	// 4. 샤용자 페이지 - user 정보 테이블의 데이터들 불러오기 : 유저아이디로, 총 적립금 및 사용 가능 적립금, 내역들 띄워주기 
-	public J_userDto userInfo (String getUserid) {
+	// 4. user 테이블의 데이터들 불러오기 : 유저아이디로  사용 가능 적립금, 적립금 사용 내역들 띄워주기 
+	public J_userDto userMileage (String getUserid) {
 		J_userDto dto = null;
 		
 		Connection connection = null;
@@ -171,26 +165,21 @@ public class J_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from user where userid = '" + getUserid + "'";
+			String query = "select userid, sum(mileage) as 'availableMilage', sum(usedmileage) as 'usedMileage'"
+					+ " from user where userid = '" + getUserid + "' group by userid";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) { 		// db에서 한 줄에 있는 데이터를 열마다 분리해서 할당하는 과정.
 				String userid = resultSet.getString("userid");
-				String userpasswd = resultSet.getString("userpasswd");
-				String username = resultSet.getString("username");
-				String usertel = resultSet.getString("usertel");
-				String useremail = resultSet.getString("useremail");
-				String userrpostcode = resultSet.getString("userpostcode");
-				String useraddress = resultSet.getString("useraddress");
-				int point = resultSet.getInt("point");
+				int mileage = resultSet.getInt("availableMilage");
+				int usedmileage = resultSet.getInt("usedMileage");
 				
-				String pid = resultSet.getString("pid");
-				String ordermessage = resultSet.getString("ordermessage");
-				String payment = resultSet.getString("payment");
-				int point = resultSet.getInt("point");
 				
-				dto = new J_userOrderDto(ordernum, count, orderprice, username, userrpostcode, shipaddress, usertel, userid, pid, ordermessage, payment, point);
+				dto = new J_userDto(userid, mileage, usedmileage);
+				System.out.println("유저아이디 : " + userid);
+				System.out.println("사용가능한 마일리지 : " + mileage);
+				System.out.println("사용한 마일리지 : " + usedmileage);
 				
 			}
 		} catch (Exception e) {
@@ -209,7 +198,59 @@ public class J_Dao {
 		
 	}
 		
-		
+			
+	
+	
+//	// 5. 사용자 페이지 - 구매 내역 리스트 : 조회버튼 클릭하면 적립금 + 적립내역 보여주기(주문 날짜, 적립금, 주문번호)
+//	public J_userOrderDto userOrderList(String getUserid) {
+//		J_userOrderDto dto = null;
+//		
+//		Connection connection = null;
+//		PreparedStatement preparedStatement = null;
+//		ResultSet resultSet = null;
+//		
+//		try {
+//			connection = dataSource.getConnection();
+//			String query = "select * from orders where userid = '" + getUserid + "'";
+//			preparedStatement = connection.prepareStatement(query);
+//			resultSet = preparedStatement.executeQuery();
+//			
+//			while(resultSet.next()) { 		// db에서 한 줄에 있는 데이터를 열마다 분리해서 할당하는 과정.
+//				String ordernum = resultSet.getString("ordernum");
+//				int count = resultSet.getInt("count");
+//				int orderprice = resultSet.getInt("orderprice");
+//				String username = resultSet.getString("username");
+//				String userpostcode = resultSet.getString("userpostcode");
+//				String shipaddress = resultSet.getString("shipaddress");
+//				String usertel = resultSet.getString("usertel");
+//				String userid = resultSet.getString("userid");
+//				String pid = resultSet.getString("pid");
+//				String ordermessage = resultSet.getString("ordermessage");
+//				String payment = resultSet.getString("payment");
+//				int point = resultSet.getInt("point");
+//				
+//				dto = new J_userOrderDto(ordernum, count, orderprice, username, userpostcode, shipaddress, usertel, userid, pid, ordermessage, payment, point);
+//				
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if(resultSet != null) resultSet.close(); 	// ResultSet이 비면 닫아.
+//				if(preparedStatement != null) preparedStatement.close();
+//				if(connection != null) connection.close();
+//			}catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		return dto;
+//		
+//	}
+	
+	
+	
+	
 	
 	
 		

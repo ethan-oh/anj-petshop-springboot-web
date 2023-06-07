@@ -19,7 +19,6 @@ public class J_PDetailCommand implements Acommand {
 		J_pdPageDto dto = dao.productDetailView(pid);
 		
 		request.setAttribute("productDetail", dto);
-		System.out.println("이건??");
 
 	}
 
