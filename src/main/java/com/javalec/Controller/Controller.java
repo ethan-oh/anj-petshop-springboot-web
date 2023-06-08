@@ -123,7 +123,7 @@ public class Controller extends HttpServlet {
 		case ("/cart.do"):
 			command = new T_cartlistCommnd();
 			command.execute(request, response);
-			viewPage = "/T_cart.jsp";
+			viewPage = "T_cart.jsp";
 			break;
 		case "/T_cart.do":
 			String pid = request.getParameter("pid"); // pid 값 가져옴

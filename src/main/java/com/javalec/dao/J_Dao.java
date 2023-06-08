@@ -111,7 +111,7 @@ public class J_Dao {
 		
 		return dto;
 		
-	}
+	} 
 	
 	// 3. 장바구니에 사용지가 선택한 옵션들 넘겨주기 
 	public void insertcart(String uid, String pid, int qty) {
@@ -142,7 +142,7 @@ public class J_Dao {
 	
 	//------------------- userPage(order, user table) ---------------------------
 	
-	// 3. order 테이블의 데이터들 불러오기 : 유저아이디로 총 적립금, 총 구매 금액, 총 구매 횟수, 사용한 마일리지 띄워주기 
+	// 4. order 테이블의 데이터들 불러오기 : 유저아이디로 총 적립금, 총 구매 금액, 총 구매 횟수, 사용한 마일리지 띄워주기 
 	public J_userOrderDto userOrderMileage (String getUserid) { 		
 		J_userOrderDto dto = null;
 		
@@ -182,7 +182,7 @@ public class J_Dao {
 		
 	}
 	
-	// 4. user 테이블의 모든 데이터들 불러오기 : 유저아이디로  사용 가능 적립금 띄워주기 
+	// 5. user 테이블의 모든 데이터들 불러오기 : 유저아이디로  사용 가능 적립금 띄워주기 
 	public J_userDto userView (String getUserid) {
 		J_userDto dto = null;
 		

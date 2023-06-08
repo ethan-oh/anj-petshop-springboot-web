@@ -1,6 +1,6 @@
 package com.javalec.dto;
 
-public class J_pdExplainDto {
+public class J_pdExplainDto { 			// 없어도 될듯??
 	String pid;
 	String p_filename;
 	String p_filename2;
