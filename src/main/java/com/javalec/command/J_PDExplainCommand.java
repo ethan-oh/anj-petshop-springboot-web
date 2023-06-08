@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javalec.dao.J_Dao;
-import com.javalec.dto.J_pdPageDto;
+import com.javalec.dto.J_pdExplainDto;
 
-public class J_PDetailCommand implements Acommand {
+public class J_PDExplainCommand implements Acommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -14,11 +14,10 @@ public class J_PDetailCommand implements Acommand {
 		String pid = request.getParameter("pid");
 //		String pid = "F1002"; 		// 테스트용 임시 제품 번호 ****** 나중에 꼭 command 처리 바꾸기!!!!
 		
-		
 		J_Dao dao = new J_Dao();
-		J_pdPageDto dto = dao.productDetailView(pid);
+		J_pdExplainDto dto = dao.productExplainView(pid);
 		
-		request.setAttribute("productDetail", dto);
+		request.setAttribute("pdExplain", dto);
 
 	}
 

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.javalec.command.A_MainCommand;
 import com.javalec.command.A_ProductCommand;
 import com.javalec.command.Acommand;
+import com.javalec.command.J_PDExplainCommand;
 import com.javalec.command.J_PDetailCommand;
 import com.javalec.command.J_insertCartCommand;
 import com.javalec.command.J_userPageCommand;
@@ -66,6 +67,7 @@ public class Controller extends HttpServlet {
 
 		String viewPage = null;
 		Acommand command = null;
+		Acommand command1 = null;
 
 		String uri = request.getRequestURI();
 		String conPath = request.getContextPath();
@@ -88,7 +90,9 @@ public class Controller extends HttpServlet {
 
 		case ("/j_productClicked.do"): // 상품목록 페이지에서 상품 선택할 때
 			command = new J_PDetailCommand();
+			command1 = new J_PDExplainCommand();
 			command.execute(request, response);
+			command1.execute(request, response);
 			viewPage = "J_productDetail.jsp"; // 제품 상세 페이지 보여주기
 			break;
 		
