@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javalec.dao.J_Dao;
+import com.javalec.dto.J_pdExplainDto;
 import com.javalec.dto.J_pdPageDto;
 
 public class J_PDetailCommand implements Acommand {
@@ -17,8 +18,11 @@ public class J_PDetailCommand implements Acommand {
 		
 		J_Dao dao = new J_Dao();
 		J_pdPageDto dto = dao.productDetailView(pid);
+		J_pdExplainDto exDto = dao.productExplainView(pid);
+		
 		
 		request.setAttribute("productDetail", dto);
+		request.setAttribute("pdExplain", exDto);
 
 	}
 
