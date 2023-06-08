@@ -57,13 +57,13 @@
 					<form action="j_insertCart.do" name="basket" method="get" style="display: inline; width: 50%;">
 						<input type="hidden" name="pid" value="${productDetail.pid}">
 						<input type="hidden" name="qty">
-						<button type="submit" id="btnCart" value="장바구니 담기" style="font-size: 25px; color: #477A7B; background-color: #DFE9E8; border: none; width: 100%; height: 60px">장바구니 담기</button>
+						<button type="submit" id="btnCart" value="장바구니 담기" onclick="sendToCart(); openCartModal();" style="font-size: 25px; color: #477A7B; background-color: #DFE9E8; border: none; width: 100%; height: 60px">장바구니 담기</button>
 							
 					</form>
 					<form action="j_purchase.do" name="purchase" method="get" style="display: inline; width: 50%;">
 						<input type="hidden" name="pid" value="${productDetail.pid}">
 						<input type="hidden" name="qty">
-						<input type="submit" value="즉시 구매하기" style="font-size: 25px; color: white; background-color: #477A7B; border: none; width: 100%; height: 60px">
+						<input type="submit" value="즉시 구매하기" onclick="sendToPay(); closeCartModal()" style="font-size: 25px; color: white; background-color: #477A7B; border: none; width: 100%; height: 60px">
 					</form>
 				</div>
 			</div>
@@ -152,6 +152,20 @@ function resetSelection() {
 	  resultElement1.textContent = '(적립금 : + ' + result1.toLocaleString() + '원)';
 	  
 }
+	
+	function sendToCart() {			/* 사용자가 선택한 수량 장바구니에 넘겨주기 */
+		/* openCartModal(); */
+		const qty = document.getElementById('quantity').value;
+		document.basket.qty.value = qty;
+		document.basket.submit();
+	}
+	
+	function sendToPay() { 			/* 사용자가 선택한 수량 구매 페이지에 넘겨주기 */
+		const qty = document.getElementById('quantity').value;
+		document.purchase.qty.value = qty;
+		document.purchase.submit();
+		
+	}
 	
 	/* const modal = document.getElementById("modal")=
 	const btnCart = document.getElementById('btnCart')
