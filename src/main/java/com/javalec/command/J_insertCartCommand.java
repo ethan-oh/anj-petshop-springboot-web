@@ -4,20 +4,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javalec.dao.J_Dao;
-import com.javalec.dto.J_pdExplainDto;
 
-public class J_PDExplainCommand implements Acommand {
+public class J_insertCartCommand implements Acommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
+		
+//		String uid = request.getParameter("userid");
+		String uid = "do";
 		String pid = request.getParameter("pid");
-//		String pid = "F1002"; 		// 테스트용 임시 제품 번호 ****** 나중에 꼭 command 처리 바꾸기!!!!
+		int qty = Integer.parseInt(request.getParameter("qty"));
 		
 		J_Dao dao = new J_Dao();
-		J_pdExplainDto dto = dao.productExplainView(pid);
-		
-		request.setAttribute("pdExplain", dto);
+		dao.insertcart(uid, pid, qty);
 
 	}
 

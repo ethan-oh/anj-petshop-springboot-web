@@ -14,7 +14,8 @@ import com.javalec.command.A_ProductCommand;
 import com.javalec.command.Acommand;
 import com.javalec.command.J_PDExplainCommand;
 import com.javalec.command.J_PDetailCommand;
-import com.javalec.command.J_userOrderCommand;
+import com.javalec.command.J_insertCartCommand;
+import com.javalec.command.J_userPageCommand;
 import com.javalec.command.O_getNDetailCommand;
 import com.javalec.command.O_getNoticeCommand;
 import com.javalec.command.T_cartlistCommnd;
@@ -94,9 +95,21 @@ public class Controller extends HttpServlet {
 			command1.execute(request, response);
 			viewPage = "J_productDetail.jsp"; // 제품 상세 페이지 보여주기
 			break;
+		
+		case ("/j_insertCart.do"): // 장바구니 선택시 데이터베이스에 옵션 넣기
+			command = new J_insertCartCommand();
+			command.execute(request, response);
+			viewPage = "cart.do";
+			break;
+		
+		case ("/j_purchase.do"): // 바로 구매 눌렀을 때 (
+			command = new J_insertCartCommand();
+			command.execute(request, response);
+			viewPage = "purchase.do";
+			break;
 			
-		case ("/j_userPage.do") : 
-			command = new J_userOrderCommand();
+		case ("/j_userPage.do") : // 유저페이지
+			command = new J_userPageCommand();
 			command.execute(request, response);
 			viewPage = "J_userMyPage.jsp";
 			break;

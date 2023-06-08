@@ -26,9 +26,10 @@
 	<main class="main">
 		<div class="top-section">
 			<div class="top-left"> 			<!-- 이미지 뜨는 섹션 --> 	<!-- 1. 슬라이드 효과 2. 몇 번째 사진이 넘어가는지 밑에 바(-)로 알려주기 -->
-				<div class="slide">
-					<img alt="제품 이미지를 준비중 입니다." src="${productDetail.pthumbnail }">
-				</div>
+				<!-- <div class="slide"> -->
+					<img alt="제품 이미지를 준비중 입니다." src="images/thumbnail/${productDetail.pthumbnail }.png">
+					
+				<!-- </div> -->
 				<div class="slide">
 					<img alt="제품 이미지를 준비중 입니다." src="${productDetail.pth2 }">
 				</div>
@@ -53,14 +54,14 @@
 				<div style="display: flex;">
 					
 					
-					<form action="cart.do" name="basket" method="get" style="display: inline; width: 50%;">
-						<input type="hidden" name="pid" value="${productDetail.pid }">
+					<form action="j_insertCart.do" name="basket" method="get" style="display: inline; width: 50%;">
+						<input type="hidden" name="pid" value="${productDetail.pid}">
 						<input type="hidden" name="qty">
 						<button type="submit" id="btnCart" value="장바구니 담기" onclick="sendToCart(); openCartModal();" style="font-size: 25px; color: #477A7B; background-color: #DFE9E8; border: none; width: 100%; height: 60px">장바구니 담기</button>
 							
 					</form>
-					<form action="purchase.do" name="purchase" method="get" style="display: inline; width: 50%;">
-						<input type="hidden" name="pid" value="${productDetail.pid }">
+					<form action="j_purchase.do" name="purchase" method="get" style="display: inline; width: 50%;">
+						<input type="hidden" name="pid" value="${productDetail.pid}">
 						<input type="hidden" name="qty">
 						<input type="button" value="즉시 구매하기" onclick="sendToPay(); closeCartModal()" style="font-size: 25px; color: white; background-color: #477A7B; border: none; width: 100%; height: 60px">
 					</form>
@@ -153,7 +154,10 @@ function resetSelection() {
 }
 	
 	function sendToCart() {			/* 사용자가 선택한 수량 장바구니에 넘겨주기 */
-		openCartModal();
+		/* openCartModal(); */
+		const qty = document.getElementById('quantity').value;
+		document.basket.qty.value = qty;
+		document.basket.submit();
 	}
 	
 	function sendToPay() { 			/* 사용자가 선택한 수량 구매 페이지에 넘겨주기 */
@@ -163,7 +167,7 @@ function resetSelection() {
 		
 	}
 	
-	const modal = document.getElementById("modal")=
+	/* const modal = document.getElementById("modal")=
 	const btnCart = document.getElementById('btnCart')
 	btnCart.addEventListener("click", e => {
 		modal.style.display = "flex"
@@ -181,7 +185,7 @@ function resetSelection() {
 	function closeCartModal() {
 		var cartModal = document.getElementById("cartModal");
 		cartModal.style.display = "none";
-}
+} */
 
 	/* 사진 넘기는 효과주기 */
 	const slides = document.querySelectorAll('.slide');

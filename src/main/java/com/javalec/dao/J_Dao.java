@@ -113,9 +113,36 @@ public class J_Dao {
 		
 	}
 	
+	// 3. 장바구니에 사용지가 선택한 옵션들 넘겨주기 
+	public void insertcart(String uid, String pid, int qty) {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connection = dataSource.getConnection();
+			String query = "insert into cart (count, userid, pid) values(?,?,?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, qty);
+			preparedStatement.setString(2, uid);
+			preparedStatement.setString(3, pid);
+			
+			preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	
+	}
+	
 	//------------------- userPage(order, user table) ---------------------------
 	
-	// 3. order 테이블의 데이터들 불러오기 : 유저아이디로 총 적립금, 총 구매 금액, 총 구매 횟수 띄워주기 
+	// 3. order 테이블의 데이터들 불러오기 : 유저아이디로 총 적립금, 총 구매 금액, 총 구매 횟수, 사용한 마일리지 띄워주기 
 	public J_userOrderDto userOrderMileage (String getUserid) { 		
 		J_userOrderDto dto = null;
 		
@@ -125,7 +152,7 @@ public class J_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select userid, count(orderseq) as ordercount, cast(sum(orderprice)*0.01 as unsigned) as total_Mileage, sum(orderprice) as total_Price "
+			String query = "select userid, count(orderseq) as ordercount, cast(sum(orderprice)*0.01 as unsigned) as total_Mileage, sum(orderprice) as total_Price, sum(usedmileage) as total_usedMileage "
 					+ " from orders where userid = '" + getUserid + "' group by userid";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
@@ -133,11 +160,11 @@ public class J_Dao {
 			while(resultSet.next()) { 		// db에서 한 줄에 있는 데이터를 열마다 분리해서 할당하는 과정.
 				String userid = resultSet.getString("userid");
 				int ordercount = resultSet.getInt("ordercount");
+				int totalUsedMileage = resultSet.getInt("total_usedMileage");
 				int totalMileage = resultSet.getInt("total_Mileage");
 				int totalPrice = resultSet.getInt("total_Price");
 				
-				dto = new J_userOrderDto(userid, ordercount, totalMileage, totalPrice);
-
+				dto = new J_userOrderDto(userid, ordercount, totalUsedMileage, totalMileage, totalPrice);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -155,8 +182,8 @@ public class J_Dao {
 		
 	}
 	
-	// 4. user 테이블의 데이터들 불러오기 : 유저아이디로  사용 가능 적립금, 적립금 사용 내역들 띄워주기 
-	public J_userDto userMileage (String getUserid) {
+	// 4. user 테이블의 모든 데이터들 불러오기 : 유저아이디로  사용 가능 적립금 띄워주기 
+	public J_userDto userView (String getUserid) {
 		J_userDto dto = null;
 		
 		Connection connection = null;
@@ -165,21 +192,16 @@ public class J_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select userid, sum(mileage) as 'availableMilage', sum(usedmileage) as 'usedMileage'"
-					+ " from user where userid = '" + getUserid + "' group by userid";
+			String query = "select * from user where userid = '" + getUserid + "' group by userid";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) { 		// db에서 한 줄에 있는 데이터를 열마다 분리해서 할당하는 과정.
 				String userid = resultSet.getString("userid");
-				int mileage = resultSet.getInt("availableMilage");
-				int usedmileage = resultSet.getInt("usedMileage");
+				int mileage = resultSet.getInt("mileage");
 				
 				
-				dto = new J_userDto(userid, mileage, usedmileage);
-				System.out.println("유저아이디 : " + userid);
-				System.out.println("사용가능한 마일리지 : " + mileage);
-				System.out.println("사용한 마일리지 : " + usedmileage);
+				dto = new J_userDto(userid, mileage);
 				
 			}
 		} catch (Exception e) {

@@ -7,7 +7,7 @@ import com.javalec.dao.J_Dao;
 import com.javalec.dto.J_userDto;
 import com.javalec.dto.J_userOrderDto;
 
-public class J_userCommand implements Acommand { 			// user table 관련 작업들 수행 command 
+public class J_userPageCommand implements Acommand { 			// orders 테이블 관련 작업들 수행 command 
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -16,12 +16,12 @@ public class J_userCommand implements Acommand { 			// user table 관련 작업�
 		String userid = "do";
 		
 		J_Dao dao = new J_Dao();
-		J_userDto dto = dao.userMileage(userid);
+		J_userOrderDto orderdto = dao.userOrderMileage(userid);
+		J_userDto userdto = dao.userView(userid);
 		
-		request.setAttribute("userMileage", dto); 			// 마일리지 보여주기
-		System.out.println("여긴 왔어?");
+		request.setAttribute("orderMileage", orderdto); 			// 주문 테이블과 관련된 마일리지 보여주기
+		request.setAttribute("userView", userdto); 			// user 테이블과 관련된 모든 것 
 		
-
 	}
 
 }

@@ -12,14 +12,14 @@ public class J_userDto {		// user table dto
 	String useraddress;
 	String userdetailaddress;
 	int mileage; 		// 사용자가 사용 가능한 적립금
-	int usedmileage; 		// 사용자가 사용 완료한 적립금
 	
 	public J_userDto() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	// 사용자의 모든 정보 불러오기
 	public J_userDto(String userid, String userpasswd, String username, String usertel, String useremail,
-			String userpostcode, String useraddress, String userdetailaddress, int mileage, int usedmileage) {
+			String userpostcode, String useraddress, String userdetailaddress, int mileage) {
 		super();
 		this.userid = userid;
 		this.userpasswd = userpasswd;
@@ -30,15 +30,12 @@ public class J_userDto {		// user table dto
 		this.useraddress = useraddress;
 		this.userdetailaddress = userdetailaddress;
 		this.mileage = mileage;
-		this.usedmileage = usedmileage;
 	}
-	
-	// 4. user 테이블에서 사용 가능한 적립금과 사용한 적립금 띄워주기
-	public J_userDto(String userid, int mileage, int usedmileage) {
+
+	public J_userDto(String userid, int mileage) {
 		super();
 		this.userid = userid;
 		this.mileage = mileage;
-		this.usedmileage = usedmileage;
 	}
 
 	public String getUserid() {
@@ -113,13 +110,7 @@ public class J_userDto {		// user table dto
 		this.mileage = mileage;
 	}
 
-	public int getUsedmileage() {
-		return usedmileage;
-	}
-
-	public void setUsedmileage(int usedmileage) {
-		this.usedmileage = usedmileage;
-	}
+	
 	
 	
 	

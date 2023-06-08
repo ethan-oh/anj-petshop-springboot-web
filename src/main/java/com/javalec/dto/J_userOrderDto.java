@@ -17,9 +17,10 @@ public class J_userOrderDto {  		// order table의 데이터 가져오기
 	String pid;
 	String ordermessage;
 	String payment;
-	int mileage;
+	int usedmileage;
 	
 	int ordercount; 		// 주문 횟수 
+	int totalUsedMileage; 	// 주문시 사용한 마일리지 총 합 
 	int totalMileage;		// 총 적립된 마일리지 합 
 	int totalPrice;			// 총 구매 금액 
 	
@@ -27,19 +28,28 @@ public class J_userOrderDto {  		// order table의 데이터 가져오기
 		// TODO Auto-generated constructor stub
 	}
 
-	// J_Dao 3. 사용자 페이지 - 유저의 적립금, 구매금액, 구매횟수 띄워주기
-	public J_userOrderDto(String userid, int ordercount, int totalMileage, int totalPrice) {
+	// J_Dao 3. 사용자 페이지 - 유저의 사용한 적립금, 구매 횟수, 총 적립금, 총 구매금액 띄워주기
+	public J_userOrderDto(String userid, int ordercount, int totalUsedMileage, int totalMileage, int totalPrice) {
 		super();
 		this.userid = userid;
 		this.ordercount = ordercount;
+		this.totalUsedMileage = totalUsedMileage;
 		this.totalMileage = totalMileage;
 		this.totalPrice = totalPrice;
 	}
 
+	public int getTotalUsedMileage() {
+		return totalUsedMileage;
+	}
 
+	public void setTotalUsedMileage(int totalUsedMileage) {
+		this.totalUsedMileage = totalUsedMileage;
+	}
+
+	// order 테이블의 모든것 
 	public J_userOrderDto(String ordernum, int count, int orderprice, String username, String userpostcode,
 			String shipaddress, String usertel, Timestamp orderdate, String userid, String pid, String ordermessage,
-			String payment, int mileage) {
+			String payment, int usedmileage) {
 		super();
 		this.ordernum = ordernum;
 		this.count = count;
@@ -53,7 +63,7 @@ public class J_userOrderDto {  		// order table의 데이터 가져오기
 		this.pid = pid;
 		this.ordermessage = ordermessage;
 		this.payment = payment;
-		this.mileage = mileage;
+		this.usedmileage = usedmileage;
 	}
 
 	public String getOrdernum() {
@@ -152,12 +162,12 @@ public class J_userOrderDto {  		// order table의 데이터 가져오기
 		this.payment = payment;
 	}
 
-	public int getMileage() {
-		return mileage;
+	public int getUsedmileage() {
+		return usedmileage;
 	}
 
-	public void setMileage(int mileage) {
-		this.mileage = mileage;
+	public void setUsedmileage(int usedmileage) {
+		this.usedmileage = usedmileage;
 	}
 
 	public int getOrdercount() {
@@ -183,6 +193,12 @@ public class J_userOrderDto {  		// order table의 데이터 가져오기
 	public void setTotalPrice(int totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+	
+	
+
+
+
+
 	
 	
 	
