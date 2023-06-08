@@ -31,7 +31,7 @@ public class O_QnaDao {
 		}
 	}
 	
-	public int getQnaCount(){ // 전체 게시물의 카운트 구하기.
+	public int getQnaCount(String queryName, String queryContent){ // 전체 게시물의 카운트 구하기.
 
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -39,10 +39,17 @@ public class O_QnaDao {
 		
 		int count = 0;
 		
+		if(queryName == null){ // 화면이 처음 열릴 때
+			queryName = "qna_title";
+			queryContent = "";
+		}
+		
+		
 		try {
 			connection = dataSource.getConnection();
 			String query = "select count(*) from qna";
-			ps = connection.prepareStatement(query);
+			String query2 = " where " + queryName + " like '%" + queryContent + "%'";
+			ps = connection.prepareStatement(query + query2);
 			rs = ps.executeQuery();
 			
 			if(rs.next()) {
@@ -165,7 +172,56 @@ public class O_QnaDao {
 		return dto;
 	}
 	
-	public void writeQnA(String category, String title, String content, String userid, String adminid) {
+	public void deleteQuestion(int seq) { // 질문글 및 답변글 모두 삭제
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "delete from qna where parentseq = " + seq;
+			ps = connection.prepareStatement(query);
+			
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (ps != null) ps.close();
+				if (connection != null) connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // deleteQuestion
+	public void deleteAnswer(int seq) { // 질문글 및 답변글 모두 삭제
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "delete from qna where seq = " + seq;
+			ps = connection.prepareStatement(query);
+			
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (ps != null) ps.close();
+				if (connection != null) connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // deleteAnswer
+	
+	public void writeQuestion(String category, String title, String content, String userid, String adminid) {
 		Connection connection = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -210,6 +266,39 @@ public class O_QnaDao {
 				e.printStackTrace();
 			}
 		}
-	} // writeQnA
+	} // writeQuestion
+	
+	public void writeAnswer(int seq, String category, String title, String content, String userid, String adminid) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "INSERT INTO qna (category, qna_title, qna_content, parentseq, writedate, userid, adminid) "
+					+ "VALUES (?, ?, ?, ?, NOW(), ?, ?)"; // parentseq를 제외한 데이터들을 입력해준다.
+			ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); // ai로 자동생성된 seq값을 받아온다.
+			
+			ps.setString(1, category);
+			ps.setString(2, title);
+			ps.setString(3, content);
+			ps.setInt(4, seq);
+			ps.setString(5, userid);
+			ps.setString(6, adminid);
+			
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (ps != null) ps.close();
+				if (connection != null) connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // writeQuestion
 	
 }

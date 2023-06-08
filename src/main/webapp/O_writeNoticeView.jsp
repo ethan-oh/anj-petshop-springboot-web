@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="A_heardCss.css">
 <link rel="stylesheet" href="A_MainCss.css">
 <link rel="stylesheet" href="CSS/O_Common.css">
-<script src="JS/O_ScrollTop.js"></script>
+<!-- <script src="JS/O_ScrollTop.js"></script> -->
 
 <script type="text/javascript">
 	function writeCheck(){

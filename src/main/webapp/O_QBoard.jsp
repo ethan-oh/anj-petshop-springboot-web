@@ -108,55 +108,61 @@
 	</div>
 	<div class="container" style="text-align: right;">
 		<br>
-		<span class="list-button" ><a href="O_writeViewQnA.do">유저용글쓰기</a></span>
+		<span class="list-button" ><a href="O_writeQuestionView.do">유저용글쓰기</a></span>
 	</div>
 
 	<div class="container pagination" style="text-align: center;">
 		<script>
-		let pageSize = ${p.pageSize}; // 한 페이지당 보여줄 최대 페이지 개수
-		let itemsPerPage = ${p.itemsPerPage}; // 한 페이지당 보여줄 게시물의 수
-		let totalCount = ${p.totalCount}; // 전체 게시물의 수
-		let currentPage = ${p.currentPage}; // 현재 페이지
-		let totalPages = ${p.totalPages}; // 전체 페이지의 수
-		let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // 현재 페이지에서 보여질 페이지의 시작값 계산
+    let pageSize = ${p.pageSize}; // 한 페이지당 보여줄 최대 페이지 개수
+    let itemsPerPage = ${p.itemsPerPage}; // 한 페이지당 보여줄 게시물의 수
+    let totalCount = ${p.totalCount}; // 전체 게시물의 수
+    let currentPage = ${p.currentPage}; // 현재 페이지
+    let totalPages = ${p.totalPages}; // 전체 페이지의 수
+    let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // 현재 페이지에서 보여질 페이지의 시작값 계산
 
-		// 이전 버튼
-		if (currentPage > 1) {
-		  document.write('<span><a href="O_QNA.do?page=' + 1 + '"><<</a></span>');
-		  document.write('<span><a href="O_QNA.do?page=' + (currentPage - 1) + '"><</a></span>');
-		} else {
-		  document.write('<span class="empty"><a><<</a></span>');
-		  document.write('<span class="empty"><a><</a></span>');
-		}
+    // query가 null일 때 query를 n_content로 설정
+    let query = "${query}";
+    if (!query) {
+      query = "qna_title";
+    }
 
-		// 페이지 번호
-		if (totalPages != 1) {
-		  let numPagesToShow = Math.min(pageSize, totalPages); // 보여줄 페이지 번호 개수 (pageSize와 totalPages 중 작은 값 선택)
-		  let startPage = calcPage; // 시작 페이지
+    // 이전 버튼
+    if (currentPage > 1) {
+      document.write('<span><a href="O_QNA.do?page=' + 1 + '&query=' + query + '&content=${content}"><<</a></span>');
+      document.write('<span><a href="O_QNA.do?page=' + (currentPage - 1) + '&query=' + query + '&content=${content}"><</a></span>');
+    } else {
+      document.write('<span class="empty"><a><<</a></span>');
+      document.write('<span class="empty"><a><</a></span>');
+    }
 
-		  // 시작 페이지 조정
-		  if (startPage + numPagesToShow - 1 > totalPages) {
-		    startPage = Math.max(totalPages - numPagesToShow + 1, 1);
-		  }
+    // 페이지 번호
+    if (totalPages != 1) {
+      let numPagesToShow = Math.min(pageSize, totalPages); // 보여줄 페이지 번호 개수 (pageSize와 totalPages 중 작은 값 선택)
+      let startPage = calcPage; // 시작 페이지
 
-		  for (let i = startPage; i <= startPage + numPagesToShow - 1; i++) {
-		    if (i === currentPage) {
-		      document.write('<span class="current"><a href="O_QNA.do?page=' + i + '">' + i + '</a></span>');
-		    } else {
-		      document.write('<span><a href="O_QNA.do?page=' + i + '">' + i + '</a></span>');
-		    }
-		  }
-		}
+      // 시작 페이지 조정
+      if (startPage + numPagesToShow - 1 > totalPages) {
+        startPage = Math.max(totalPages - numPagesToShow + 1, 1);
+      }
 
-		// 다음 버튼
-		if (currentPage != totalPages && totalPages != 1) {
-		  document.write('<span><a href="O_QNA.do?page=' + (currentPage + 1) + '">></a><span>');
-		  document.write('<span><a href="O_QNA.do?page=' + totalPages + '">>></a><span>');
-		} else {
-		  document.write('<span class="empty"><a>></a><span>');
-		  document.write('<span class="empty"><a>>></a><span>');
-		}
-		</script>
+      for (let i = startPage; i <= startPage + numPagesToShow - 1; i++) {
+        if (i === currentPage) {
+          document.write('<span class="current"><a href="O_QNA.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
+        } else {
+          document.write('<span><a href="O_QNA.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
+        }
+      }
+    }
+
+    // 다음 버튼
+    if (currentPage != totalPages && totalPages != 1) {
+      document.write('<span><a href="O_QNA.do?page=' + (currentPage + 1) + '&query=' + query + '&content=${content}">></a><span>');
+      document.write('<span><a href="O_QNA.do?page=' + totalPages + '&query=' + query + '&content=${content}">>></a><span>');
+    } else {
+      document.write('<span class="empty"><a>></a><span>');
+      document.write('<span class="empty"><a>>></a><span>');
+    }
+  </script>
 	</div>
 
 	<button class="top-button" onclick="scrollToTop()">top</button>

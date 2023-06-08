@@ -15,34 +15,30 @@
 <script src="JS/O_ScrollTop.js"></script>
 
 <script type="text/javascript">
-	function updateCheck(){
-		const form = document.NDetail
-		const n_title = form.n_title.value
-		const n_content = form.n_content.value
+	function writeCheck(){
+		const form = document.writeQnA
+		const qna_title = form.qna_title.value
+		const qna_content = form.qna_content.value
 		
-		if(n_title == ""){
+		if(qna_title == ""){
 			alert("제목을 입력해 주세요.")
 			return
 		}
-		if(n_content == ""){
+		if(qna_content == ""){
 			alert("내용을 입력해 주세요.")
 			return
 		}
-		if(confirm("수정하시겠습니까?") == true){
-		form.action = "O_updateNotice.do";
-		form.submit();
-		}
+		form.action = "O_writeQuestion.do";
+		document.productinfo.submit();
 	}
-	
-	function deleteCheck(){
-		const form = document.NDetail
-		
-		if(confirm("정말 삭제하시겠습니까?") == true){
-			const form = document.NDetail
-			form.action = "O_changeNoticeStatus.do";
-			form.submit();
-			}
-	}
+
+  function setQnaTitle() { // select의 옵션 선택하자마자 제목에 값을 넣어주는 함수.
+    var qCategory = document.getElementsByName('qCategory')[0];
+    var qnaTitle = document.getElementById('qna_title');
+
+    var selectedCategory = qCategory.options[qCategory.selectedIndex].value;
+    qnaTitle.value = selectedCategory + " 문의 드립니다.";
+  }
 </script>
 
 </head>
@@ -60,62 +56,60 @@
 			</ul>
 		</nav>
 	</header>
-	<!-- ---------------------- -->
+	<!----------------------------------------------------------------------------------------------------->
 	<div class="page-title" style="background-color: #DFE9E8;">
 		<br><br><br>
 		<h3>COMMUNITY</h3>
 		<br><br>
 			<a href="O_Notice.do">NOTICE</a> 
 			<a href="O_FAQ.do">FAQ</a> 
-			<a href="O_QNA.do">Q&A</a> 
+			<span class="selected"><a href="O_QNA.do">Q&A</a></span>
 			<a href="O_FAQ.do">REVIEW</a> 
 		<br><br>
 	</div>
-	<div class="page-title">
-		<h4>공지사항 상세</h4>
-	</div>
 
+	<div class="page-title">
+		<h4>QnA 등록</h4>
+	</div>
 	<!-- board list area -->
 	<div class="container">
-		<form name="NDetail" method="post"> <!-- 유저용에서는 이 폼태그 빼고 제목을 input타입 빼고 그냥 적기, textarea readonly 속성 넣어주기 -->
-			<input type="hidden" name="status" value="1">
-			<input type="hidden" name="seq" value="${seq }">
-			<table class="board-table">
-				<thead>
-					<tr>
-						<th class="th-wnum">제목</th>
-						<th scope="col" colspan="3"><input type="text" name="n_title" value="${NDetail.n_title}"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="th-wnum">구분</td>
-						<td scope="col" class="th-left">공지</td>
-					</tr>
-					<tr>
-						<td scope="col" class="th-wnum">작성일</td>
-						<td scope="col" class="th-left">${NDetail.writedate}</td>
-					</tr>
-					<tr>
-						<td>내용</td>
-						<td>
-							<textarea rows="25" cols="109" wrap="hard" name="n_content"><c:out value="${NDetail.n_content}" /></textarea>
-						</td>
-					</tr>
-					<tr>
-						<td class="th-wnum"><span class="list-button"><a href="O_Notice.do">목록</a></span></td>
-						<td class="th-right">
-							<input type="submit" class="list-button" value="수정" onclick="updateCheck()">
-							<input type="submit" class="list-button" value="삭제" onclick="deleteCheck()">
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</form>
+		<form name="writeQnA" method="post">
+		  <input type="hidden" name="userid" value="osm1119"> <!-- 로그인 구현 시 session값으로 바꿔주기 -->
+		  <table class="board-table">
+		    <thead>
+		      <tr>
+		        <th scope="col">
+		          <div class="qna">
+		            <select name="qCategory" onchange="setQnaTitle()">
+		              <option value="상품 관련">상품</option>
+		              <option value="배송 관련">배송</option>
+		              <option value="입금 관련">입금확인</option>
+		              <option value="주문 취소">주문취소</option>
+		              <option value="환불">환불</option>
+		              <option value="기타">기타</option>
+		            </select>
+		          </div>
+		        </th>
+		        <th scope="col">
+		          <span class="qna"><input type="text" name="qna_title" id="qna_title" value="상품 관련 문의 드립니다."></span>
+		        </th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr>
+		        <td>내용</td>
+		        <td><textarea rows="5" cols="100" wrap="hard" name="qna_content" placeholder="내용을 입력하세요."></textarea></td>
+		      </tr>
+		    </tbody>
+		  </table>
+		  <div class="container" style="text-align: right;">
+		    <br>
+		    <input type="submit" class="list-button th-right" value="등록" onclick="writeCheck()">
+		  </div>
+</form>
 	</div>
-	
 	<button class="top-button" onclick="scrollToTop()">top</button>
-	
+	<!----------------------------------------------------------------------------------------------------->
 	<footer>
 		<ul>
 			<li><a href="#">Brand Story</a></li>

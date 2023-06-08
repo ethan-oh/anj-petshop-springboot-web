@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.javalec.dao.O_QnaDao;
 
-public class O_writeQnACommand implements Acommand {
+public class O_writeQuestionCommand implements Acommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -18,7 +18,7 @@ public class O_writeQnACommand implements Acommand {
 		String userid = request.getParameter("userid");
 		String adminid = "dummy";
 		
-		dao.writeQnA(category, qna_title, qna_content, userid, adminid);
+		dao.writeQuestion(category, qna_title, qna_content, userid, adminid);
 		
 	}
 
