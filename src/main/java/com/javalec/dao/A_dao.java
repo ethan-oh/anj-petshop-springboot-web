@@ -117,7 +117,7 @@ public class A_dao {
 
 		try {
 			connection = dataSource.getConnection();
-			String query = "SELECT pid, pname, pprice, pthumbnail from product order by rand() Limit 10";
+			String query = "SELECT pid, pname, pprice, pthumbnail from product order by rand() Limit 4";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 
@@ -152,14 +152,14 @@ public class A_dao {
 	}
 	
 	// (3) 상품페이지 전체상품 노출 + 가격순 정렬
-	public ArrayList<A_dto> A_ProductView(String queryName, String queryContent, String sortOrder) {
+	public ArrayList<A_dto> A_ProductView(String pcategory, String queryName, String queryContent, String sortOrder) {
 		ArrayList<A_dto> dtos = new ArrayList<>();
 
 		if (queryName == null) {
 			queryName = "pname";
 			queryContent = "";
 		}
-
+		
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -167,7 +167,12 @@ public class A_dao {
 		try {
 			connection = dataSource.getConnection();
 			String query = "SELECT pid, pname, pprice, pthumbnail FROM product";
-			String where = " WHERE " + queryName + " LIKE '%" + queryContent + "%'";
+			String where = "";
+			if(pcategory == null) {
+			where = " WHERE " + queryName + " LIKE '%" + queryContent + "%';";
+			}else {
+			where = " WHERE " + queryName + " LIKE '%" + queryContent + "%' and pcategory='" + pcategory + "';";
+			}
 
 			if ("highprice".equals(sortOrder)) { // 높은 가격순으로 정렬
 				query += where + " ORDER BY pprice DESC";
@@ -206,4 +211,49 @@ public class A_dao {
 
 		return dtos;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public ArrayList<A_dto> getProductsByCategory(String category) {
+	    ArrayList<A_dto> dtos2 = new ArrayList<>();
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+
+	    try {
+	        connection = dataSource.getConnection();
+	        String query = "SELECT pid, pname, pprice, pthumbnail FROM product WHERE pcategory = ?";
+	        preparedStatement = connection.prepareStatement(query);
+	        preparedStatement.setString(1, category);
+	        resultSet = preparedStatement.executeQuery();
+
+	        while (resultSet.next()) {
+	            String pid = resultSet.getString("pid");
+	            String pname = resultSet.getString("pname");
+	            int pprice = resultSet.getInt("pprice");
+	            String pthumbnail = resultSet.getString("pthumbnail");
+
+	            A_dto dto = new A_dto(pid, pname, pprice, pthumbnail);
+	            dtos2.add(dto);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        // ...
+	    }
+
+	    return dtos2;
+	}
+	
 }
+
+

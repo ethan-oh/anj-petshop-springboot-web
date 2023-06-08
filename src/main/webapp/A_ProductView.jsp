@@ -21,8 +21,6 @@
 <script type="text/javascript">
 
 
-
-
 	// (1) 검색 및 가격정렬-------------------------------------------
 	
 	function handleSortOrderChange() {
@@ -42,19 +40,10 @@
 		window.location.href = url;
 	}
 
-	function removeSortOrderParameter(url) {
-		var urlParts = url.split('?');
-		if (urlParts.length > 1) {
-			var queryParams = urlParts[1].split('&');
-			var updatedQueryParams = queryParams.filter(function(param) {
-				return !param.startsWith('sortOrder=');
-			});
-			return urlParts[0] + '?' + updatedQueryParams.join('&');
-		}
-		return url;
-	}
 	
-
+	
+	
+	
 </script>
 <body>
 
@@ -66,7 +55,7 @@
 						               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>    
 				            		</div>
 				           		 <div class="head-wrap-sub">
-				      			     <h3>ANJ PET SHOP</h3>
+				      			    
 				                <nav class="head-menu-main-nav">
 				                    <ul>	
 				                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
@@ -96,26 +85,26 @@
 			
 						<div style="text-align: right;">
 						  <form class="search-form">
-              	  <select name="query">
+              	  		<select name="query">
 		                    <option value="pname" selected="selected">Product</option>
 		                    <option value="pprice">Price</option>
 		                </select>
-			                <input type="text" name="content" size="30">
+			                <input type="text" name="content" size="150">
 			                <input type="submit" value="Search">
 			              <select id="sortOrder" name="sortOrder" onchange="handleSortOrderChange()">
 		                    <option value="">Price Sort</option>
 		                    <option value="highprice">Highest Price</option>
 		                    <option value="lowprice">Lowest Price</option>
-              		  </select>
+              		 	</select>
 				            </form>
 				        </div>
 						<br/>
 						
 
 							 <li class="center-align">
-						            <button class="btn-login btn-dog">Food</button>
-						             <button class="btn-login btn-new">Clean</button>
-                                     <button class="btn-login">Living</button>
+						        <a href="A_ProductView.do?pcategory=food" class="btn-login btn-dog">Food</a> 
+						        <a href="A_ProductView.do?pcategory=clean" class="btn-login btn-dog">Clean</a> 
+						        <a href="A_ProductView.do?pcategory=living" class="btn-login btn-dog">Living</a> 
                              </li><br><br>
 				
 				<!-- 전체 상품목록 -->
@@ -124,9 +113,8 @@
 							<div class="product-grid">
 								<c:forEach items="${A_ProductView}" var="dto">
 									<div class="product-item">
-										<a href="j_productClicked.do?pid=${dto.pid }"><img
-											src="images/thumbnail/${dto.pthumbnail}.png"
-											alt="Product Thumbnail"></a>
+										<a href="j_productClicked.do?pid=${dto.pid }"
+										><img src="images/thumbnail/${dto.pthumbnail}.png" alt="Product Thumbnail"></a>
 										<h3>${dto.pname}</h3>
 										<p>Price: ${dto.pprice}</p>
 									</div>
@@ -134,55 +122,57 @@
 							</div><br/><br/><br/>
 				
 				
-				
-
 			  
-			  
-						 <div class="pagination">
-						    <button onclick="goToPreviousPage()">Previous</button>
-						    <div id="pageNumbers"></div>
-						    <button onclick="goToNextPage()">Next</button>
-						 </div>
+						<div class="pagination">
+  							<button onclick="goToPreviousPage()">Back</button>
+  						<div id="pageNumbers">
+						     <span id="currentPage" class="page-number"></span>
+						  </div>
+						  <button onclick="goToNextPage()">Next</button>
+						</div>
 			
 			
 						<script>
-						  // 한 페이지에 보여줄 상품의 개수
+						 // 한 페이지에 보여줄 상품의 개수
 						  var itemsPerPage = 8;
-						
+
 						  // 상품 목록 컨테이너 요소
 						  var productGrid = document.querySelector('.product-grid');
-						
+
 						  // 상품 아이템 요소들
 						  var productItems = productGrid.querySelectorAll('.product-item');
-						
+
 						  // 상품 아이템 개수
 						  var itemCount = productItems.length;
-						
+
 						  // 현재 페이지 번호
 						  var currentPage = 1;
-						
+
 						  // 전체 페이지 개수
 						  var totalPages = Math.ceil(itemCount / itemsPerPage);
-						
+
 						  // 페이지를 업데이트하는 함수
 						  function updatePage() {
-						   
-							  // 모든 상품 아이템을 숨김
-						    productItems.forEach(function(item) {
+						    // 모든 상품 아이템을 숨김
+						    productItems.forEach(function (item) {
 						      item.style.display = 'none';
 						    });
-						
+
 						    // 현재 페이지에 해당하는 상품 아이템만 보여줌
 						    var startIndex = (currentPage - 1) * itemsPerPage;
 						    var endIndex = startIndex + itemsPerPage;
 						    for (var i = startIndex; i < endIndex && i < itemCount; i++) {
 						      productItems[i].style.display = 'block';
 						    }
+
+						    // 현재 페이지 번호를 표시하는 요소 업데이트
+						    var currentPageElement = document.getElementById('currentPage');
+						    currentPageElement.textContent = currentPage;
 						  }
-						
+
 						  // 초기 페이지 업데이트
 						  updatePage();
-						
+
 						  // 페이지 번호를 클릭했을 때 해당 페이지로 이동
 						  function goToPage(page) {
 						    if (page < 1 || page > totalPages) {
@@ -191,7 +181,7 @@
 						    currentPage = page;
 						    updatePage();
 						  }
-						
+
 						  // 이전 페이지로 이동하는 함수
 						  function goToPreviousPage() {
 						    if (currentPage > 1) {
@@ -199,7 +189,7 @@
 						      updatePage();
 						    }
 						  }
-						
+
 						  // 다음 페이지로 이동하는 함수
 						  function goToNextPage() {
 						    if (currentPage < totalPages) {
@@ -207,7 +197,7 @@
 						      updatePage();
 						    }
 						  }
-						  
+
 						</script>
 
 						<footer>

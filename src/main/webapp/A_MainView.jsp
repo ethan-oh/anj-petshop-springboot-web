@@ -23,6 +23,39 @@ $(function(){
 	        $header.stop().animate({height:'50px'},200);
 	    }) 
 		});
+		
+		
+//(1) 검색 및 가격정렬-------------------------------------------
+
+function handleSortOrderChange() {
+	var selectElement = document.getElementById("sortOrder");
+	var selectedValue = selectElement.value;
+
+	// 현재 페이지 URL에서 정렬 파라미터 제거
+	var url = removeSortOrderParameter(window.location.href);
+
+	// 선택된 정렬 파라미터 추가
+	if (selectedValue !== '') {
+		url += url.indexOf('?') === -1 ? '?sortOrder=' + selectedValue
+				: '&sortOrder=' + selectedValue;
+	}
+	
+	// 페이지 리로드
+	window.location.href = url;
+}
+
+function removeSortOrderParameter(url) {
+	var urlParts = url.split('?');
+	if (urlParts.length > 1) {
+		var queryParams = urlParts[1].split('&');
+		var updatedQueryParams = queryParams.filter(function(param) {
+			return !param.startsWith('sortOrder=');
+		});
+		return urlParts[0] + '?' + updatedQueryParams.join('&');
+	}
+	return url;
+}
+
 </script>
 <body>
 
@@ -34,25 +67,33 @@ $(function(){
 		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
 		            	</div>
 		           	 <div class="head-wrap-sub">
-		           	    <h3 class="shop-name">ANJ PET SHOP</h3>
+		           	    
 		                <nav class="head-menu-main-nav">
-		                    <ul>
+		                    <ul> 
 		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
 		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
 		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
 		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
-		                        <li class="main-nav04"><a href="#">CART</a></li>         
+		                        <li class="main-nav04"><a href="#">CART</a></li>        
 		                        <li class="right-align">
 						        <button class="btn-login">Abandoned dog</button>
 						        <button class="btn-login">Login</button>
-						        <button class="btn-new">New MEMBERS</button>
-						      </li>
+						        <button class="btn-new">New MEMBERS</button>	
 		                    </ul>
 			            </nav>
 			            </div>
 		       		 </div>
    	 			</header>
-     <br><br> <br> <br><br><hr>
+     <br><br> <br> <br><br><br>
+     				
+     				 <form action="A_ProductView.do" class="search-form">
+              	 		 <select name="query">
+		                    <option value="pname" selected="selected">Product</option>
+		                    <option value="pprice">Price</option>
+		                </select>
+			                <input type="text" name="content" size="500">
+			                <input type="submit" value="Search">
+			         </form><br><br>
 				<!-- 아래부터 본문---------------------------------------------------------------->
 		
 		 				
@@ -107,8 +148,10 @@ $(function(){
 				<!--(2) 판매량 순으로 데이터 베이스 가져오기 -------------------------------------------->
 
 						<div style="text-align: center;">
-						  <input type="button" value="BEST PRODUCT" style="font-size: 20px; color: white; background-color: black; border: none; width: 20%; height: 50px">
-						</div><br/><br/>
+  						<input type="button" value="BEST PRODUCT" style="font-size: 20px; 	
+  						color: white; background-color: #2196F3; border: none; width: 20%; height: 50px; 
+  						border-radius: 25px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);">
+						</div><br/><br/><hr>
 						
 						
 				
@@ -137,33 +180,39 @@ $(function(){
 						  0% { transform: translateX(0); }
 						  100% { transform: translateX(-100%); }
 						}
-						</style>
+						</style><hr><br>
 			
   				<!-- (1) 전체상품 목록 데이터 베이스 가져오기  ------------------------------------------>
-				
-				<%-- 		<hr>
-				<h1 style="text-align: center; color: #477A7B;">ALL Product</h1>
 					
-						<div class="product-grid">
-						  <c:forEach items="${A_MainView}" var="dto">
-						   <div class="product-item">
-							<img src="images/thumbnail/${dto.pthumbnail}.png" alt="Product Thumbnail">
-						      <h3>${dto.pname}</h3>
-						      <p>Price: ${dto.pprice}</p>
-						   </div> 
-						  </c:forEach>
-						</div><br/><br/><br/><br/>
-						 --%>
-			
 				
+					<div style="text-align: left;">
+   				 <img src="image_16.png" alt="My Image" style="width: 90%; height: 100%;">
+					</div><br><br>	
+				
+				<h3>Your dog is your family. Find a new family for an abandoned dog</h3>
+				<h3>Dogs live their whole lives looking only at their owners.</h3>
+				<h3>Please don't abandon your children</h3>
+				
+				<br>		
+					
+				<div style="display: flex; justify-content: center;">
+    				<button class="button-style">Abandoned dog</button>
+				</div>
+					<br><br>
+			
+			
 
 
 				<!-- (3) 랜덤으로 데이터 베이스 가져오기 ------------------------------------------------>
 				
-				<hr><br/>
+				<br/>
+				
+				<img src="image_13.png" alt="My Image" style="width: 90%; height: auto;"><bR>
+				
+						<h3>Recommended product of the day Discover new products every day</h3><br><br>
 				<div style="text-align: center;">
-						  <input type="button" value="Recommendation of the day" style="font-size: 20px; color: white; background-color: black; border: none; width: 20%; height: 50px">
-						</div><br/><br/>
+    				<input type="button" value="RANDOM PRODUCT" class="button-style">
+				</div> <br><br>
 				
 				
 					<div class="product-grid">
@@ -177,6 +226,7 @@ $(function(){
 						</div>
 					
 			
+					
 				
 
 				 <footer>

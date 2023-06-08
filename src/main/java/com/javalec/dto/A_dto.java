@@ -6,6 +6,7 @@ public class A_dto {
 	String pname;
 	int pprice;
 	String pthumbnail;
+	String pcategory;
 
 	public A_dto(String pid, String pname, int pprice, String pthumbnail) {
 		super();
@@ -13,6 +14,18 @@ public class A_dto {
 		this.pname = pname;
 		this.pprice = pprice;
 		this.pthumbnail = pthumbnail;
+	}
+
+
+
+
+	public A_dto(String pid, String pname, int pprice, String pthumbnail, String pcategory) {
+		super();
+		this.pid = pid;
+		this.pname = pname;
+		this.pprice = pprice;
+		this.pthumbnail = pthumbnail;
+		this.pcategory = pcategory;
 	}
 
 
@@ -58,5 +71,13 @@ public class A_dto {
 	
 	public void setPthumbnail(String pthumbnail) {
 		this.pthumbnail = pthumbnail;
+	}
+	public String getPcategory() {
+		return pcategory;
+	}
+	
+	
+	public void setPcategory(String pcategory) {
+		this.pcategory = pcategory;
 	}
 }

@@ -187,6 +187,10 @@ header .head-wrap-sub{
     
 
 }
+
+header .head-wrap-sub h3 {
+        text-align: left;
+    }
 header .head-wrap-sub ul{
    list-style: none;
    width: 737px;
@@ -311,12 +315,18 @@ img {
 
 .product-item {
 	text-align: center;
+	background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+
 
 }
 
 .product-item img {
-	width: 80%;
-	height: auto;
+	      width: 100%;
+        max-width: 200px;
+        height: auto;
+        margin-bottom: 10px;
 }
 
 .product-item h3 {
@@ -475,9 +485,16 @@ input#img-6:checked ~ .nav-dots label#img-dot-6 {
 
 .btn-dog {
     background-color: #eaeaea;
-    margin-right: 10px;
+    margin-right: 20px;
+    
 }
 
+.btn-login.btn-dog:hover {
+  background-color: black; 
+  color: white;
+  
+ 
+}
 .btn-new {
     background-color: #dcdcdc;
 }
@@ -498,9 +515,9 @@ input#img-6:checked ~ .nav-dots label#img-dot-6 {
     .search-form input[type="text"],
     .search-form input[type="submit"] {
         padding: 8px;
-        border: none;
+        /* border: none; */
         border-radius: 5px;
-        font-size: 14px;
+        font-size: 10px;
     }
     
     .search-form select {
@@ -509,7 +526,7 @@ input#img-6:checked ~ .nav-dots label#img-dot-6 {
     
     .search-form input[type="text"] {
         background-color: #ffffff;
-        width: 200px;
+        width: 500px;
     }
     
     .search-form input[type="submit"] {
@@ -517,3 +534,67 @@ input#img-6:checked ~ .nav-dots label#img-dot-6 {
         color: #ffffff;
         cursor: pointer;
     }
+    
+      .pagination {
+    text-align: center;
+  }
+
+  .pagination button {
+    padding: 8px 16px;
+    margin: 0 4px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .pagination button:hover {
+    background-color: black;
+  }
+  
+  .page-number {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  padding: 0 5px;
+}
+
+ .btn-login2 {
+        width: 300px;
+        height: 50px;
+        background-color: #ffcc00; /* 배경색 설정 */
+        color: #ffffff; /* 텍스트 색상 설정 */
+        font-family: 'Arial', sans-serif; /* 폰트 설정 */
+        font-size: 24px; /* 폰트 크기 설정 */
+        border: none; /* 테두리 제거 */
+        border-radius: 10px; /* 둥근 모서리 설정 */
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 그림자 효과 설정 */
+}
+
+h3 {
+        text-align: center;
+}
+
+hr {
+        border: none;
+        border-top: 3px solid #000000; /* 테두리 스타일 및 색상 */
+        height: 3px; /* 테두리 굵기 */
+}
+
+.button-style {
+        font-size: 20px;
+        color: white;
+        background-color: #2196F3;
+        border: none;
+        width: 20%;
+        height: 50px;
+        border-radius: 25px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        transition: background-color 0.3s ease; /* 배경색 변경에 대한 애니메이션 효과 추가 */
+    }
+
+    .button-style:hover {
+        background-color: #FF0000; /* 마우스 호버 시 배경색 변경 */
+    }
+    
