@@ -23,9 +23,9 @@
 	window.addEventListener("load", calculateTotalAmount);	
 	
 
-	function userpoint() {
-		var pointInput = document.getElementsByName("point")[0];
-		pointInput.value = serverData.point;
+	function usermileage() {
+		var mileageInput = document.getElementsByName("mileage")[0];
+		mileageInput.value = serverData.mileage;
 	}
 
 	function submitForm() {
@@ -110,6 +110,15 @@
 		  paymentHiddenInput.name = "payment";
 		  paymentHiddenInput.value = paymentValue;
 		  form.appendChild(paymentHiddenInput);
+		  
+		  var usedmileageInput = document.getElementById("mileageInput");
+		  var usedmileageValue = usedmileageInput.value.replace(/,/g, ""); // 쉼표 제거
+
+		  var usedmileageHiddenInput = document.createElement("input");
+		  usedmileageHiddenInput.type = "hidden";
+		  usedmileageHiddenInput.name = "usedmileage";
+		  usedmileageHiddenInput.value = usedmileageValue;
+		  form.appendChild(usedmileageHiddenInput);
 
 		  // pid와 count를 폼 데이터로 추가
 		  for (var i = 0; i < pidInputs.length; i++) {
@@ -129,8 +138,21 @@
 		  document.body.appendChild(form);
 		  form.submit();
 		}
+	
+	// 마일리지 넘기기
+	/* function usermileage() {
+		  var mileageInput = document.getElementById("mileageInput");
+		  var mileageValue = mileageInput.value;
 
+		  // mileageValue를 서버로 전송하고 사용할 수 있도록 폼 데이터로 추가합니다.
+		  var mileageHiddenInput = document.createElement("input");
+		  mileageHiddenInput.type = "hidden";
+		  mileageHiddenInput.name = "usedmileage";
+		  mileageHiddenInput.value = mileageValue;
 
+		  var form = document.getElementById("orderForm");
+		  form.appendChild(mileageHiddenInput);
+		} */
 
 
 	function confirmPurchase() {
@@ -224,7 +246,8 @@ var serverData = {
 	userdetailaddress : "${delivery_View.userdetailaddress}",
 	usertel : "${delivery_View.usertel}",
 	useremail : "${delivery_View.useremail}",
-	point : "${delivery_View.point}"
+	mileage : "${delivery_View.mileage}",
+	usedmileage : "${delivery_View.usedmileage}"
 };
 
 
@@ -235,8 +258,7 @@ function fillUserInfo(checkbox) {
 	var usernameInput = document.getElementsByName("username")[0];
 	var userpostcodeInput = document.getElementsByName("userpostcode")[0];
 	var useraddressInput = document.getElementsByName("useraddress")[0];
-	var userdetailaddressInput = document
-			.getElementsByName("userdetailaddress")[0];
+	var userdetailaddressInput = document.getElementsByName("userdetailaddress")[0];
 	var usertelInput1 = document.getElementsByName("phone1")[0];
 	var usertelInput2 = document.getElementsByName("phone2")[0];
 	var usertelInput3 = document.getElementsByName("phone3")[0];
@@ -268,11 +290,7 @@ function fillUserInfo(checkbox) {
 //페이지 로드 시 자동으로 데이터 비우기
 fillUserInfo(document.getElementById("checkboxId"));
 
-var formattedPrice = ...; // 적절한 방법으로 formattedPrice 변수를 설정해야 합니다.
-var savingAmount = formattedPrice * 0.1;
 
-var savingAmountElement = document.createElement("span");
-savingAmountElement.textContent = savingAmount + "원";
 
 </script>
 
@@ -475,16 +493,17 @@ savingAmountElement.textContent = savingAmount + "원";
 			<tr>
 				<td style="font-size: 15px; vertical-align: top; text-align: left;">마일리지</td>
 				<td style="text-align: right;">보유 <fmt:formatNumber
-						value="${delivery_View.point}" pattern="#,##0" />원<br> <input type="text" name="point" id="pointInput" size="20" dir="ltr" style="font-size: 15px; height: 30px; background-color: #DFE9E8; border-color: white; text-align: right;" 
-  						inputmode="numeric" oninput="formatNumberInput(this)" onblur="checkEnteredPoints()" value="0">원&nbsp;
+						value="${delivery_View.mileage}" pattern="#,##0" />원<br>
+						<input type="text" name="mileage" id="mileageInput" size="20" dir="ltr" style="font-size: 15px; height: 30px; background-color: #DFE9E8; border-color: white; text-align: right;" 
+  						inputmode="numeric" oninput="formatNumberInput(this)" onblur="checkEnteredmileages()" value="0">원&nbsp;
 
-<button type="button" id="clearButton" style="display: none; height: 30px; background-color: #477a7b; border: none; color: white;" onclick="clearPointInput()">X</button>
+<button type="button" id="clearButton" style="display: none; height: 30px; background-color: #477a7b; border: none; color: white;" onclick="clearmileageInput()">X</button>
 
 					<button type="button"
 						style="height: 30px; background-color: #477a7b; border: none; color: white;"
-						onclick="useAllPoints()">전액사용</button>
-					<br> 남은 적립금 <span id="remainingPoints"></span>원<br>
-					적립 예정 금액<input id="savingAmountContainer" value="${ }" >
+						onclick="useAllmileages()">전액사용</button>
+					<br> 남은 적립금 <span id="remainingmileages"></span>원<br>
+					
 				</td>
 			</tr>
 			<tr>
@@ -520,6 +539,7 @@ savingAmountElement.textContent = savingAmount + "원";
 				<button type="button" class="submit-button"
 					style="width: 300px; height: 40px; background-color: #477A7B; border: none; color: white;"
 					onclick="confirmPurchase()">결제하기</button>
+					<!-- <input type="submit" value="결제하기"> -->
 			</td>
 		</tr>
 
@@ -566,22 +586,22 @@ savingAmountElement.textContent = savingAmount + "원";
 <!-- 마일리지  -->
 <script type="text/javascript">
 		var totalPrice = parseInt("${totalPrice}");
-		var deliveryPoint = parseInt("${delivery_View.point}");
+		var deliverymileage = parseInt("${delivery_View.mileage}");
 
-		function useAllPoints() {
-			  var pointInput = document.getElementById("pointInput");
-			  var enteredPoints = deliveryPoint; // "${delivery_View.point}" 값을 사용
+		function useAllmileages() {
+			  var mileageInput = document.getElementById("mileageInput");
+			  var enteredmileages = deliverymileage; // "${delivery_View.mileage}" 값을 사용
 
-			  if (enteredPoints > deliveryPoint) {
+			  if (enteredmileages > deliverymileage) {
 			    alert("입력한 값이 보유 적립금보다 큽니다.");
 			    return;
 			  }
 
-			  if (enteredPoints > totalPrice) {
-			    enteredPoints = totalPrice;
+			  if (enteredmileages > totalPrice) {
+			    enteredmileages = totalPrice;
 			  }
 
-			  pointInput.value = numberWithCommas(enteredPoints);
+			  mileageInput.value = numberWithCommas(enteredmileages);
 			  calculateRemainingTotalPrice();
 
 			  // x버튼 보이기
@@ -589,29 +609,29 @@ savingAmountElement.textContent = savingAmount + "원";
 			  clearButton.style.display = "inline";
 			}
 
-		function checkEnteredPoints() {
-			var pointInput = document.getElementById("pointInput");
-			var enteredPoints = parseInt(pointInput.value
+		function checkEnteredmileages() {
+			var mileageInput = document.getElementById("mileageInput");
+			var enteredmileages = parseInt(mileageInput.value
 					.replace(/[^0-9]/g, "")); // 입력된 값을 정수로 변환
 
-			if (enteredPoints > deliveryPoint || enteredPoints > totalPrice) {
-				if (!pointInput.getAttribute("data-shown-warning")) {
+			if (enteredmileages > deliverymileage || enteredmileages > totalPrice) {
+				if (!mileageInput.getAttribute("data-shown-warning")) {
 					alert("입력한 값이 보유 적립금보다 크거나 주문 금액을 초과합니다.");
-					pointInput.setAttribute("data-shown-warning", "true");
-					pointInput.value = "0"; // 입력 값을 0으로 변경
-					pointInput.focus(); // 입력 요소에 다시 포커스를 설정하여 수정 가능하도록 함
+					mileageInput.setAttribute("data-shown-warning", "true");
+					mileageInput.value = "0"; // 입력 값을 0으로 변경
+					mileageInput.focus(); // 입력 요소에 다시 포커스를 설정하여 수정 가능하도록 함
 				}
 			} else {
-				pointInput.removeAttribute("data-shown-warning");
-				pointInput.value = numberWithCommas(enteredPoints); // 포맷이 적용된 값으로 변경
+				mileageInput.removeAttribute("data-shown-warning");
+				mileageInput.value = numberWithCommas(enteredmileages); // 포맷이 적용된 값으로 변경
 				calculateRemainingTotalPrice(); // 값이 유효한 경우에만 남은 총 가격 계산
 			}
 		}
 
 		function calculateRemainingTotalPrice() {
-			var pointInput = parseInt(document.getElementById("pointInput").value
+			var mileageInput = parseInt(document.getElementById("mileageInput").value
 					.replace(/[^0-9]/g, ""));
-			var remainingTotalPrice = totalPrice - pointInput;
+			var remainingTotalPrice = totalPrice - mileageInput;
 
 			if (remainingTotalPrice < 0) {
 				remainingTotalPrice = 0;
@@ -625,47 +645,47 @@ savingAmountElement.textContent = savingAmount + "원";
 		}
 
 		function calculateRemainingTotalPrice() {
-			var pointInput = parseInt(document.getElementById("pointInput").value
+			var mileageInput = parseInt(document.getElementById("mileageInput").value
 					.replace(/[^0-9]/g, ""));
-			var remainingPoints = deliveryPoint - pointInput;
-			var remainingTotalPrice = totalPrice - pointInput;
+			var remainingmileages = deliverymileage - mileageInput;
+			var remainingTotalPrice = totalPrice - mileageInput;
 
 			document.getElementById("remainingTotalPrice").textContent = numberWithCommas(remainingTotalPrice);
-			document.getElementById("remainingPoints").textContent = numberWithCommas(remainingPoints);
+			document.getElementById("remainingmileages").textContent = numberWithCommas(remainingmileages);
 		}
 		
 		// x버튼
 		function showClearButton() {
-			  var pointInput = document.getElementById("pointInput");
+			  var mileageInput = document.getElementById("mileageInput");
 			  var clearButton = document.getElementById("clearButton");
 
-			  if (pointInput.value !== "0") {
+			  if (mileageInput.value !== "0") {
 			    clearButton.style.display = "inline";
 			  } else {
 			    clearButton.style.display = "none";
 			  }
 			}
 
-			function clearPointInput() {
-			  var pointInput = document.getElementById("pointInput");
-			  pointInput.value = "0";
+			function clearmileageInput() {
+			  var mileageInput = document.getElementById("mileageInput");
+			  mileageInput.value = "0";
 			  showClearButton();
 			  calculateRemainingTotalPrice();
 			}
 
 			// input 필드에 값이 입력되는 이벤트를 감지하여 showClearButton 함수 호출
-			document.getElementById("pointInput").addEventListener("input", showClearButton);
+			document.getElementById("mileageInput").addEventListener("input", showClearButton);
 
 			// 초기화 버튼 클릭 이벤트 처리
-			document.getElementById("clearButton").addEventListener("click", clearPointInput);
+			document.getElementById("clearButton").addEventListener("click", clearmileageInput);
 
 
 		// 초기화
 		calculateRemainingTotalPrice();
 
-		// input 필드에 값이 입력되는 이벤트를 감지하여 checkEnteredPoints 함수 호출
-		document.getElementById("pointInput").addEventListener("input",
-				checkEnteredPoints);
+		// input 필드에 값이 입력되는 이벤트를 감지하여 checkEnteredmileages 함수 호출
+		document.getElementById("mileageInput").addEventListener("input",
+				checkEnteredmileages);
 		
 		
 		
