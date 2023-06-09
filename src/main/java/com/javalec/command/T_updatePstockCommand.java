@@ -15,23 +15,42 @@ public class T_updatePstockCommand implements Acommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         int count = 0;
         List<String> pidList = new ArrayList<>();
+        List<Integer> countList = new ArrayList<>();
 
         if (request.getParameter("count") != null) {
-            String countParameter = request.getParameter("count");
-            if (!countParameter.isEmpty()) {
-                count = Integer.parseInt(countParameter);
+            String[] countArray = request.getParameterValues("count");
+            for (String countStr : countArray) {
+                if (!countStr.isEmpty()) {
+                    int productCount = Integer.parseInt(countStr);
+                    countList.add(productCount);
+                } else {
+                    System.out.println("count is null or empty");
+                    // 적절한 기본값 또는 오류 처리를 수행하세요.
+                }
             }
+        } else {
+            System.out.println("count is null");
+            // 적절한 기본값 또는 오류 처리를 수행하세요.
         }
 
-        String[] pids = request.getParameterValues("pid");
-        if (pids != null && pids.length > 0) {
-            for (String pid : pids) {
+        if (request.getParameter("pid") != null) {
+            String[] pidArray = request.getParameterValues("pid");
+            for (String pid : pidArray) {
                 pidList.add(pid);
             }
+        } else {
+            System.out.println("null");
         }
-
+//        String[] pids = request.getParameterValues("pid");
+//        if (pids != null && pids.length > 0) {
+//            for (String pid : pids) {
+//                pidList.add(pid);
+//            }
+//        }
+        System.out.println("pidList = " + pidList);
+        System.out.println("count = " + countList);
         T_Dao dao = new T_Dao();
-        dao.updatePstock(pidList, count);
+        dao.updatePstock(pidList, countList);
 
         // 오류 발생 시 처리 방법 추가
         try {

@@ -17,9 +17,11 @@ import com.javalec.command.J_insertCartCommand;
 import com.javalec.command.J_userPageCommand;
 import com.javalec.command.O_getNDetailCommand;
 import com.javalec.command.O_getNoticeCommand;
+import com.javalec.command.T_cartUpdateCommand;
 import com.javalec.command.T_cartlistCommnd;
 import com.javalec.command.T_orderCommand;
 import com.javalec.command.T_purchaseCommand;
+import com.javalec.command.T_updatePstockCommand;
 import com.javalec.command.T_userinfoCommand;
 import com.javalec.command.W_ProductInsertCommand;
 import com.javalec.command.W_ProductUpdataActionCommand;
@@ -64,6 +66,7 @@ public class Controller extends HttpServlet {
 	private void actionDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("UTF-8");
 
 		String viewPage = null;
 		Acommand command = null;
@@ -132,7 +135,7 @@ public class Controller extends HttpServlet {
 			viewPage = "/T_cart.jsp";
 			break;
 		case "/T_cart.do":
-			command = new T_cartlistCommnd();
+			command = new T_cartUpdateCommand();
 			command.execute(request, response);
 			viewPage = "cart.do";
 			break;
@@ -153,9 +156,9 @@ public class Controller extends HttpServlet {
 		// 구매하기 누르기
 		case "/order.do":
 			command = new T_orderCommand();
-			// command1 = new T_updatePstockCommand();
+			//command1 = new T_updatePstockCommand();
 			command.execute(request, response);
-			// command1.execute(request, response);
+			//command1.execute(request, response);
 
 			viewPage = "T_purchaseComplete.jsp";
 			break;

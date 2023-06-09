@@ -2,11 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %><!-- 쉼표제거할때 쓰는 fn 접두사 -->
 
 <!DOCTYPE html>
 <html>
 
 <head>
+<meta charset="utf-8">
 <link rel="stylesheet" href="A_heardCss.css">
 <link rel="stylesheet" href="T_cartCss.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -119,7 +121,19 @@
 		  usedmileageHiddenInput.name = "usedmileage";
 		  usedmileageHiddenInput.value = usedmileageValue;
 		  form.appendChild(usedmileageHiddenInput);
+		  
+		  //formattedMileage
 
+		  var enterdmileageInput = document.getElementById("formattedMileage");
+			var enterdmileageValue = enterdmileageInput.textContent.replace(/,/g, ""); // 쉼표 제거
+			
+			var enterdmileageHiddenInput = document.createElement("input");
+			enterdmileageHiddenInput.type = "hidden";
+			enterdmileageHiddenInput.name = "enteredmileage"; // 수정: name을 "enteredmileage"로 변경
+			enterdmileageHiddenInput.value = enterdmileageValue;
+			form.appendChild(enterdmileageHiddenInput);
+
+		  
 		  // pid와 count를 폼 데이터로 추가
 		  for (var i = 0; i < pidInputs.length; i++) {
 		    var pidInput = document.createElement("input");
@@ -229,8 +243,7 @@
 						document.getElementById('sample6_postcode').value = data.zonecode;
 						document.getElementById("sample6_address").value = addr;
 						// 커서를 상세주소 필드로 이동한다.
-						document.getElementById("sample6_detailAddress")
-								.focus();
+						document.getElementById("sample6_detailAddress").focus();
 					}
 				}).open();
 	}
@@ -485,17 +498,22 @@ fillUserInfo(document.getElementById("checkboxId"));
 			<tr>
 				<td style="font-size: 15px; vertical-align: top; text-align: left;">주문
 					금액</td>
-				<td style="text-align: right;"><fmt:formatNumber
-						value="${totalPrice}" var="formattedPrice" pattern="#,##0" /> <c:out
-						value="${formattedPrice}" />원<br>
-				<br></td>
+				<td style="text-align: right;">
+				<%-- <fmt:formatNumber value="${totalPrice}" var="formattedPrice" pattern="#,##0" /> --%>
+				<c:out value="${formattedPrice}" />원
+				<br><br>
+				</td>
 			</tr>
 			<tr>
 				<td style="font-size: 15px; vertical-align: top; text-align: left;">마일리지</td>
-				<td style="text-align: right;">보유 <fmt:formatNumber
-						value="${delivery_View.mileage}" pattern="#,##0" />원<br>
-						<input type="text" name="mileage" id="mileageInput" size="20" dir="ltr" style="font-size: 15px; height: 30px; background-color: #DFE9E8; border-color: white; text-align: right;" 
-  						inputmode="numeric" oninput="formatNumberInput(this)" onblur="checkEnteredmileages()" value="0">원&nbsp;
+				
+				<td style="text-align: right;">
+						적립 예정 마일리지 <span id="formattedMileage"></span>원
+
+
+    <br>보유 <fmt:formatNumber value="${delivery_View.mileage}" pattern="#,##0" />원<br>
+    <input type="text" name="mileage" id="mileageInput" size="20" dir="ltr" style="font-size: 15px; height: 30px; background-color: #DFE9E8; border-color: white; text-align: right;" 
+           inputmode="numeric" oninput="formatNumberInput(this)" onblur="checkEnteredmileages()" value="0">원&nbsp;
 
 <button type="button" id="clearButton" style="display: none; height: 30px; background-color: #477a7b; border: none; color: white;" onclick="clearmileageInput()">X</button>
 
@@ -529,9 +547,9 @@ fillUserInfo(document.getElementById("checkboxId"));
 		<tr>
 			<td style="text-align: left;">
 			<input type="radio" name="payment" value="카드결제" checked="checked">카드 결제&nbsp;
-			<input type="radio" name="payment" value="가상계좌">에스크로(가상계좌)&nbsp;
-			<input	type="radio" name="payment" value="실시간계좌">에스크로(실시간계좌이체)&nbsp;
-			<input type="radio" name="payment" value="카카오페이">카카오페이(간편결제)<br>
+			<input type="radio" name="payment" value="에스크로(가상계좌)">에스크로(가상계좌)&nbsp;
+			<input	type="radio" name="payment" value="에스크로(실시간계좌이체)">에스크로(실시간계좌이체)&nbsp;
+			<input type="radio" name="payment" value="카카오페이(간편결제)">카카오페이(간편결제)<br>
 			<br></td>
 		</tr>
 		<tr>
@@ -585,6 +603,18 @@ fillUserInfo(document.getElementById("checkboxId"));
 
 <!-- 마일리지  -->
 <script type="text/javascript">
+
+
+		// 적립예정 마일리지 정리
+		var formattedPrice = "${fn:replace(formattedPrice, ',', '') * 0.01}";
+	    var mileageElement = document.getElementById("formattedMileage");
+	    
+	    var formatter = new Intl.NumberFormat("ko-KR");
+	    var formattedValue = formatter.format(Math.floor(formattedPrice));
+	    
+    	mileageElement.textContent = formattedValue;
+    		
+    	
 		var totalPrice = parseInt("${totalPrice}");
 		var deliverymileage = parseInt("${delivery_View.mileage}");
 

@@ -32,10 +32,21 @@ public class T_orderCommand implements Acommand {
         List<Integer> countList = new ArrayList<>();
 
         T_Dao dao = new T_Dao();
-        int count = 0;
+        //int count = 0;
         String ordermessage = request.getParameter("ordermessage");
         String payment = request.getParameter("payment");
         String userid = "do";
+        
+        
+        
+        String enteredmileageParameter = request.getParameter("enteredmileage"); // 수정: "enteredmileage"로 변경
+        int enteredmileage = 0; // 기본값 설정
+        if (enteredmileageParameter != null && !enteredmileageParameter.isEmpty()) {
+            enteredmileage = Integer.parseInt(enteredmileageParameter);
+        } else {
+            System.out.println("null");
+        }
+        
         
         String usedmileageParameter = request.getParameter("usedmileage");
         int usedmileage = 0; // 기본값 설정
@@ -70,7 +81,7 @@ public class T_orderCommand implements Acommand {
             // 적절한 기본값 또는 오류 처리를 수행하세요.
         }
 
-
+        System.out.println("enteredmileage = " + enteredmileage);
         
 //        System.out.println("username = " + username);
 //        System.out.println("userpostcode = " + userpostcode);
@@ -83,8 +94,10 @@ public class T_orderCommand implements Acommand {
 //        System.out.println("payment = " + payment);
 //        System.out.println("usedmileage = " + usedmileage);
 
-        dao.orders(pidList, countList, username, userpostcode, useraddress, userdetailaddress, phone1, phone2, phone3, ordermessage, payment, usedmileage);
-        
+        // 주문하면 order로 넘기기
+        dao.orders(pidList, countList, username, userpostcode, useraddress, userdetailaddress, phone1, phone2, phone3, ordermessage, payment, usedmileage, enteredmileage);
+        // pstock업데이트
+        dao.updatePstock(pidList, countList);
        
         // 주문 처리 로직 실행 후의 코드
         // 성공적으로 주문되었다는 메시지 등을 설정하거나 리디렉션할 수 있습니다.

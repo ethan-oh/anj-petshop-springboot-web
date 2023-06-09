@@ -3,6 +3,7 @@ package com.javalec.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -183,16 +184,20 @@ public class T_Dao {
 
 		// 주문하기
 		private String userid = "do"; // 사용자 ID를 여기에 설정
-		//private int pprice = 0;
-		
-		public void orders(List<String> pidList, List<Integer> countList, String username, String userpostcode, String useraddress, String userdetailaddress, String phone1, String phone2, String phone3, String ordermessage, String payment, int usedmileage) {
+
+
+		public void orders(List<String> pidList, List<Integer> countList, String username, String userpostcode, String useraddress, String userdetailaddress, String phone1, String phone2, String phone3, String ordermessage, String payment, int usedmileage, int enteredmileage) {
 		    Connection connection = null;
 		    PreparedStatement preparedStatement = null;
 
 		    try {
 		        connection = dataSource.getConnection();
+
+		        // 트랜잭션 시작
+		        connection.setAutoCommit(false);
+
 		        String query = "INSERT INTO orders (ordernum, count, orderprice, username, userpostcode, shipaddress, usertel, orderdate, userid, pid, ordermessage, payment, usedmileage)"
-		                + " SELECT CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'), LAST_INSERT_ID()), ?, ?, ?, ?, ?, ?, NOW(),'do', ?, ?, ?, ?"
+		                + " SELECT CONCAT(DATE_FORMAT(NOW(), '%Y%m%d'), '-', DATE_FORMAT(NOW(), '%H%i%s')), ?, ?, ?, ?, ?, ?, NOW(), 'do', ?, ?, ?, ?"
 		                + " FROM cart c"
 		                + " JOIN user u ON u.userid = c.userid "
 		                + " JOIN product p ON p.pid = c.pid"
@@ -202,6 +207,8 @@ public class T_Dao {
 
 		        String priceQuery = "SELECT pprice FROM product WHERE pid = ?";
 		        PreparedStatement priceStatement = connection.prepareStatement(priceQuery);
+
+		        int totalOrderPrice = 0; // 주문 총 가격 변수 추가
 
 		        for (int i = 0; i < pidList.size(); i++) {
 		            String pid = pidList.get(i);
@@ -214,6 +221,7 @@ public class T_Dao {
 		            if (priceResultSet.next()) {
 		                int pprice = priceResultSet.getInt("pprice");
 		                int orderPrice = count * pprice; // 주문 가격 계산
+		                totalOrderPrice += orderPrice; // 주문 총 가격 누적
 
 		                preparedStatement.setInt(1, count);
 		                preparedStatement.setInt(2, orderPrice);
@@ -236,11 +244,80 @@ public class T_Dao {
 
 		        preparedStatement.executeBatch();
 		        priceStatement.close();
-
+		        
 		        String query1 = "DELETE FROM cart WHERE userid = ?";
 		        preparedStatement = connection.prepareStatement(query1);
 		        preparedStatement.setString(1, "do"); // userid를 'do'로 고정
 		        preparedStatement.executeUpdate();
+
+		        if (usedmileage > 0) {
+		            String deductMileageQuery = "UPDATE user SET mileage = mileage - ? WHERE userid = ?";
+		            PreparedStatement deductMileageStatement = connection.prepareStatement(deductMileageQuery);
+		            deductMileageStatement.setInt(1, usedmileage); // 사용한 마일리지 값
+		            deductMileageStatement.setString(2, "do"); // 사용자 ID
+		            deductMileageStatement.executeUpdate();
+		        }
+
+
+		        if (enteredmileage > 0) {
+		            String enteredmileageQuery = "UPDATE user SET mileage = mileage + ? WHERE userid = ?";
+		            PreparedStatement enteredmileageStatement = connection.prepareStatement(enteredmileageQuery);
+		            enteredmileageStatement.setInt(1, enteredmileage); // 적립될 마일리지 값
+		            enteredmileageStatement.setString(2, "do"); // 사용자 ID
+		            enteredmileageStatement.executeUpdate();
+		        }
+
+		        // 트랜잭션 커밋
+		        connection.commit();
+		        		        
+		        
+		    } catch (Exception e) {
+		        // 트랜잭션 롤백
+		        if (connection != null) {
+		            try {
+		                connection.rollback();
+		            } catch (SQLException ex) {
+		                ex.printStackTrace();
+		            }
+		        }
+		        e.printStackTrace();
+		    } finally {
+		        try {
+		            // 트랜잭션 종료
+		            if (preparedStatement != null)
+		                preparedStatement.close();
+		            if (connection != null)
+		                connection.close();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+		}
+
+
+		
+		
+		
+		
+		
+		// 상품 수량 업데이트
+		public void updatePstock(List<String> pidList, List<Integer> countList) {
+		    Connection connection = null;
+		    PreparedStatement preparedStatement = null;
+
+		    try {
+		        connection = dataSource.getConnection();
+
+		        for (int i = 0; i < pidList.size(); i++) {
+		            String pid = pidList.get(i);
+		            int count = countList.get(i);
+
+		            String query = "UPDATE product SET pstock = pstock - ? WHERE pid = ?";
+		            preparedStatement = connection.prepareStatement(query);
+		            preparedStatement.setInt(1, count);
+		            preparedStatement.setString(2, pid);
+		            preparedStatement.executeUpdate();
+		        }
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		    } finally {
@@ -254,132 +331,53 @@ public class T_Dao {
 		        }
 		    }
 		}
-
-
-
 		
 		
 		
 		
 		
-		
-		
-		
-		//보류
-//		public void orders(List<String> pidList, List<Integer> countList, String username, String userpostcode, String useraddress, String userdetailaddress, String phone1, String phone2, String phone3, String ordermessage, String payment, int usedmileage) {
+		// 구매 후 내역 띄우기
+//		public T_userinfoDto userlist(String userid) {
+//		    T_userinfoDto dto = null;
 //		    Connection connection = null;
 //		    PreparedStatement preparedStatement = null;
-//		    Statement statement = null; // Statement 변수 추가
+//		    ResultSet resultSet = null;
+//		    String fixedUserId = "do"; // userid를 고정값으로 설정
 //
 //		    try {
 //		        connection = dataSource.getConnection();
-//		        statement = connection.createStatement(); // Statement 생성
-//
-//		        String query = "INSERT INTO orders (ordernum, count, orderprice, username, userpostcode, shipaddress, usertel, orderdate, userid, pid, ordermessage, payment, usedmileage)"
-//		        	    + " SELECT CONCAT(DATE_FORMAT(NOW(), '%Y%m%d'), LPAD(@seq, 5, '0')), ?, p.pprice*?, ?, ?, ?, ?, NOW(),'do', ?, ?, ?, ?"
-//		        	    + " FROM cart c"
-//		        	    + " JOIN user u ON u.userid = c.userid "
-//		        	    + " JOIN product p ON p.pid = c.pid"
-//		        	    + " JOIN (SELECT @seq := @seq + 1 FROM cart LIMIT 1) s" // seq 변수 증가
-//		        	    + " WHERE u.userid = ? AND p.pid = ?"
-//		        	    + " LIMIT 1;";
-//
-//		        	preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-//
-//		        	for (int i = 0; i < pidList.size(); i++) {
-//		        	    String pid = pidList.get(i);
-//		        	    preparedStatement.setInt(1, countList.get(i)); // count 값을 countList에서 가져옴
-//		        	    preparedStatement.setInt(2, countList.get(i)); // count 값을 countList에서 가져옴
-//		        	    preparedStatement.setString(3, username);
-//		        	    preparedStatement.setString(4, userpostcode);
-//		        	    preparedStatement.setString(5, useraddress + userdetailaddress);
-//		        	    preparedStatement.setString(6, phone1 + "-" + phone2 + "-" + phone3);
-//		        	    preparedStatement.setString(7, pid);
-//		        	    preparedStatement.setString(8, ordermessage);
-//		        	    preparedStatement.setString(9, payment);
-//		        	    preparedStatement.setInt(10, usedmileage);
-//		        	    preparedStatement.setString(11, "do"); // userid를 'do'로 고정
-//		        	    preparedStatement.setString(12, "do"); // 12번째 매개변수에도 'do'로 설정
-//
-//		        	    preparedStatement.addBatch();
-//		        	}
-//
-//		        	preparedStatement.executeBatch(); // Batch 실행
-//
-//		        	String deleteQuery = "DELETE FROM cart WHERE userid = ?";
-//		        	preparedStatement = connection.prepareStatement(deleteQuery);
-//		        	preparedStatement.setString(1, "do"); // userid를 'do'로 고정
-//		        	preparedStatement.executeUpdate();
-//		    } catch (Exception e) {
-//		        e.printStackTrace();
-//		    } finally {
-//		        try {
-//		            if (preparedStatement != null)
-//		                preparedStatement.close();
-//		            if (connection != null)
-//		                connection.close();
-//		        } catch (Exception e) {
-//		            e.printStackTrace();
-//		        }
-//		    }
-//		}
-
-
-
-
-
-
-
-
-
-		
-		
-		
-		
-		
-//		public void usersorders(String username, String userpostcode, String useraddress, String userdetailaddress, String phone1, String phone2, String phone3, String ordermessage, String payment, int usedmileage) {
-//		    Connection connection = null;
-//		    PreparedStatement preparedStatement = null;
-//
-//		    try {
-//		        connection = dataSource.getConnection();
-//		        String query = "INSERT INTO orders (ordernum, orderprice, username, userpostcode, shipaddress, usertel, orderdate, ordermessage, payment, usedmileage)"
-//		            + " SELECT CONCAT(DATE_FORMAT(NOW(), '%Y-%m-%d'), LAST_INSERT_ID()), p.pprice*count, ?, ?, ?, ?, NOW(), ?, ?, ?"
-//		            + " FROM cart c"
-//		            + " JOIN user u ON u.userid = c.userid "
-//		            + " JOIN product p ON p.pid = c.pid"
-//		            + " WHERE u.userid = ? AND p.pid = ?"
-//		            + " LIMIT 1;";
-//
+//		        String query = "SELECT * FROM orders WHERE ordernum = ?;";
 //		        preparedStatement = connection.prepareStatement(query);
-//		        
-//		        preparedStatement.setString(1, username);
-//		        preparedStatement.setString(2, userpostcode);
-//		        preparedStatement.setString(3, useraddress + userdetailaddress);
-//		        preparedStatement.setString(4, phone1 + "-" + phone2 + "-" + phone3);
-//		        preparedStatement.setString(5, ordermessage); // 수정된 부분
-//		        preparedStatement.setString(6, payment); // 수정된 부분
-//		        preparedStatement.setInt(7, usedmileage); // 수정된 부분
-//		        preparedStatement.executeUpdate();
-//		        
-//		        
-//		        System.out.println("username1: " + username);
-//		        System.out.println("userpostcode1: " + userpostcode);
-//		        System.out.println("useraddress1 " + useraddress);
-//		        System.out.println("userdetailaddress1 " + userdetailaddress);
-//		        System.out.println("phone1*: " + phone1);
-//		        System.out.println("phone2*: " + phone2);
-//		        System.out.println("phone3*: " + phone3);
-//		        System.out.println("usedmileage" + usedmileage);
-//		        System.out.println("payment1: " + payment);
-//		        
-//		        
+//		        preparedStatement.setString(1, fixedUserId); // 고정값으로 설정된 변수를 사용
+//		        resultSet = preparedStatement.executeQuery();
 //
-//		       
+//		        if (resultSet.next()) {
+//		            String username = resultSet.getString("username");
+//		            String userpostcode = resultSet.getString("userpostcode");
+//		            String useraddress = resultSet.getString("useraddress");
+//		            String userdetailaddress = resultSet.getString("userdetailaddress");
+//		            String usertel1 = resultSet.getString("usertel").substring(0, 3);
+//		            String usertel2 = resultSet.getString("usertel").substring(4, 8);
+//		            String usertel3 = resultSet.getString("usertel").substring(9);
+//		            String useremail = resultSet.getString("useremail");
+//		            int mileage = resultSet.getInt("mileage");
+//
+//		            dto = new T_userinfoDto();
+//		            dto.setUserid(fixedUserId); // 고정값으로 설정된 변수를 사용
+//		            dto.setUsername(username);
+//		            dto.setUserpostcode(userpostcode);
+//		            dto.setUseraddress(useraddress);
+//		            dto.setUserdetailaddress(userdetailaddress);
+//		            dto.setUsertel(usertel1 + "-" + usertel2 + "-" + usertel3);
+//		            dto.setUseremail(useremail);
+//		            dto.setMileage(mileage);
+//		        }
 //		    } catch (Exception e) {
 //		        e.printStackTrace();
 //		    } finally {
 //		        try {
+//		            if (resultSet != null)
+//		                resultSet.close();
 //		            if (preparedStatement != null)
 //		                preparedStatement.close();
 //		            if (connection != null)
@@ -388,49 +386,7 @@ public class T_Dao {
 //		            e.printStackTrace();
 //		        }
 //		    }
-//		}
-		
-		
-		
-//		public void productorders(List<String> pidList, int count) {
-//		    Connection connection = null;
-//		    PreparedStatement preparedStatement = null;
-//
-//		    try {
-//		        connection = dataSource.getConnection();
-//		        String query = "INSERT INTO orders (count, userid, pid) "
-//		                + "SELECT ?, 'do', ? "
-//		                + "FROM cart c "
-//		                + "JOIN user u ON u.userid = c.userid "
-//		                + "JOIN product p ON p.pid = c.pid "
-//		                + "WHERE u.userid = 'do' AND c.pid = ?;";
-//
-//		        preparedStatement = connection.prepareStatement(query);
-//
-//		        for (String pid : pidList) {
-//		            preparedStatement.setInt(1, count);
-//		            preparedStatement.setString(2, pid);
-//		            preparedStatement.setString(3, pid);
-//		            preparedStatement.addBatch();
-//		        }
-//
-//		        preparedStatement.executeBatch();
-//
-//		        String query1 = "DELETE FROM cart WHERE userid = 'do'";
-//		        preparedStatement = connection.prepareStatement(query1);
-//		        preparedStatement.executeUpdate();
-//		    } catch (Exception e) {
-//		        e.printStackTrace();
-//		    } finally {
-//		        try {
-//		            if (preparedStatement != null)
-//		                preparedStatement.close();
-//		            if (connection != null)
-//		                connection.close();
-//		        } catch (Exception e) {
-//		            e.printStackTrace();
-//		        }
-//		    }
+//		    return dto;
 //		}
 		
 		
@@ -440,55 +396,13 @@ public class T_Dao {
 		
 		
 		
-
-
-
-
-
-//		preparedStatement.setString(1, userid);
-
-
-
-
-
-
-
-
-
-
-
-
-		// 주문하면 pstock에서 count만큼 빼주기
-//		public void updatePstock(List<String> pidList, int count) {
-//		    Connection connection = null;
-//		    PreparedStatement preparedStatement = null;
-//
-//		    try {
-//		        connection = dataSource.getConnection();
-//		        String query = "UPDATE product p " +
-//		                "JOIN orders o ON p.pid = o.pid " +
-//		                "SET p.pstock = p.pstock - o.count " +
-//		                "WHERE o.oderseq = o.oderseq AND p.pid = ?";
-//		        preparedStatement = connection.prepareStatement(query);
-//
-//		        for (String pid : pidList) {
-//		            preparedStatement.setString(1, pid);
-//		            preparedStatement.executeUpdate();
-//		        }
-//		    } catch (Exception e) {
-//		        e.printStackTrace();
-//		    } finally {
-//		        try {
-//		            if (preparedStatement != null)
-//		                preparedStatement.close();
-//		            if (connection != null)
-//		                connection.close();
-//		        } catch (Exception e) {
-//		            e.printStackTrace();
-//		        }
-//		    }
-//		}
-	
-	
-	
+		
+		
+		
+		
+		
 }
+		
+		
+		
+		

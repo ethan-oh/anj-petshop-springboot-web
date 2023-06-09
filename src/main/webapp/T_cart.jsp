@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="T_cartCss.css">
 
 <head>
-
+<meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>장바구니</title>
 </head>
