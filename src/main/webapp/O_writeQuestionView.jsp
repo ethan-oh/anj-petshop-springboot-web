@@ -44,18 +44,30 @@
 </head>
 <body>
 	<header>
-		<nav>
-			<ul>
-				<li><a href="A_MainView.do"><img src="LOGO.png" alt="logo"></a></li>
-				<li><a href="A_ProductView.do">SHOP</a></li>
-				<li><a href="#">ANJLIFE</a></li>
-				<li><a href="#">COMMUNITY</a></li>
-				<li><a href="#">CART</a></li>
-				<li class="right-align"><a href="A_introduction.jsp">Login</a></li>
-				<li class="right-align"><a href="A_introduction.jsp">New</a></li>
-			</ul>
-		</nav>
-	</header>
+		        <div class="head-wrap">
+		            <div class="head-wrap-inner">
+		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
+		            	</div>
+		           	 <div class="head-wrap-sub">
+		           	  <h3>ANJ PET SHOP</h3>
+		                <nav class="head-menu-main-nav">
+		                    <ul>
+		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
+		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
+		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
+		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
+		                        <li class="main-nav04"><a href="#">CART</a></li>         
+		                        <li class="right-align">
+						        <button class="btn-login">Abandoned dog</button>
+						        <button class="btn-login">Login</button>
+						        <button class="btn-new">New MEMBERS</button>
+						      </li>
+		                    </ul>
+			            </nav>
+			            </div>
+		       		 </div>
+   	 			</header>
+     <br><br> <br> <br><br><hr>
 	<!----------------------------------------------------------------------------------------------------->
 	<div class="page-title" style="background-color: #DFE9E8;">
 		<br><br><br>
@@ -73,8 +85,8 @@
 	</div>
 	<!-- board list area -->
 	<div class="container">
-		<form name="writeQnA" method="post">
-		  <input type="hidden" name="userid" value="osm1119"> <!-- 로그인 구현 시 session값으로 바꿔주기 -->
+		<form name="writeQnA"  method="post">
+		  <input type="hidden" name="userid" value="ajw0376"> <!-- 로그인 구현 시 session값으로 바꿔주기 -->
 		  <table class="board-table">
 		    <thead>
 		      <tr>

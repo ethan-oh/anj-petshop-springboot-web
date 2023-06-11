@@ -80,18 +80,30 @@
 <body>
 <!------------------------- /header ---------------------------------->
 	<header>
-		<nav>
-			<ul>
-				<li><a href="A_MainView.do"><img src="LOGO.png" alt="logo"></a></li>
-				<li><a href="A_ProductView.do">SHOP</a></li>
-				<li><a href="#">ANJLIFE</a></li>
-				<li><a href="#">COMMUNITY</a></li>
-				<li><a href="#">CART</a></li>
-				<li class="right-align"><a href="A_introduction.jsp">Login</a></li>
-				<li class="right-align"><a href="A_introduction.jsp">New</a></li>
-			</ul>
-		</nav>
-	</header>
+		        <div class="head-wrap">
+		            <div class="head-wrap-inner">
+		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
+		            	</div>
+		           	 <div class="head-wrap-sub">
+		           	  <h3>ANJ PET SHOP</h3>
+		                <nav class="head-menu-main-nav">
+		                    <ul>
+		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
+		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
+		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
+		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
+		                        <li class="main-nav04"><a href="#">CART</a></li>         
+		                        <li class="right-align">
+						        <button class="btn-login">Abandoned dog</button>
+						        <button class="btn-login">Login</button>
+						        <button class="btn-new">New MEMBERS</button>
+						      </li>
+		                    </ul>
+			            </nav>
+			            </div>
+		       		 </div>
+   	 			</header>
+     <br><br> <br> <br><br><hr>
 <!------------------------- /header ---------------------------------->
 <!------------------------- body ---------------------------------->
 
@@ -142,7 +154,7 @@
 				<tbody>
 					<tr>
 						<td>내용</td>
-						<td><textarea rows="5" cols="100" wrap="hard" name="n_content" placeholder="내용을 입력하세요."></textarea></td>
+						<td><textarea rows="5" cols="109" wrap="hard" name="n_content" placeholder="내용을 입력하세요."></textarea></td>
 					</tr>
 				</tbody>
 			</table>

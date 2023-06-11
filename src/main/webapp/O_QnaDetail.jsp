@@ -54,12 +54,16 @@
 			form.action = "O_deleteQuestion.do?seq=" + seq;
 			form.submit();
 			return;
+			}else{
+				return; // 취소 눌러도 return함
 			}
 		
 		if(confirm("정말 삭제하시겠습니까?") == true && result == 2){
 			form.action = "O_deleteAnswer.do?seq=" + seq;
 			form.submit();
 			return;
+			}else{
+				return;
 			}
 	}
 	
@@ -72,18 +76,30 @@
 </script>
 <body>
 	<header>
-		<nav>
-			<ul>
-				<li><a href="A_MainView.do"><img src="LOGO.png" alt="logo"></a></li>
-				<li><a href="A_ProductView.do">SHOP</a></li>
-				<li><a href="#">ANJLIFE</a></li>
-				<li><a href="#">COMMUNITY</a></li>
-				<li><a href="#">CART</a></li>
-				<li class="right-align"><a href="A_introduction.jsp">Login</a></li>
-				<li class="right-align"><a href="A_introduction.jsp">New</a></li>
-			</ul>
-		</nav>
-	</header>
+		        <div class="head-wrap">
+		            <div class="head-wrap-inner">
+		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
+		            	</div>
+		           	 <div class="head-wrap-sub">
+		           	  <h3>ANJ PET SHOP</h3>
+		                <nav class="head-menu-main-nav">
+		                    <ul>
+		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
+		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
+		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
+		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
+		                        <li class="main-nav04"><a href="#">CART</a></li>         
+		                        <li class="right-align">
+						        <button class="btn-login">Abandoned dog</button>
+						        <button class="btn-login">Login</button>
+						        <button class="btn-new">New MEMBERS</button>
+						      </li>
+		                    </ul>
+			            </nav>
+			            </div>
+		       		 </div>
+   	 			</header>
+     <br><br> <br> <br><br><hr>
 	<!-- ---------------------- -->
 	<div class="page-title" style="background-color: #DFE9E8;">
 		<br><br><br>
