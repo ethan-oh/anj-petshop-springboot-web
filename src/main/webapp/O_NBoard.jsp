@@ -52,7 +52,7 @@ session.setAttribute("ADMINID", "admin");
 		<br>
 		<h3>COMMUNITY</h3>
 		<br>
-		<br> <span class="selected"><a href="O_Notice.do">NOTICE</a></span> <a href="O_FAQ.do">FAQ</a> <a href="O_QNA.do">Q&A</a> <a href="O_FAQ.do">REVIEW</a> <br>
+		<br> <span class="selected"><a href="O_Notice.do">NOTICE</a></span> <a href="O_FAQ.do">FAQ</a> <a href="O_QNA.do">Q&A</a> <a href="O_Review.do">REVIEW</a> <br>
 		<br>
 	</div>
 

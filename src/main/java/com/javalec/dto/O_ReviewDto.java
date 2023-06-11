@@ -7,25 +7,44 @@ public class O_ReviewDto {
 	String r_title;
 	String r_content;
 	String writedate;
+	int isdelete;
 	String userid;
-	String orders_pid;
+	int orderseq;
+	String pname;
+	String pthumbnail;
 	
 	// Constructor
 	public O_ReviewDto() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public O_ReviewDto(int seq, String r_title, String r_content, String writedate, String userid, String orders_pid) {
+	public O_ReviewDto(int seq, String r_title, String r_content, String writedate, int isdelete, String userid,
+			int orderseq) {
 		super();
 		this.seq = seq;
 		this.r_title = r_title;
 		this.r_content = r_content;
 		this.writedate = writedate;
+		this.isdelete = isdelete;
 		this.userid = userid;
-		this.orders_pid = orders_pid;
+		this.orderseq = orderseq;
+	}
+	
+	// 상품 이름 같이 가지고 오기 위한 생성자
+	public O_ReviewDto(int seq, String r_title, String r_content, String writedate, int isdelete, String userid,
+			int orderseq, String pname, String pthumbnail) {
+		super();
+		this.seq = seq;
+		this.r_title = r_title;
+		this.r_content = r_content;
+		this.writedate = writedate;
+		this.isdelete = isdelete;
+		this.userid = userid;
+		this.orderseq = orderseq;
+		this.pname = pname;
+		this.pthumbnail = pthumbnail;
 	}
 
-	
 	// Getter And Setter
 	public int getSeq() {
 		return seq;
@@ -59,6 +78,14 @@ public class O_ReviewDto {
 		this.writedate = writedate;
 	}
 
+	public int getIsdelete() {
+		return isdelete;
+	}
+
+	public void setIsdelete(int isdelete) {
+		this.isdelete = isdelete;
+	}
+
 	public String getUserid() {
 		return userid;
 	}
@@ -67,13 +94,30 @@ public class O_ReviewDto {
 		this.userid = userid;
 	}
 
-	public String getOrders_pid() {
-		return orders_pid;
+	public int getOrderseq() {
+		return orderseq;
 	}
 
-	public void setOrders_pid(String orders_pid) {
-		this.orders_pid = orders_pid;
+	public void setOrderseq(int orderseq) {
+		this.orderseq = orderseq;
+	}
+
+	public String getPname() {
+		return pname;
+	}
+
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+
+	public String getPthumbnail() {
+		return pthumbnail;
+	}
+
+	public void setPthumbnail(String pthumbnail) {
+		this.pthumbnail = pthumbnail;
 	}
 	
+
 	
 } // End

@@ -108,7 +108,7 @@
 			<a href="O_Notice.do">NOTICE</a>
 			<a href="O_FAQ.do">FAQ</a> 
 			<span class="selected"><a href="O_QNA.do">Q&A</a></span>
-			<a href="O_FAQ.do">REVIEW</a>
+			<a href="O_Review.do">REVIEW</a>
 		<br><br>
 	</div>
 	<div class="page-title">

@@ -6,32 +6,46 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>공지사항</title>
+<title>리뷰 내용</title>
 
 <link rel="stylesheet" href="CSS/O_NBoardStyle.css">
 <link rel="stylesheet" href="A_heardCss.css">
 <link rel="stylesheet" href="A_MainCss.css">
 <link rel="stylesheet" href="CSS/O_Common.css">
-<!-- <script src="JS/O_ScrollTop.js"></script> -->
+<link rel="stylesheet" href="CSS/O_RBoardStyle.css">
+<script src="JS/O_ScrollTop.js"></script>
 
 <script type="text/javascript">
-	function writeCheck(){
-		const form = document.writeNotice
-		const n_title = form.n_title.value
-		const n_content = form.n_content.value
+	function updateCheck(){
+		const form = document.RDetail
+		const r_title = form.r_title.value
+		const r_content = form.r_content.value
 		
-		if(n_title == ""){
+		if(r_title == ""){
 			alert("제목을 입력해 주세요.")
 			return
 		}
-		if(n_content == ""){
+		if(r_content == ""){
 			alert("내용을 입력해 주세요.")
 			return
 		}
-		form.action = "O_writeNotice.do";
-		document.productinfo.submit();
+		if(confirm("수정하시겠습니까?") == true){
+		form.action = "";
+		form.submit();
+		}
+	}
+	
+	function deleteCheck(){
+		const form = document.RDetail
+		
+		if(confirm("정말 삭제하시겠습니까?") == true){
+			const form = document.RDetail
+			form.action = "";
+			form.submit();
+			}
 	}
 </script>
+
 </head>
 <body>
 	<header>
@@ -59,51 +73,68 @@
 		       		 </div>
    	 			</header>
      <br><br> <br> <br><br><hr>
-	<!----------------------------------------------------------------------------------------------------->
+	<!-- ---------------------- -->
 	<div class="page-title" style="background-color: #DFE9E8;">
 		<br><br><br>
 		<h3>COMMUNITY</h3>
 		<br><br>
-			<span class="selected"><a href="O_Notice.do">NOTICE</a></span>
+			<a href="O_Notice.do">NOTICE</a> 
 			<a href="O_FAQ.do">FAQ</a> 
 			<a href="O_QNA.do">Q&A</a> 
-			<a href="O_Review.do">REVIEW</a> 
+			<span class="selected"><a href="O_Review.do">REVIEW</a></span>
 		<br><br>
 	</div>
-
 	<div class="page-title">
-		<h4>공지사항 등록</h4>
+		<h4>리뷰 상세페이지</h4>
 	</div>
+
 	<!-- board list area -->
 	<div class="container">
-		<form name="writeNotice" method="post">
-			<input type="hidden" name="adminid" value="admin">
+		<form name="RDetail" method="post"> <!-- 유저용에서는 이 폼태그 빼고 제목을 input타입 빼고 그냥 적기, textarea readonly 속성 넣어주기 -->
+			<input type="hidden" name="status" value="1">
+			<input type="hidden" name="seq" value="${seq }">
 			<table class="board-table">
 				<thead>
 					<tr>
-						<th scope="col" class="th-wnum">제목</th>
-						<th scope="col" class="th-left"><input type="text" name="n_title" placeholder="제목을 입력하세요."></th>
+						<th class="th-wnum">제목</th>
+						<th scope="col" colspan="3"><input type="text" name="r_title" value="${RDetail.r_title}"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class="th-wnum">작성자</td>
-						<td scope="col" class="th-left">admin</td> <!-- 나중에 로그인한 관리자의 세션으로 받아오기 -->
+						<td class="th-wnum">상품</td>
+						<td scope="col" class="th-left">${RDetail.pname }</td>
 					</tr>
 					<tr>
-						<td class="th-wnum">내용</td>
-						<td class="th-left"><textarea rows="25" cols="102" wrap="hard" name="n_content" placeholder="내용을 입력하세요."></textarea></td>
+						<td class="th-wnum">상품<br>이미지</td>
+						<td scope="col" class="th-left" align="left">
+							<img src="images/thumbnail/${RDetail.pthumbnail}.png" style="width: 10%; float: left;" alt="Product Thumbnail">
+						</td>
 					</tr>
 					<tr>
-						<td class="th-wnum"><span class="list-button"><a href="O_Notice.do">목록</a></span></td>
-						<td class="th-right"><input type="submit" class="list-button" value="등록" onclick="writeCheck()"></td>
+						<td scope="col" class="th-wnum">작성일</td>
+						<td scope="col" class="th-left">${RDetail.writedate}</td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td>
+							<textarea rows="25" cols="109" wrap="hard" name="n_content"><c:out value="${RDetail.r_content}" /></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td class="th-wnum"><span class="list-button"><a href="O_Review.do">목록</a></span></td>
+						<td class="th-right">
+							<input type="submit" class="list-button" value="수정" onclick="updateCheck()">
+							<input type="submit" class="list-button" value="삭제" onclick="deleteCheck()">
+						</td>
 					</tr>
 				</tbody>
 			</table>
 		</form>
 	</div>
+	
 	<button class="top-button" onclick="scrollToTop()">top</button>
-	<!----------------------------------------------------------------------------------------------------->
+	
 	<footer>
 		<ul>
 			<li><a href="#">Brand Story</a></li>
