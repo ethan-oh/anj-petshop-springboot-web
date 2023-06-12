@@ -3,6 +3,7 @@ package com.javalec.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,7 +12,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.javalec.dto.O_CommentsDto;
 import com.javalec.dto.O_NoticeDto;
+import com.javalec.dto.O_QnaDto;
 import com.javalec.dto.O_ReviewDto;
 
 public class O_ReviewDao {
@@ -66,6 +69,39 @@ public class O_ReviewDao {
 			}
 		}
 		return count;
+	}
+	public int getMaxRef(){ // 새 부모댓글이 달릴 때 maxRef + 1 해주기 위한 쿼리
+		
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		int maxRef = 0;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "SELECT max(ref) FROM comments;";
+			ps = connection.prepareStatement(query);
+			rs = ps.executeQuery();
+			
+			
+			if(rs.next()) {
+				maxRef = rs.getInt(1);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return maxRef;
 	}
 	
 	public ArrayList<O_ReviewDto> getReviewList(String queryName, String queryContent, int startNum, int itemPerPage){
@@ -175,4 +211,94 @@ public class O_ReviewDao {
 		}
 		return dto;
 	}
+	
+	public ArrayList<O_CommentsDto> getCommentsList(int t_rootseq){
+		
+		ArrayList<O_CommentsDto> dtos = new ArrayList<>();
+		
+		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd HH:mm");
+		
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query1 = "SELECT * FROM comments where rootseq = " + t_rootseq;
+			String query2 = " order by ref, reforder;";
+			String query = query1 + query2;
+			
+			ps = connection.prepareStatement(query);
+			rs = ps.executeQuery();
+			
+			
+			while(rs.next()) {
+				
+				int c_seq = rs.getInt(1);
+				int rootseq = rs.getInt(2);
+				int ref = rs.getInt(3);
+				int step = rs.getInt(4);
+				int reforder = rs.getInt(5);
+				int answernum = rs.getInt(6);
+				String writer = rs.getString(7);
+				int parentseq = rs.getInt(8);
+				String comments = rs.getString(9);
+				Timestamp tmp_writedate = rs.getTimestamp(10);
+				int isdelete = rs.getInt(11);
+				
+				String writedate = format.format(tmp_writedate);
+				
+				O_CommentsDto dto = new O_CommentsDto(c_seq, rootseq, ref, step, reforder, answernum, writer, parentseq, comments, writedate, isdelete);
+				dtos.add(dto);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return dtos;
+	}
+	
+	public void writeComment(int rseq, String userid, int maxRef, String comment) {
+		
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "INSERT INTO comments (rootseq, ref, step, reforder, answernum, writer, parentseq, comments, writedate, isdelete) "
+					+ "VALUES (?,?,0,0,0,?,0,?,now(),0)"; // parentseq를 제외한 데이터들을 입력해준다.
+			
+			ps = connection.prepareStatement(query); // ai로 자동생성된 seq값을 받아온다.
+			
+			ps.setInt(1, rseq);
+			ps.setInt(2, maxRef + 1);
+			ps.setString(3, userid);
+			ps.setString(4, comment);
+			
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (ps != null) ps.close();
+				if (connection != null) connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
 } // End

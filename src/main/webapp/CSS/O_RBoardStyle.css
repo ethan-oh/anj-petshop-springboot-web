@@ -13,3 +13,10 @@
 	display: inline-block;
 	text-align: left;
 }
+
+.comment input[type="text"] {
+	font-size: 17px;
+	height: 35px;
+	width: 850px;
+	padding-left: 10px;
+}

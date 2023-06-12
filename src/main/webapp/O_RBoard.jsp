@@ -2,10 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%
-session.setAttribute("USERID", "osm1119");
-session.setAttribute("ADMINID", "admin");
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,7 +66,7 @@ session.setAttribute("ADMINID", "admin");
 					<div class="search-wrap">
 						<select name="query">
 							<option value="r_title">제목</option>
-							<option value="r_content">내용</option>
+							<option value="userid">작성자</option>
 						</select> <input id="search" type="search" name="content" placeholder="검색어를 입력해주세요.">
 						<button type="submit" class="btn btn-dark">검색</button>
 					</div>
@@ -106,7 +103,7 @@ session.setAttribute("ADMINID", "admin");
     let itemsPerPage = ${p.itemsPerPage}; // 한 페이지당 보여줄 게시물의 수
     let totalCount = ${p.totalCount}; // 전체 게시물의 수
     let currentPage = ${p.currentPage}; // 현재 페이지
-    let totalPages = ${p.totalPages}; // 전체 페이지의 수
+    let totalPages = ${p0.totalPages}; // 전체 페이지의 수
     let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // 현재 페이지에서 보여질 페이지의 시작값 계산
 
     // query가 null일 때 query를 n_content로 설정

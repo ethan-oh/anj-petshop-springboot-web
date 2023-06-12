@@ -112,6 +112,14 @@ textarea::placeholder {
 	width: 100px;
 	text-align: center;
 }
+.board-table .th-id { /* 글쓰기 시 제목 너비 */
+	width: 120px;
+	text-align: center;
+	margin-right: 20px;
+}
+.board-table .non { /* 글쓰기 시 제목 너비 */
+	text-align: center;
+}
 
 .board-table .th-title {
 	width: 200px;
