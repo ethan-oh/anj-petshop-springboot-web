@@ -14,7 +14,9 @@ import com.javalec.command.A_ProductCommand;
 import com.javalec.command.Acommand;
 import com.javalec.command.J_PDetailCommand;
 import com.javalec.command.J_insertCartCommand;
+import com.javalec.command.J_userDeleteCommand;
 import com.javalec.command.J_userPageCommand;
+import com.javalec.command.J_userUpdateCommand;
 import com.javalec.command.O_getNDetailCommand;
 import com.javalec.command.O_getNoticeCommand;
 import com.javalec.command.T_cartUpdateCommand;
@@ -116,6 +118,29 @@ public class Controller extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "J_userMyPage.jsp";
 			break;
+		
+		case ("/J_userProfilePage.do") : 
+			command = new J_userPageCommand();
+			command.execute(request, response);
+			viewPage = "J_userProfilePage.jsp";
+			break;
+		case ("/j_userUpdate.do") :	
+			command = new J_userUpdateCommand();
+			command.execute(request, response);
+			command = new J_userPageCommand();
+			command.execute(request, response);
+			System.out.println("왜그럴까나..");
+			viewPage = "J_userProfilePage.jsp";
+			break;
+			
+		case("/j_userUpdateCancel.do") : 
+			viewPage = "A_MainView.jsp";
+			break;
+		case("/j_userDelete.do"): 
+			command = new J_userDeleteCommand();
+			command.execute(request, response);
+			viewPage = "A_MainView.jsp";
+			break;	
 		////////////////////////////////////////////
 		//////////////////////////////////////////// 여기서부터 성민
 		case ("/O_Notice.do"):

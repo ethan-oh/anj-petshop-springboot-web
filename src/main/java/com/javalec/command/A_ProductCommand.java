@@ -16,9 +16,10 @@ public class A_ProductCommand implements Acommand {
 		String queryName = request.getParameter("query");
 		String queryContent = request.getParameter("content");
 		String sortOrder = request.getParameter("sortOrder"); // 추가: 가격순 정렬을 위한 파라미터
-
+		String pcategory = request.getParameter("pcategory");
+		
 		A_dao dao = new A_dao();
-		ArrayList<A_dto> dtos = dao.A_ProductView(queryName, queryContent, sortOrder); // 수정: sortOrder 전달
+		ArrayList<A_dto> dtos = dao.A_ProductView(pcategory, queryName, queryContent, sortOrder); // 수정: sortOrder 전달
 		request.setAttribute("A_ProductView", dtos);
 
 		// 응답에 대한 출력 작업이 없는지 확인

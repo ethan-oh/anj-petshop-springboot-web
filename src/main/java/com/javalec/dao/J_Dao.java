@@ -192,16 +192,22 @@ public class J_Dao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "select * from user where userid = '" + getUserid + "' group by userid";
+			String query = "select * from user where userid = '" + getUserid + "'";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) { 		// db에서 한 줄에 있는 데이터를 열마다 분리해서 할당하는 과정.
 				String userid = resultSet.getString("userid");
+				String userpasswd = resultSet.getString("userpasswd");
+				String username = resultSet.getString("username");
+				String usertel = resultSet.getString("usertel");
+				String useremail = resultSet.getString("useremail");
+				String userpostcode = resultSet.getString("userpostcode");
+				String useraddress = resultSet.getString("useraddress");
+				String userdetailaddress = resultSet.getString("userdetailaddress");
 				int mileage = resultSet.getInt("mileage");
 				
-				
-				dto = new J_userDto(userid, mileage);
+				dto = new J_userDto(userid, userpasswd, username, usertel, useremail, userpostcode, useraddress, userdetailaddress, mileage);
 				
 			}
 		} catch (Exception e) {
@@ -220,10 +226,68 @@ public class J_Dao {
 		
 	}
 		
+	// 6. user 테이블의 모든 데이터들 불러오기 : 프로필 변경 1) 회원 정보 수정
+	public void updateUser(String userid,String userpasswd, String userpostcode, String useraddress, String userdetailaddress, String usertel, String useremail) {
+		System.out.println(userid);
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connection = dataSource.getConnection();
+			String query = "update user set userpasswd=?, usertel=?, useremail=?, userpostcode=?, useraddress=?, userdetailaddress=? where userid = '" + userid + "'";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, userpasswd);
+			preparedStatement.setString(2, usertel);
+			preparedStatement.setString(3, useremail);
+			preparedStatement.setString(4, userpostcode);
+			preparedStatement.setString(5, useraddress);
+			preparedStatement.setString(6, userdetailaddress);
 			
+			
+			preparedStatement.executeUpdate();
+			
+			System.out.println(userid);
+			System.out.println(userpasswd);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	
+	}
 	
 	
-//	// 5. 사용자 페이지 - 구매 내역 리스트 : 조회버튼 클릭하면 적립금 + 적립내역 보여주기(주문 날짜, 적립금, 주문번호)
+	// 7. user 테이블의 모든 데이터들 불러오기 : 프로필 변경 2) 회원 탈퇴
+	public void deleteUser(String uid) {
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connection = dataSource.getConnection();
+			String query = "update user set deletedate = now() where userid = '" + uid + "'";
+			preparedStatement = connection.prepareStatement(query);
+			
+			preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	
+	}
+	
+	
+//	// 8. 사용자 페이지 - 구매 내역 리스트 : 조회버튼 클릭하면 적립금 + 적립내역 보여주기(주문 날짜, 적립금, 주문번호)
 //	public J_userOrderDto userOrderList(String getUserid) {
 //		J_userOrderDto dto = null;
 //		

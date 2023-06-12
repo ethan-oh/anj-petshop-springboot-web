@@ -29,8 +29,8 @@
 
 	<main class="main">
 
-	<p></p>
 	<h1 style="text-align: center; color : #477A7B">MY PAGE</h1><br/><br/>
+	<h2 style="text-align: center;">${userView.username } 님, 환영합니다!</h2><br/>
 	
 	<div class="userExpense"> 		<!-- 사용자 마일리지 및 총 구매 금액 보여주는 테이블 -->
 		<table class="mileage">
@@ -59,21 +59,21 @@
 		<table class="operations">
 			<tr>
 				<td> 
-				<img src="J_userPageIcon/J_orderIcon.gif" style="width: 3px; height: auto; border: 1px solid black;"> 
+				<a href="J_orderHistoryPage.jsp"><img src="J_userPageIcon/J_orderIcon.gif" style="width: 3px; height: auto; border: 1px solid black;"></a> 
 				<h4><a href="J_orderHistoryPage.jsp">ORDER </a></h4> 
 				<h5><a href="J_orderHistoryPage.jsp">주문내역 조회 </a></h5>
 				<h6><a href="J_orderHistoryPage.jsp">고객님께서 주문하신 상품의 주문내역을 확인하실 수 있습니다. </a></h6>  
 				</td>
 
 				<td>
-				<img src="J_userPageIcon/J_profileIcon.gif" style="width: 3px; height: auto;"> 
-				<h4><a href="J_userProfilePage.jsp"> PROFILE </a> </h4> 
-				<h5><a href="J_userProfilePage.jsp"> 회원 정보 </a></h5>
-				<h6><a href="J_userProfilePage.jsp"> 회원이신 고객님의 개인 정보를 관리하는 공간입니다. </a></h6>  
+				<a href="J_userProfilePage.do"><img src="J_userPageIcon/J_profileIcon.gif" style="width: 3px; height: auto;"></a> 
+				<h4><a href="J_userProfilePage.do"> PROFILE </a> </h4> 
+				<h5><a href="J_userProfilePage.do"> 회원 정보 </a></h5>
+				<h6><a href="J_userProfilePage.do"> 회원이신 고객님의 개인 정보를 관리하는 공간입니다. </a></h6>  
 				</td>
 
 				<td>			<!-- 여기는 찜 기능 넣으면 하고 안넣으면 안하고 기억이 안나서 일단 넣는다. (or 최근 본 상품으로 대체) -->
-				<img src="J_userPageIcon/J_wishlistIcon.gif" style="width: 3px; height: auto; /* border: 1px solid black; */"> 
+				<a href="J_wishListPage.jsp"><img src="J_userPageIcon/J_wishlistIcon.gif" style="width: 3px; height: auto; /* border: 1px solid black; */"></a> 
 				<h4><a href="J_wishListPage.jsp"> WISHLIST </a></h4> 
 				<h5><a href="J_wishListPage.jsp"> 관심 상품 </a></h5>
 				<h6><a href="J_wishListPage.jsp"> 관심상품으로 등록하신 상품의 목록을 보여드립니다. </a></h6>  
@@ -81,17 +81,17 @@
 			</tr>
 			<tr>			
 				<td> 
-				<img src="J_userPageIcon/J_mileageIcon.gif" style="width: 3px; height: auto; /* border: 1px solid black; */"> 
+				<a href="J_mileageHistoryPage.jsp"><img src="J_userPageIcon/J_mileageIcon.gif" style="width: 3px; height: auto; /* border: 1px solid black; */"></a> 
 				<h4><a href="J_mileageHistoryPage.jsp"> MILEAGE </a></h4> 
 				<h5><a href="J_mileageHistoryPage.jsp"> 제품구매 적립금 </a></h5>
 				<h6><a href="J_mileageHistoryPage.jsp"> 제품구매 적립금은 상품 구매 시 사용하실 수 있습니다. </a></h6>  
 				</td>
 				
 				<td>
-				<img src="J_userPageIcon/J_boardIcon.gif" style="width: 3px; height: auto; /* border: 1px solid black; */"> 
-				<h4> BOARD </h4> 
-				<h5> 게시물 관리 </h5>
-				<h6> 고객님께서 작성하신 게시물을 관리하는 공간입니다. </h6>  
+				<a href="J_bordPage.jsp"><img src="J_userPageIcon/J_boardIcon.gif" style="width: 3px; height: auto; /* border: 1px solid black; */"></a> 
+				<h4><a href="J_bordPage.jsp"> BOARD </a></h4> 
+				<h5><a href="J_bordPage.jsp"> 게시물 관리 </a></h5>
+				<h6><a href="J_bordPage.jsp"> 고객님께서 작성하신 게시물을 관리하는 공간입니다. </a></h6>  
 				</td>
 				
 				<td>
