@@ -75,40 +75,16 @@
 		}
 </script>
 <body>
-	<header>
-		        <div class="head-wrap">
-		            <div class="head-wrap-inner">
-		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
-		            	</div>
-		           	 <div class="head-wrap-sub">
-		           	  <h3>ANJ PET SHOP</h3>
-		                <nav class="head-menu-main-nav">
-		                    <ul>
-		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
-		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
-		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
-		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
-		                        <li class="main-nav04"><a href="#">CART</a></li>         
-		                        <li class="right-align">
-						        <button class="btn-login">Abandoned dog</button>
-						        <button class="btn-login">Login</button>
-						        <button class="btn-new">New MEMBERS</button>
-						      </li>
-		                    </ul>
-			            </nav>
-			            </div>
-		       		 </div>
-   	 			</header>
-     <br><br> <br> <br><br><hr>
+
 	<!-- ---------------------- -->
 	<div class="page-title" style="background-color: #DFE9E8;">
 		<br><br><br>
 		<h3>COMMUNITY</h3>
 		<br><br>
-			<a href="O_Notice.do">NOTICE</a>
-			<a href="O_FAQ.do">FAQ</a> 
-			<span class="selected"><a href="O_QNA.do">Q&A</a></span>
-			<a href="O_Review.do">REVIEW</a>
+			<a href="O_adminNotice.do">NOTICE</a>
+			<a href="O_adminFAQ.do">FAQ</a> 
+			<span class="selected"><a href="O_adminQNA.do">Q&A</a></span>
+			<a href="O_adminReview.do">REVIEW</a>
 		<br><br>
 	</div>
 	<div class="page-title">
@@ -148,8 +124,14 @@
 						</td>
 					</tr>
 					<tr>
-						<td></td>
-						<td class="th-right"><span class="list-button"><a href="O_QNA.do">목록</a></span></td>
+						<td class="th-wnum"><span class="list-button"><a href="O_QNA.do">목록</a></span></td>
+						<td class="th-right">
+							<input type="submit" class="list-button" value="수정" onclick="updateCheck()">
+							<input type="submit" class="list-button" value="삭제" onclick="deleteCheck()">
+							<c:if test="${qnaDetail.seq == qnaDetail.parentseq}"> <!-- 질문글에만 답변을 달 수 있음 -->
+            					<input type="submit" class="list-button" value="답변하기" onclick="writeAction()">
+        					</c:if>
+						</td>
 					</tr>
 				</tbody>
 			</table>

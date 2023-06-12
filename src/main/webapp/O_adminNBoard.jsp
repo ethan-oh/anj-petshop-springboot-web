@@ -2,10 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%-- <%
-session.setAttribute("USERID", "osm1119");
-session.setAttribute("ADMINID", "admin");
-%> --%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -98,7 +95,9 @@ session.setAttribute("ADMINID", "admin");
 				</c:forEach>
 			</tbody>
 		</table>
-		<br><br>
+	</div>
+	<div class="container" style="text-align: right;">
+		<br> <span class="list-button"><a href="O_writeNoticeView.do">글쓰기</a></span>
 	</div>
 
 	<div class="container pagination" style="text-align: center;">

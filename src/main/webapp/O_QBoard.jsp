@@ -120,7 +120,7 @@
 	</div>
 	<div class="container" style="text-align: right;">
 		<br>
-		<span class="list-button" ><a href="O_writeQuestionView.do">유저용글쓰기</a></span>
+		<span class="list-button" ><a href="O_writeQuestionView.do">질문하기</a></span>
 	</div>
 
 	<div class="container pagination" style="text-align: center;">

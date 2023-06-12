@@ -14,37 +14,6 @@
 <link rel="stylesheet" href="CSS/O_Common.css">
 <script src="JS/O_ScrollTop.js"></script>
 
-<script type="text/javascript">
-	function updateCheck(){
-		const form = document.NDetail
-		const n_title = form.n_title.value
-		const n_content = form.n_content.value
-		
-		if(n_title == ""){
-			alert("제목을 입력해 주세요.")
-			return
-		}
-		if(n_content == ""){
-			alert("내용을 입력해 주세요.")
-			return
-		}
-		if(confirm("수정하시겠습니까?") == true){
-		form.action = "O_updateNotice.do";
-		form.submit();
-		}
-	}
-	
-	function deleteCheck(){
-		const form = document.NDetail
-		
-		if(confirm("정말 삭제하시겠습니까?") == true){
-			const form = document.NDetail
-			form.action = "O_changeNoticeStatus.do";
-			form.submit();
-			}
-	}
-</script>
-
 </head>
 <body>
 	<header>
@@ -96,7 +65,7 @@
 				<thead>
 					<tr>
 						<th class="th-wnum">제목</th>
-						<th scope="col" colspan="3"><input type="text" name="n_title" value="${NDetail.n_title}"></th>
+						<th scope="col" colspan="3"><input type="text" name="n_title" value="${NDetail.n_title}" readonly="readonly"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -111,15 +80,12 @@
 					<tr>
 						<td>내용</td>
 						<td>
-							<textarea rows="25" cols="109" wrap="hard" name="n_content"><c:out value="${NDetail.n_content}" /></textarea>
+							<textarea rows="25" cols="109" wrap="hard" name="n_content" readonly="readonly"><c:out value="${NDetail.n_content}" /></textarea>
 						</td>
 					</tr>
 					<tr>
-						<td class="th-wnum"><span class="list-button"><a href="O_Notice.do">목록</a></span></td>
-						<td class="th-right">
-							<input type="submit" class="list-button" value="수정" onclick="updateCheck()">
-							<input type="submit" class="list-button" value="삭제" onclick="deleteCheck()">
-						</td>
+						<td></td>
+						<td class="th-right"><span class="list-button"><a href="O_Notice.do">목록</a></span></td>
 					</tr>
 				</tbody>
 			</table>

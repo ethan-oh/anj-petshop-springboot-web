@@ -34,40 +34,16 @@
 </script>
 </head>
 <body>
-	<header>
-		        <div class="head-wrap">
-		            <div class="head-wrap-inner">
-		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
-		            	</div>
-		           	 <div class="head-wrap-sub">
-		           	  <h3>ANJ PET SHOP</h3>
-		                <nav class="head-menu-main-nav">
-		                    <ul>
-		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
-		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
-		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
-		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
-		                        <li class="main-nav04"><a href="#">CART</a></li>         
-		                        <li class="right-align">
-						        <button class="btn-login">Abandoned dog</button>
-						        <button class="btn-login">Login</button>
-						        <button class="btn-new">New MEMBERS</button>
-						      </li>
-		                    </ul>
-			            </nav>
-			            </div>
-		       		 </div>
-   	 			</header>
-     <br><br> <br> <br><br><hr>
+
 	<!----------------------------------------------------------------------------------------------------->
 	<div class="page-title" style="background-color: #DFE9E8;">
 		<br><br><br>
 		<h3>COMMUNITY</h3>
 		<br><br>
-			<span class="selected"><a href="O_Notice.do">NOTICE</a></span>
-			<a href="O_FAQ.do">FAQ</a> 
-			<a href="O_QNA.do">Q&A</a> 
-			<a href="O_Review.do">REVIEW</a> 
+			<span class="selected"><a href="O_adminNotice.do">NOTICE</a></span>
+			<a href="O_adminFAQ.do">FAQ</a> 
+			<a href="O_adminQNA.do">Q&A</a> 
+			<a href="O_adminReview.do">REVIEW</a> 
 		<br><br>
 	</div>
 
@@ -95,7 +71,7 @@
 						<td class="th-left"><textarea rows="25" cols="102" wrap="hard" name="n_content" placeholder="내용을 입력하세요."></textarea></td>
 					</tr>
 					<tr>
-						<td class="th-wnum"><span class="list-button"><a href="O_Notice.do">목록</a></span></td>
+						<td class="th-wnum"><span class="list-button"><a href="O_adminNotice.do">목록</a></span></td>
 						<td class="th-right"><input type="submit" class="list-button" value="등록" onclick="writeCheck()"></td>
 					</tr>
 				</tbody>

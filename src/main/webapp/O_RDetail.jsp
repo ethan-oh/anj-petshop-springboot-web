@@ -92,7 +92,7 @@
 	<!-- board list area -->
 	<div class="container">
 		<form name="RDetail" method="post"> <!-- 유저용에서는 이 폼태그 빼고 제목을 input타입 빼고 그냥 적기, textarea readonly 속성 넣어주기 -->
-			<input type="hidden" name="userid" value="osm1119"> <!-- 나중에는 로그인 아이디 세션 받아서 수정하기 -->
+			<input type="hidden" name="userid" value="${sessionScope.USERID}"> <!-- 나중에는 로그인 아이디 세션 받아서 수정하기 -->
 			<input type="hidden" name="seq" value="${seq }">
 			<table class="board-table">
 				<thead>
@@ -140,7 +140,7 @@
 			<table class="board-table">
 				<thead>
 					<tr>
-						<th class="th-id">do</th>
+						<th class="th-id">${sessionScope.USERID}</th>
 						<th scope="col" colspan="3">
 							<span class="comment"><input type="text" name="comment" placeholder="댓글을 입력하세요."></span>
 						</th>

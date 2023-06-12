@@ -35,31 +35,6 @@
 </script>
 </head>
 <body>
-	<header>
-		        <div class="head-wrap">
-		            <div class="head-wrap-inner">
-		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
-		            	</div>
-		           	 <div class="head-wrap-sub">
-		           	  <h3>ANJ PET SHOP</h3>
-		                <nav class="head-menu-main-nav">
-		                    <ul>
-		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
-		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
-		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
-		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
-		                        <li class="main-nav04"><a href="#">CART</a></li>         
-		                        <li class="right-align">
-						        <button class="btn-login">Abandoned dog</button>
-						        <button class="btn-login">Login</button>
-						        <button class="btn-new">New MEMBERS</button>
-						      </li>
-		                    </ul>
-			            </nav>
-			            </div>
-		       		 </div>
-   	 			</header>
-     <br><br> <br> <br><br><hr>
 	<!----------------------------------------------------------------------------------------------------->
 	<div class="page-title" style="background-color: #DFE9E8;">
 		<br>
@@ -67,7 +42,10 @@
 		<br>
 		<h3>COMMUNITY</h3>
 		<br>
-		<br> <a href="O_Notice.do">NOTICE</a> <a href="O_FAQ.do">FAQ</a> <span class="selected"><a href="O_QNA.do">Q&A</a></span> <a href="O_Review.do">REVIEW</a> <br>
+		<br> <a href="O_adminNotice.do">NOTICE</a> 
+		<a href="O_adminFAQ.do">FAQ</a> 
+		<span class="selected"><a href="O_adminQNA.do">Q&A</a></span> 
+		<a href="O_adminReview.do">REVIEW</a> <br>
 		<br>
 	</div>
 
@@ -109,7 +87,7 @@ ${qnaDetail.qna_content }
 			</table>
 			<div class="container" style="text-align: right;">
 				<br>
-				<span class="list-button"><a href="O_QNA.do">목록</a></span>
+				<span class="list-button"><a href="O_adminQNA.do">목록</a></span>
 				<input type="submit" class="list-button th-right" value="등록" onclick="writeCheck()">
 			</div>
 		</form>

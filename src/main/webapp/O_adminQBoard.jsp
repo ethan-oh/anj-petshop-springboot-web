@@ -2,10 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%-- <%
-session.setAttribute("USERID", "osm1119");
-session.setAttribute("ADMINID", "admin");
-%> --%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,55 +17,33 @@ session.setAttribute("ADMINID", "admin");
 </head>
 
 <body>
-	<header>
-		        <div class="head-wrap">
-		            <div class="head-wrap-inner">
-		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
-		            	</div>
-		           	 <div class="head-wrap-sub">
-		           	  <h3>ANJ PET SHOP</h3>
-		                <nav class="head-menu-main-nav">
-		                    <ul>
-		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
-		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
-		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
-		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
-		                        <li class="main-nav04"><a href="#">CART</a></li>         
-		                        <li class="right-align">
-						        <button class="btn-login">Abandoned dog</button>
-						        <button class="btn-login">Login</button>
-						        <button class="btn-new">New MEMBERS</button>
-						      </li>
-		                    </ul>
-			            </nav>
-			            </div>
-		       		 </div>
-   	 			</header>
-     <br><br> <br> <br><br><hr>
 
 	<div class="page-title" style="background-color: #DFE9E8;">
-		<br>
-		<br>
-		<br>
+		<br><br><br>
 		<h3>COMMUNITY</h3>
-		<br>
-		<br> <span class="selected"><a href="O_Notice.do">NOTICE</a></span> <a href="O_FAQ.do">FAQ</a> <a href="O_QNA.do">Q&A</a> <a href="O_Review.do">REVIEW</a> <br>
-		<br>
+		<br><br>
+			<a href="O_adminNotice.do">NOTICE</a>
+			<a href="O_adminFAQ.do">FAQ</a> 
+			<span class="selected"><a href="O_adminQNA.do">Q&A</a></span>
+			<a href="O_adminReview.do">REVIEW</a> 
+		<br><br>
 	</div>
 
 	<div class="page-title">
-		<h4>공지사항</h4>
+		<h4>QnA 게시판</h4>
 	</div>
 	<!-- board seach area -->
 	<div id="board-search">
 		<div class="container">
 			<div class="search-window">
-				<form action="O_Notice.do" method="post">
+				<form action="O_adminQNA.do" method="post">
 					<div class="search-wrap">
 						<select name="query">
-							<option value="n_title">제목</option>
-							<option value="n_content">내용</option>
-						</select> <input id="search" type="search" name="content" placeholder="검색어를 입력해주세요.">
+							<option value="qna_title">제목</option>
+							<option value="qna_content">내용</option>
+							<option value="userid">작성자</option>
+						</select>
+						<input id="search" type="search" name="content" placeholder="검색어를 입력해주세요.">
 						<button type="submit" class="btn btn-dark">검색</button>
 					</div>
 				</form>
@@ -83,16 +58,35 @@ session.setAttribute("ADMINID", "admin");
 				<tr>
 					<th scope="col" class="th-num">번호</th>
 					<th scope="col" class="th-title">제목</th>
-					<th scope="col" class="th-writer">작성자</th>
+					<th scope="col" class="th-date">작성자</th>
 					<th scope="col" class="th-date">작성일</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${noticeList}" var="dto">
+				<c:set var="count" value="${qnaList.size() + 1}" />
+				<c:forEach items="${qnaList}" var="dto">
+					<c:set var="count" value="${count -1 }" />
 					<tr>
-						<td><span class="notice-button">공지</span></td>
-						<td><a href="O_NDetail.do?seq=${dto.seq}">${dto.n_title}</a></td>
-						<td>${dto.adminid}</td>
+						<td>${count}</td>
+						<td style="text-align: left;">
+							<c:choose>
+								<c:when test="${dto.seq == dto.parentseq }">
+									<a href="O_adminGetQnaDetail.do?seq=${dto.seq }">[${dto.category}] ${dto.qna_title}</a>
+								</c:when>
+								<c:otherwise>
+									<span class="re-button">re</span> <a href="O_adminGetQnaDetail.do?seq=${dto.seq }" style="font-weight: bold;">${dto.qna_title}</a>
+								</c:otherwise>
+							</c:choose>
+						</td>
+						<td>
+							<c:choose>
+								<c:when test="${dto.seq == dto.parentseq}">
+									<c:set var="maskedUserId" value="${fn:substring(dto.userid, 0, 3)}****" />
+									${maskedUserId}
+								</c:when>
+								<c:otherwise><strong>관리자</strong></c:otherwise>
+							</c:choose>
+						</td>
 						<td>${dto.writedate}</td>
 					</tr>
 				</c:forEach>
@@ -113,13 +107,13 @@ session.setAttribute("ADMINID", "admin");
     // query가 null일 때 query를 n_content로 설정
     let query = "${query}";
     if (!query) {
-      query = "n_title";
+      query = "qna_title";
     }
 
     // 이전 버튼
     if (currentPage > 1) {
-      document.write('<span><a href="O_Notice.do?page=' + 1 + '&query=' + query + '&content=${content}"><<</a></span>');
-      document.write('<span><a href="O_Notice.do?page=' + (currentPage - 1) + '&query=' + query + '&content=${content}"><</a></span>');
+      document.write('<span><a href="O_QNA.do?page=' + 1 + '&query=' + query + '&content=${content}"><<</a></span>');
+      document.write('<span><a href="O_QNA.do?page=' + (currentPage - 1) + '&query=' + query + '&content=${content}"><</a></span>');
     } else {
       document.write('<span class="empty"><a><<</a></span>');
       document.write('<span class="empty"><a><</a></span>');
@@ -137,24 +131,23 @@ session.setAttribute("ADMINID", "admin");
 
       for (let i = startPage; i <= startPage + numPagesToShow - 1; i++) {
         if (i === currentPage) {
-          document.write('<span class="current"><a href="O_Notice.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
+          document.write('<span class="current"><a href="O_QNA.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
         } else {
-          document.write('<span><a href="O_Notice.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
+          document.write('<span><a href="O_QNA.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
         }
       }
     }
 
     // 다음 버튼
     if (currentPage != totalPages && totalPages != 1) {
-      document.write('<span><a href="O_Notice.do?page=' + (currentPage + 1) + '&query=' + query + '&content=${content}">></a><span>');
-      document.write('<span><a href="O_Notice.do?page=' + totalPages + '&query=' + query + '&content=${content}">>></a><span>');
+      document.write('<span><a href="O_QNA.do?page=' + (currentPage + 1) + '&query=' + query + '&content=${content}">></a><span>');
+      document.write('<span><a href="O_QNA.do?page=' + totalPages + '&query=' + query + '&content=${content}">>></a><span>');
     } else {
       document.write('<span class="empty"><a>></a><span>');
       document.write('<span class="empty"><a>>></a><span>');
     }
   </script>
 	</div>
-
 
 	<button class="top-button" onclick="scrollToTop()">top</button>
 

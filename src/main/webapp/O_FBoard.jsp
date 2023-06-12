@@ -117,12 +117,6 @@
 			<a href="O_Review.do">REVIEW</a> 
 		<br><br>
 	</div>
-	<div class="page-title">
-			<a href="O_FAQ.do">목록</a> 
-			<a href="O_writeViewFAQ.do">등록</a> 
-			<a href="O_updateViewFAQ.do">수정</a>
-			<a href="O_deleteViewFAQ.do">삭제</a>
-	</div>
 	
 	<div class="page-title">
 		<h4>FAQ 목록</h4>
