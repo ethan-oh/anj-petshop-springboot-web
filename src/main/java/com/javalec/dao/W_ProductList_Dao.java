@@ -92,8 +92,7 @@ public class W_ProductList_Dao {
 		
 		ArrayList<W_ProductList_Dto> dtos = new ArrayList<>();
 		W_ProductList_Dto dto = null;
-		
-		Connection connection = null;
+ 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {

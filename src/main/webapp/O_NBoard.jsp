@@ -2,6 +2,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%-- <%
+session.setAttribute("USERID", "osm1119");
+session.setAttribute("ADMINID", "admin");
+%> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,29 +20,40 @@
 </head>
 
 <body>
-	<header >
-		<nav>
-			<ul>
-				<li><a href="A_MainView.do"><img src="LOGO.png" alt="logo"></a></li>
-				<li><a href="A_ProductView.do">SHOP</a></li>
-				<li><a href="#">ANJLIFE</a></li>
-				<li><a href="#">COMMUNITY</a></li>
-				<li><a href="#">CART</a></li>
-				<li class="right-align"><a href="A_introduction.jsp">Login</a></li>
-				<li class="right-align"><a href="A_introduction.jsp">New</a></li>
-			</ul>
-		</nav>
-	</header>
+	<header>
+		        <div class="head-wrap">
+		            <div class="head-wrap-inner">
+		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
+		            	</div>
+		           	 <div class="head-wrap-sub">
+		           	  <h3>ANJ PET SHOP</h3>
+		                <nav class="head-menu-main-nav">
+		                    <ul>
+		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
+		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
+		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
+		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
+		                        <li class="main-nav04"><a href="#">CART</a></li>         
+		                        <li class="right-align">
+						        <button class="btn-login">Abandoned dog</button>
+						        <button class="btn-login">Login</button>
+						        <button class="btn-new">New MEMBERS</button>
+						      </li>
+		                    </ul>
+			            </nav>
+			            </div>
+		       		 </div>
+   	 			</header>
+     <br><br> <br> <br><br><hr>
 
 	<div class="page-title" style="background-color: #DFE9E8;">
-		<br><br><br>
-		<h3>CUMMUNITY</h3>
-		<br><br>
-			<span class="selected"><a href="O_Notice.do">NOTICE</a></span>
-			<a href="O_FAQ.do">FAQ</a> 
-			<a href="O_QNA.do">Q&A</a> 
-			<a href="O_FAQ.do">REVIEW</a> 
-		<br><br>
+		<br>
+		<br>
+		<br>
+		<h3>COMMUNITY</h3>
+		<br>
+		<br> <span class="selected"><a href="O_Notice.do">NOTICE</a></span> <a href="O_FAQ.do">FAQ</a> <a href="O_QNA.do">Q&A</a> <a href="O_Review.do">REVIEW</a> <br>
+		<br>
 	</div>
 
 	<div class="page-title">
@@ -53,8 +68,7 @@
 						<select name="query">
 							<option value="n_title">제목</option>
 							<option value="n_content">내용</option>
-						</select>
-						<input id="search" type="search" name="content" placeholder="검색어를 입력해주세요.">
+						</select> <input id="search" type="search" name="content" placeholder="검색어를 입력해주세요.">
 						<button type="submit" class="btn btn-dark">검색</button>
 					</div>
 				</form>
@@ -86,57 +100,63 @@
 		</table>
 	</div>
 	<div class="container" style="text-align: right;">
-		<br>
-		<span class="list-button" ><a href="O_writeNoticeView.do">글쓰기</a></span>
+		<br> <span class="list-button"><a href="O_writeNoticeView.do">글쓰기</a></span>
 	</div>
 
 	<div class="container pagination" style="text-align: center;">
 		<script>
-		let pageSize = ${p.pageSize}; // 한 페이지당 보여줄 최대 페이지 개수
-		let itemsPerPage = ${p.itemsPerPage}; // 한 페이지당 보여줄 게시물의 수
-		let totalCount = ${p.totalCount}; // 전체 게시물의 수
-		let currentPage = ${p.currentPage}; // 현재 페이지
-		let totalPages = ${p.totalPages}; // 전체 페이지의 수
-		let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // 현재 페이지에서 보여질 페이지의 시작값 계산
+    let pageSize = ${p.pageSize}; // 한 페이지당 보여줄 최대 페이지 개수
+    let itemsPerPage = ${p.itemsPerPage}; // 한 페이지당 보여줄 게시물의 수
+    let totalCount = ${p.totalCount}; // 전체 게시물의 수
+    let currentPage = ${p.currentPage}; // 현재 페이지
+    let totalPages = ${p.totalPages}; // 전체 페이지의 수
+    let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // 현재 페이지에서 보여질 페이지의 시작값 계산
 
-		// 이전 버튼
-		if (currentPage > 1) {
-		  document.write('<span><a href="O_Notice.do?page=' + 1 + '"><<</a></span>');
-		  document.write('<span><a href="O_Notice.do?page=' + (currentPage - 1) + '"><</a></span>');
-		} else {
-		  document.write('<span class="empty"><a><<</a></span>');
-		  document.write('<span class="empty"><a><</a></span>');
-		}
+    // query가 null일 때 query를 n_content로 설정
+    let query = "${query}";
+    if (!query) {
+      query = "n_title";
+    }
 
-		// 페이지 번호
-		if (totalPages != 1) {
-		  let numPagesToShow = Math.min(pageSize, totalPages); // 보여줄 페이지 번호 개수 (pageSize와 totalPages 중 작은 값 선택)
-		  let startPage = calcPage; // 시작 페이지
+    // 이전 버튼
+    if (currentPage > 1) {
+      document.write('<span><a href="O_Notice.do?page=' + 1 + '&query=' + query + '&content=${content}"><<</a></span>');
+      document.write('<span><a href="O_Notice.do?page=' + (currentPage - 1) + '&query=' + query + '&content=${content}"><</a></span>');
+    } else {
+      document.write('<span class="empty"><a><<</a></span>');
+      document.write('<span class="empty"><a><</a></span>');
+    }
 
-		  // 시작 페이지 조정
-		  if (startPage + numPagesToShow - 1 > totalPages) {
-		    startPage = Math.max(totalPages - numPagesToShow + 1, 1);
-		  }
+    // 페이지 번호
+    if (totalPages != 1) {
+      let numPagesToShow = Math.min(pageSize, totalPages); // 보여줄 페이지 번호 개수 (pageSize와 totalPages 중 작은 값 선택)
+      let startPage = calcPage; // 시작 페이지
 
-		  for (let i = startPage; i <= startPage + numPagesToShow - 1; i++) {
-		    if (i === currentPage) {
-		      document.write('<span class="current"><a href="O_Notice.do?page=' + i + '">' + i + '</a></span>');
-		    } else {
-		      document.write('<span><a href="O_Notice.do?page=' + i + '">' + i + '</a></span>');
-		    }
-		  }
-		}
+      // 시작 페이지 조정
+      if (startPage + numPagesToShow - 1 > totalPages) {
+        startPage = Math.max(totalPages - numPagesToShow + 1, 1);
+      }
 
-		// 다음 버튼
-		if (currentPage != totalPages && totalPages != 1) {
-		  document.write('<span><a href="O_Notice.do?page=' + (currentPage + 1) + '">></a><span>');
-		  document.write('<span><a href="O_Notice.do?page=' + totalPages + '">>></a><span>');
-		} else {
-		  document.write('<span class="empty"><a>></a><span>');
-		  document.write('<span class="empty"><a>>></a><span>');
-		}
-		</script>
+      for (let i = startPage; i <= startPage + numPagesToShow - 1; i++) {
+        if (i === currentPage) {
+          document.write('<span class="current"><a href="O_Notice.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
+        } else {
+          document.write('<span><a href="O_Notice.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
+        }
+      }
+    }
+
+    // 다음 버튼
+    if (currentPage != totalPages && totalPages != 1) {
+      document.write('<span><a href="O_Notice.do?page=' + (currentPage + 1) + '&query=' + query + '&content=${content}">></a><span>');
+      document.write('<span><a href="O_Notice.do?page=' + totalPages + '&query=' + query + '&content=${content}">>></a><span>');
+    } else {
+      document.write('<span class="empty"><a>></a><span>');
+      document.write('<span class="empty"><a>>></a><span>');
+    }
+  </script>
 	</div>
+
 
 	<button class="top-button" onclick="scrollToTop()">top</button>
 

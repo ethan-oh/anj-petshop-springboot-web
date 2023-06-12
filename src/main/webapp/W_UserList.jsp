@@ -15,14 +15,14 @@
       .rowdata{
 	
 	 display: flex;
-	 background-color: blue;
+	 background-color: f1f1f1;
 	  margin-top: 5%;
 	}
 	.sidebar{
 	  display: flex;
 	flex-direction: column;
 	width: 10%;
-	background-color: black;
+	background-color: f1f1f1;
 	padding: 20px;
 	
 	}
@@ -82,35 +82,37 @@
 <header>
 					  <nav>
 					    <ul>
-					      <li><a href="W_AdminMain.jsp">HOME</a></li>
-					      <li><a href="W_ProductList.do">상품 관리</a>
+					      <li><a href="W_Home.do">HOME</a></li>
+					      <li><a href="W_ProductList.jsp">상품 관리</a>
 					      	<ul>
 					      		<li><a href="W_ProductList.jsp">상품 목록</a></li>
 					      		<li><a href="W_ProductInsert.jsp">상품 등록</a></li>
 					      	</ul>
 					      </li>
 					      <li><a href="A_introduction.jsp">주문 관리</a></li>
-					      <li><a href="A_introduction.jsp">회원 관리</a></li>
-					      <li><a href="A_introduction.jsp">게시판 관리</a>
+					      <li><a href="W_UserList.jsp">회원 관리</a></li>
+					      <li><a href="">게시판 관리</a>
 					      	<ul>
-					      		<li><a href="A_ProductView.do">공지사항</a></li>
-					      		<li><a href="A_ProductView.do">Q & A</a></li>
-					      		<li><a href="A_ProductView.do">리뷰</a></li>
+					      		<li><a href="">공지사항</a></li>
+					      		<li><a href="">Q & A</a></li>
+					      		<li><a href="">리뷰</a></li>
 					      	</ul>
 					      	</li>
-					      <li><a href="A_introduction.jsp">매출현황</a></li>
+					      <li><a href="W_SalesDaily.jsp">매출현황</a>
+					      <ul>
+					      		<li><a href="W_SalesDaily.jsp">일별 매출</a></li>
+					      		<li><a href="W_SalesMonthly.jsp">월별 매출</a></li>
+					      	</ul>
+					      </li>
 					    </ul>
 					  </nav>
-				</header>
-				
+</header>			
 				
 
 <div class="rowdata">
 
 		<div class="sidebar">
-			<form action="W_ProductList.jsp"><input type="submit" value="상품 목록"></form>
-			<br />
-			<form action="W_ProductInsert.jsp"><input type="submit" value="상품 등록"></form>
+			<form action="W_ProductList.jsp"><input type="submit" value="회원 정보"></form>
 			<br />
 		</div>
 	<div class="container">
@@ -140,7 +142,7 @@
 					<th style="width: 100px; text-align: center;">전화번호</th>
 					<th style="width: 100px; text-align: center;">이메일</th>
 					<th style="width: 80px; text-align: center;">주소</th>
-					<th style="width: 130px; text-align: center;">포인트</th>
+					<th style="width: 130px; text-align: center;">마일리지</th>
 					<th style="width: 90px; text-align: center;">가입일자</th>
 					<th style="width: 50px; text-align: center;">탈퇴일자</th>
 				</tr>
@@ -171,7 +173,7 @@
 		pagenum = 1;
 		$("#pagenum li").remove();
 		$.ajax({
-			url : "selectUser.do",
+			url : "./userlist",
 			type : "post",
 			dataType : "JSON",
 			data : {
@@ -194,7 +196,7 @@
 					str += '<td>'+ item.usertel + '</td>';
 					str += '<td>' + item.useremail + '</td>';
 					str += '<td>' + item.useraddress + '</td>';
-					str += '<td>' + item.point + '</td>';
+					str += '<td>' + item.mileage + '</td>';
 					str += '<td>' + item.insertdate + '</td>';
 					str += '<td>' + item.deletedate + '</td>';
 					str += '</tr>';
@@ -230,7 +232,7 @@
 				};
 				$("#pagenum li").remove();
 				$.ajax({
-					url : "selectUser.do",
+					url : "./userlist",
 					type : "post",
 					dataType : "JSON",
 					data : {
@@ -256,7 +258,7 @@
 							str += '<td>'+ item.usertel + '</td>';
 							str += '<td>' + item.useremail + '</td>';
 							str += '<td>' + item.useraddress + '</td>';
-							str += '<td>' + item.point + '</td>';
+							str += '<td>' + item.mileage + '</td>';
 							str += '<td>' + item.insertdate + '</td>';
 							str += '<td>' + item.deletedate + '</td>';
 							str += '</tr>';
@@ -283,7 +285,7 @@
 				
 				$("#pagenum li").remove();
 				$.ajax({
-					url : "selectUser.do",
+					url : "./userlist",
 					type : "post",
 					dataType : "JSON",
 					data : {
@@ -306,7 +308,7 @@
 							str += '<td>'+ item.usertel + '</td>';
 							str += '<td>' + item.useremail + '</td>';
 							str += '<td>' + item.useraddress + '</td>';
-							str += '<td>' + item.point + '</td>';
+							str += '<td>' + item.mileage + '</td>';
 							str += '<td>' + item.insertdate + '</td>';
 							str += '<td>' + item.deletedate + '</td>';
 							str += '</tr>';
@@ -331,7 +333,7 @@
 				pagenum = 1;
 				pagesize = $("#pagesize option:selected").val();
 				$.ajax({
-					url : "selectUser.do",
+					url : "./userlist",
 					type : "post",
 					dataType : "JSON",
 					data : {
@@ -354,7 +356,7 @@
 							str += '<td>'+ item.usertel + '</td>';
 							str += '<td>' + item.useremail + '</td>';
 							str += '<td>' + item.useraddress + '</td>';
-							str += '<td>' + item.point + '</td>';
+							str += '<td>' + item.mileage + '</td>';
 							str += '<td>' + item.insertdate + '</td>';
 							str += '<td>' + item.deletedate + '</td>';
 							str += '</tr>';

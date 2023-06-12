@@ -1,6 +1,6 @@
 package com.javalec.dto;
 
-public class J_pdExplainDto {
+public class J_pdExplainDto { 			// 없어도 될듯??
 	String pid;
 	String p_filename;
 	String p_filename2;
@@ -11,7 +11,8 @@ public class J_pdExplainDto {
 	public J_pdExplainDto() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	// J_Dao 2. 사용자 페이지 - 제품 설명 이미지 띄워주기 (사용자 하단 화면)
 	public J_pdExplainDto(String pid, String p_filename, String p_filename2, String p_filename3, String p_filename4,
 			String p_filename5) {
 		super();

@@ -1,6 +1,6 @@
 package com.javalec.dto;
 
-public class J_pdPageDto { 		// ANJ pet shop 프로젝트
+public class J_pdPageDto { 		// ANJ pet shop 프로젝트 - product table dto
 	
 	// Field 
 	String pid;
@@ -19,7 +19,7 @@ public class J_pdPageDto { 		// ANJ pet shop 프로젝트
 		// TODO Auto-generated constructor stub
 	}
 
-
+	// J_Dao 1. 제품 페이지 - 사용자 보여주는 오른쪽 상단 구역에 정보 띄워주기
 	public J_pdPageDto(String pid, String pname, String pcategory, int pprice, int pstock, int available, String pthumbnail,
 			String pth2, String pth3) {
 		super();

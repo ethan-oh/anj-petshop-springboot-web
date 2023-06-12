@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,28 +17,40 @@
 </head>
 
 <body>
-	<header >
-		<nav>
-			<ul>
-				<li><a href="A_MainView.do"><img src="LOGO.png" alt="logo"></a></li>
-				<li><a href="A_ProductView.do">SHOP</a></li>
-				<li><a href="#">ANJLIFE</a></li>
-				<li><a href="#">COMMUNITY</a></li>
-				<li><a href="#">CART</a></li>
-				<li class="right-align"><a href="A_introduction.jsp">Login</a></li>
-				<li class="right-align"><a href="A_introduction.jsp">New</a></li>
-			</ul>
-		</nav>
-	</header>
+	<header>
+		        <div class="head-wrap">
+		            <div class="head-wrap-inner">
+		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
+		            	</div>
+		           	 <div class="head-wrap-sub">
+		           	  <h3>ANJ PET SHOP</h3>
+		                <nav class="head-menu-main-nav">
+		                    <ul>
+		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
+		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
+		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
+		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
+		                        <li class="main-nav04"><a href="#">CART</a></li>         
+		                        <li class="right-align">
+						        <button class="btn-login">Abandoned dog</button>
+						        <button class="btn-login">Login</button>
+						        <button class="btn-new">New MEMBERS</button>
+						      </li>
+		                    </ul>
+			            </nav>
+			            </div>
+		       		 </div>
+   	 			</header>
+     <br><br> <br> <br><br><hr>
 
 	<div class="page-title" style="background-color: #DFE9E8;">
 		<br><br><br>
-		<h3>CUMMUNITY</h3>
+		<h3>COMMUNITY</h3>
 		<br><br>
 			<a href="O_Notice.do">NOTICE</a>
 			<a href="O_FAQ.do">FAQ</a> 
-			<span class="selected"><a href="O_FAQ.do">Q&A</a></span>
-			<a href="O_FAQ.do">REVIEW</a> 
+			<span class="selected"><a href="O_QNA.do">Q&A</a></span>
+			<a href="O_Review.do">REVIEW</a> 
 		<br><br>
 	</div>
 
@@ -48,11 +61,12 @@
 	<div id="board-search">
 		<div class="container">
 			<div class="search-window">
-				<form action="O_Notice.do" method="post">
+				<form action="O_QNA.do" method="post">
 					<div class="search-wrap">
 						<select name="query">
-							<option value="n_title">제목</option>
-							<option value="n_content">내용</option>
+							<option value="qna_title">제목</option>
+							<option value="qna_content">내용</option>
+							<option value="userid">작성자</option>
 						</select>
 						<input id="search" type="search" name="content" placeholder="검색어를 입력해주세요.">
 						<button type="submit" class="btn btn-dark">검색</button>
@@ -69,16 +83,35 @@
 				<tr>
 					<th scope="col" class="th-num">번호</th>
 					<th scope="col" class="th-title">제목</th>
-					<th scope="col" class="th-writer">작성자</th>
+					<th scope="col" class="th-date">작성자</th>
 					<th scope="col" class="th-date">작성일</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${noticeList}" var="dto">
+				<c:set var="count" value="${qnaList.size() + 1}" />
+				<c:forEach items="${qnaList}" var="dto">
+					<c:set var="count" value="${count -1 }" />
 					<tr>
-						<td><span class="notice-button">공지</span></td>
-						<td><a href="O_NDetail.do?seq=${dto.seq}">${dto.n_title}</a></td>
-						<td>${dto.adminid}</td>
+						<td>${count}</td>
+						<td style="text-align: left;">
+							<c:choose>
+								<c:when test="${dto.seq == dto.parentseq }">
+									<a href="O_getQnaDetail.do?seq=${dto.seq }">[${dto.category}] ${dto.qna_title}</a>
+								</c:when>
+								<c:otherwise>
+									<span class="re-button">re</span> <a href="O_getQnaDetail.do?seq=${dto.seq }" style="font-weight: bold;">${dto.qna_title}</a>
+								</c:otherwise>
+							</c:choose>
+						</td>
+						<td>
+							<c:choose>
+								<c:when test="${dto.seq == dto.parentseq}">
+									<c:set var="maskedUserId" value="${fn:substring(dto.userid, 0, 3)}****" />
+									${maskedUserId}
+								</c:when>
+								<c:otherwise><strong>관리자</strong></c:otherwise>
+							</c:choose>
+						</td>
 						<td>${dto.writedate}</td>
 					</tr>
 				</c:forEach>
@@ -87,55 +120,61 @@
 	</div>
 	<div class="container" style="text-align: right;">
 		<br>
-		<span class="list-button" ><a href="O_WriteNoticeView.do">글쓰기</a></span>
+		<span class="list-button" ><a href="O_writeQuestionView.do">유저용글쓰기</a></span>
 	</div>
 
 	<div class="container pagination" style="text-align: center;">
 		<script>
-		let pageSize = ${p.pageSize}; // 한 페이지당 보여줄 최대 페이지 개수
-		let itemsPerPage = ${p.itemsPerPage}; // 한 페이지당 보여줄 게시물의 수
-		let totalCount = ${p.totalCount}; // 전체 게시물의 수
-		let currentPage = ${p.currentPage}; // 현재 페이지
-		let totalPages = ${p.totalPages}; // 전체 페이지의 수
-		let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // 현재 페이지에서 보여질 페이지의 시작값 계산
+    let pageSize = ${p.pageSize}; // 한 페이지당 보여줄 최대 페이지 개수
+    let itemsPerPage = ${p.itemsPerPage}; // 한 페이지당 보여줄 게시물의 수
+    let totalCount = ${p.totalCount}; // 전체 게시물의 수
+    let currentPage = ${p.currentPage}; // 현재 페이지
+    let totalPages = ${p.totalPages}; // 전체 페이지의 수
+    let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // 현재 페이지에서 보여질 페이지의 시작값 계산
 
-		// 이전 버튼
-		if (currentPage > 1) {
-		  document.write('<span><a href="O_Notice.do?page=' + 1 + '"><<</a></span>');
-		  document.write('<span><a href="O_Notice.do?page=' + (currentPage - 1) + '"><</a></span>');
-		} else {
-		  document.write('<span class="empty"><a><<</a></span>');
-		  document.write('<span class="empty"><a><</a></span>');
-		}
+    // query가 null일 때 query를 n_content로 설정
+    let query = "${query}";
+    if (!query) {
+      query = "qna_title";
+    }
 
-		// 페이지 번호
-		if (totalPages != 1) {
-		  let numPagesToShow = Math.min(pageSize, totalPages); // 보여줄 페이지 번호 개수 (pageSize와 totalPages 중 작은 값 선택)
-		  let startPage = calcPage; // 시작 페이지
+    // 이전 버튼
+    if (currentPage > 1) {
+      document.write('<span><a href="O_QNA.do?page=' + 1 + '&query=' + query + '&content=${content}"><<</a></span>');
+      document.write('<span><a href="O_QNA.do?page=' + (currentPage - 1) + '&query=' + query + '&content=${content}"><</a></span>');
+    } else {
+      document.write('<span class="empty"><a><<</a></span>');
+      document.write('<span class="empty"><a><</a></span>');
+    }
 
-		  // 시작 페이지 조정
-		  if (startPage + numPagesToShow - 1 > totalPages) {
-		    startPage = Math.max(totalPages - numPagesToShow + 1, 1);
-		  }
+    // 페이지 번호
+    if (totalPages != 1) {
+      let numPagesToShow = Math.min(pageSize, totalPages); // 보여줄 페이지 번호 개수 (pageSize와 totalPages 중 작은 값 선택)
+      let startPage = calcPage; // 시작 페이지
 
-		  for (let i = startPage; i <= startPage + numPagesToShow - 1; i++) {
-		    if (i === currentPage) {
-		      document.write('<span class="current"><a href="O_Notice.do?page=' + i + '">' + i + '</a></span>');
-		    } else {
-		      document.write('<span><a href="O_Notice.do?page=' + i + '">' + i + '</a></span>');
-		    }
-		  }
-		}
+      // 시작 페이지 조정
+      if (startPage + numPagesToShow - 1 > totalPages) {
+        startPage = Math.max(totalPages - numPagesToShow + 1, 1);
+      }
 
-		// 다음 버튼
-		if (currentPage != totalPages && totalPages != 1) {
-		  document.write('<span><a href="O_Notice.do?page=' + (currentPage + 1) + '">></a><span>');
-		  document.write('<span><a href="O_Notice.do?page=' + totalPages + '">>></a><span>');
-		} else {
-		  document.write('<span class="empty"><a>></a><span>');
-		  document.write('<span class="empty"><a>>></a><span>');
-		}
-		</script>
+      for (let i = startPage; i <= startPage + numPagesToShow - 1; i++) {
+        if (i === currentPage) {
+          document.write('<span class="current"><a href="O_QNA.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
+        } else {
+          document.write('<span><a href="O_QNA.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
+        }
+      }
+    }
+
+    // 다음 버튼
+    if (currentPage != totalPages && totalPages != 1) {
+      document.write('<span><a href="O_QNA.do?page=' + (currentPage + 1) + '&query=' + query + '&content=${content}">></a><span>');
+      document.write('<span><a href="O_QNA.do?page=' + totalPages + '&query=' + query + '&content=${content}">>></a><span>');
+    } else {
+      document.write('<span class="empty"><a>></a><span>');
+      document.write('<span class="empty"><a>>></a><span>');
+    }
+  </script>
 	</div>
 
 	<button class="top-button" onclick="scrollToTop()">top</button>

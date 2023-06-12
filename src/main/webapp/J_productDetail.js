@@ -25,7 +25,7 @@ function clickMinus() {		/* 수량 파트 : (-) 클릭할 때 */
  window.addEventListener('scroll', function() {
 	 var btn = document.querySelector('fixedPurchaseBtn');		// class이름이 fixedPurchaseBtn인 요소를 선택하여 btn에 할당. 
 	 var topDistance = btn.getBoundingClientRec().top;		// 버튼의 상단 경계가 뷰포트(보이는 영역)의 상단 경계로부터 얼마나 떨어져 있는지 
-	 var windHeight = window.innerHeight;						// 현재 브라우저 창의 뷰포트 높이(픽셀단위로 반환)
+//	 var windHeight = window.innerHeight;						// 현재 브라우저 창의 뷰포트 높이(픽셀단위로 반환)
 //	 var btnHeight = button.offsetHeight;						// 버튼의 높이를 픽셀 단위로 반환 
 //	 var startFixed = 1200; 										// 버튼이 고정되어서 스크롤과 같이 움직이기 시작하는 시점 
 	 

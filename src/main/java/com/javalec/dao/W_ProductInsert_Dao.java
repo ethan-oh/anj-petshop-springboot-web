@@ -25,6 +25,11 @@ public class W_ProductInsert_Dao {
 	 
 	 public void productInsertAction(String pid, String pname, String pcategory, int pprice, int pstock, int available, String pthumbnail, String pth2, String pth3){
 			
+		 
+		 pthumbnail = pthumbnail.substring(0, pthumbnail.length()-4);
+		 pth2 = pth2.substring(0, pth2.length()-4);
+		 pth3 = pth3.substring(0, pth3.length()-4);
+		 
 			String querypthumbnail = pthumbnail;
 			String querypth2 = pth2;
 			String querypth3 = pth3;
@@ -32,6 +37,8 @@ public class W_ProductInsert_Dao {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 			try {
+				
+				
 				connection = dataSource.getConnection();
 				String query = "insert into product(pid, pname, pcategory, pprice, pstock, available, pthumbnail, pth2, pth3) values(?,?,?,?,?,?,?,?,?)";
 				preparedStatement = connection.prepareStatement(query);

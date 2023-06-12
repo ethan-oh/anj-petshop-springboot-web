@@ -5,35 +5,14 @@
 
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="A_heardCss.css">
 <link rel="stylesheet" href="T_cartCss.css">
 
 <head>
-
+<meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>장바구니</title>
 </head>
-
-<style type="text/css">
-@import
-	url(https://fonts.googleapis.com/css?family=Advent+Pro:100,300,600);
-
-@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
-
-@import
-	url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
-
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
-
-@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
-
-@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
-
-@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
-
-@import
-	url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
-</style>
-
 
 <script>
 	/* // 발자국 찍기
@@ -177,28 +156,33 @@
 <body>
 
 	<!-- <header>
-		<nav>
-			<ul>
-				<li><a href="A_mainView.do">SHOP</a></li>
-				<li><a href="A_ProductView.do">ANJLIFE</a></li>
-				<li><a href="A_introduction.jsp">COMMUNITY</a></li>
-				<li><a href="A_introduction.jsp">CART</a></li>
-			</ul>
-		</nav>
-	</header> -->
+				  <nav>
+				    <ul>
+				      <li><a href="A_MainView.do"><img src="LOGO.png" alt="logo"></a></li>
+				      <li><a href="A_ProductView.do">SHOP</a></li>
+				      <li><a href="#">ANJLIFE</a></li>
+				      <li><a href="#">COMMUNITY</a></li>
+				      <li><a href="#">CART</a></li>
+				      <li class="right-align"><a href="A_introduction.jsp">Login</a></li>
+				      <li class="right-align"><a href="A_introduction.jsp">New</a></li>
+				    </ul>
+				  </nav>
+				</header>
+				<br/><br/><br/><br/><br/>
+				<img src="image_08.png" alt="My Image"> -->
 
 
 	<main class="main">
-
-		<h1 style="font-family: 'font-family: ' Nanum Pen Script ', cursive;">CART</h1>
+		
+		<h1 style="font-family: 'font-family: ' Nanum Pen Script ', cursive; position: absolute;
+        top: 40%;
+    	left: 50%;
+    	transform: translate(-50%, -50%);
+        height: 300px; /* 원하는 높이 값으로 변경 */  
+        color: #477a7b;   /* 글씨색깔 */" >CART</h1>
 		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
+		
+	
 
 
 		<!-- <hr width="85%" color=#E8E8E8 size="2" style="position: absolute; top: 25%;"> -->
@@ -258,10 +242,10 @@
 				<td colspan="2"
 					style="text-align: right; border-top: 2px solid #E8E8E8;"><br>
 				<input type="button"  value="   삭제    "
-				    style="width: 80px; height: 30px; color: #E8E8E8;"
+				    style="width: 80px; height: 30px; color: #477A7B; border-color: #477A7B;"
 				    onclick="deleteSelectedItems()">
 				<input type="submit" value="주문하기"
-					style="width: 80px; height: 30px; background-color: #E8E8E8; color: white;"
+					style="width: 80px; height: 30px; background-color: #477A7B; color: white; border-color: #477A7B;"
 					class="submit-button"><br>
 				<br>
 				<br></td>
@@ -271,8 +255,7 @@
 					style="width: 900px; text-align: left; border-bottom: 2px solid #E8E8E8;">주문금액
 					<br>배송비
 				</td>
-				<td
-					style="width: 150px; text-align: right; border-bottom: 2px solid #E8E8E8;">
+				<td style="width: 150px; text-align: right; border-bottom: 2px solid #E8E8E8;">
 					<span id="totalAmount"> <fmt:formatNumber
 							value="${totalAmount}" pattern="#,##0" />
 				</span>원<br>0원
@@ -294,17 +277,40 @@
 
 
 
-	<!-- <footer>
-  			<p>
-			   <span>TEL. 1877-3228<br/>
-			   E-MAIL. arrr@dongwon.com<br/>
-			   ADDRESS. 10th floor, 68, Mabangro, Seocho-gu, Seoul, 
-			   Republic of Korea, 06775<br/>
-			   BUSINESS NO. 703-88-01843 </span>
-			</p>
-			
-				여기에다가는 마지막에 추가하는것으로 
-	</footer> -->
+	 <footer>
+            <ul>
+                <li><a href="#">Brand Story</a></li>
+                <li><a href="#">서비스이용약관</a></li>
+                <li><a href="#">개인정보처리방침</a></li>
+                <li><a href="#">전자금융거래약관</a></li>
+            </ul>
+            <div>
+                <p><img src="LOGO.png" alt="푸터로고"></p>
+                <p>
+                    <strong>Corporation ANJ.industry</strong>
+                    <br>
+                    Gangnam-gu, Seoul (Yeoksam-dong The Joy Computer Academy)
+                    <br>
+                    CEO: Ahn Jae-won
+                    <br>   
+					Business registration number: 240-81-87676 Business information confirmation
+                    <br>
+                    Mail-order business report: Gangnam 10238 Fax: 02-000-1234
+                </p>
+                <p>
+                    <strong>customer service center</strong>
+                    <br>
+                    Tel : Representative number 1234-5678 (Weekdays 09:00~18:00)
+                    <br>
+                    Dedicated to the future: 1522-5700 (365 days 09:00-18:00)
+                    <br>
+                    Gangnam-gu, Seoul (Yeoksam-dong The Joy Computer Academy)
+                    <br>
+                    Fax : 02-000-1234 | Mail : ajw0376@gmail.com
+                    <br>
+                </p>
+            </div>
+        </footer>
 </body>
 </html>
 

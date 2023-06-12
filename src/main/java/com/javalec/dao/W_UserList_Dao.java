@@ -43,7 +43,7 @@ public ArrayList<W_UserList_Dto> userList(String pageNum, String pageSize, Strin
 		ResultSet resultSet = null;
 		try {
 			connection = dataSource.getConnection();
-			String query = "select userid, username, usertel, useremail, useraddress, point, insertdate, deletedate, ( select count(*) from user where "+querySelectType+" like '%"+querySelectText+"%' ) as count from user WHERE "+querySelectType+" LIKE '%"+querySelectText+"%' order by userid limit ?,?";
+			String query = "select userid, username, usertel, useremail, useraddress, mileage, insertdate, deletedate, ( select count(*) from user where "+querySelectType+" like '%"+querySelectText+"%' ) as count from user WHERE "+querySelectType+" LIKE '%"+querySelectText+"%' order by userid limit ?,?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, queryPageNum);
 			preparedStatement.setInt(2, queryPageSize);
@@ -55,7 +55,7 @@ public ArrayList<W_UserList_Dto> userList(String pageNum, String pageSize, Strin
 				String usertel = resultSet.getString(3);
 				String useremail = resultSet.getString(4);
 				String useraddress = resultSet.getString(5);
-				int point = resultSet.getInt(6);
+				int mileage = resultSet.getInt(6);
 				String insertdate = resultSet.getString(7);
 				String deletedate = resultSet.getString(8);
 				int countSQL = resultSet.getInt(9);
@@ -65,7 +65,7 @@ public ArrayList<W_UserList_Dto> userList(String pageNum, String pageSize, Strin
 				}
 				
 				int count =  (int) Math.ceil((double) countSQL / queryPageSize);
-				dto = new W_UserList_Dto(userid, username, usertel, useremail, useraddress, point, insertdate, deletedate, count);
+				dto = new W_UserList_Dto(userid, username, usertel, useremail, useraddress, mileage, insertdate, deletedate, count);
 				dtos.add(dto);
 			
 				

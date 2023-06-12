@@ -16,10 +16,13 @@ public class O_getNoticeCommand implements Acommand {
 		// TODO Auto-generated method stub
 		O_NoticeDao dao = new O_NoticeDao();
 		
+		String queryName = request.getParameter("query");
+		String queryContent = request.getParameter("content");
+		
 		int itemsPerPage = 2; // 한 페이지당 출력할 게시글 수
 		// O_Notice.do에서 page값을 전달하지 않았을 때는 default로 1로 세팅해주기 위한 3항 연산자
 		int currentPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-		int totalCount = dao.getNoticeCount(); // 전체 게시물 수 검색
+		int totalCount = dao.getNoticeCount(queryName, queryContent); // 검색된 게시물 수 검색
 		 // 전체 페이지 계산. 전체 게시물 수 / itemPerPage의 나머지가 없을 때는 그대로, 있을 때는 올림.
 		double totalPages = (Math.ceil(totalCount / (double)itemsPerPage));
 		
@@ -32,10 +35,10 @@ public class O_getNoticeCommand implements Acommand {
 //		System.out.println(" totalPages:" + totalPages);
 //		System.out.println(" pageSize:" + pageSize);
 //		System.out.println(" startIndex:" + startIndex);
+//		System.out.println(" queryName:" + queryName);
+//		System.out.println(" queryContent:" + queryContent);
 //		System.out.println("---------------------------");
 		
-		String queryName = request.getParameter("query");
-		String queryContent = request.getParameter("content");
 		
 		ArrayList<O_NoticeDto> dtos = dao.getNoticeList(queryName, queryContent, startIndex, itemsPerPage); // 검색결과 불러와 저장
 		
@@ -45,6 +48,9 @@ public class O_getNoticeCommand implements Acommand {
 		
 		request.setAttribute("noticeList", dtos);
 		request.setAttribute("p", page); // 페이지네이션 값 전달
+		request.setAttribute("query", queryName); // 카테고리 전달
+		request.setAttribute("content", queryContent); // 검색 내용 전달
+		
 		
 	}
 

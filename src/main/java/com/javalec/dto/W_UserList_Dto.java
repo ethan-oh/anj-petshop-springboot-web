@@ -9,7 +9,7 @@ public class W_UserList_Dto {
 	String usertel;
 	String useremail;
 	String useraddress;
-	int point;
+	int mileage;
 	String insertdate;
 	String deletedate;
 	int count;
@@ -35,14 +35,14 @@ public class W_UserList_Dto {
 	
 
 	public W_UserList_Dto(String userid, String username, String usertel, String useremail, String useraddress,
-			int point, String insertdate, String deletedate, int count) {
+			int mileage, String insertdate, String deletedate, int count) {
 		super();
 		this.userid = userid;
 		this.username = username;
 		this.usertel = usertel;
 		this.useremail = useremail;
 		this.useraddress = useraddress;
-		this.point = point;
+		this.mileage = mileage;
 		this.insertdate = insertdate;
 		this.deletedate = deletedate;
 		this.count = count;
@@ -127,14 +127,14 @@ public class W_UserList_Dto {
 
 
 
-	public int getPoint() {
-		return point;
+	public int getMileage() {
+		return mileage;
 	}
 
 
 
-	public void setPoint(int point) {
-		this.point = point;
+	public void setMileage(int mileage) {
+		this.mileage = mileage;
 	}
 
 

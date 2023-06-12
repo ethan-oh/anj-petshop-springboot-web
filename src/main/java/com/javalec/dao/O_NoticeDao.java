@@ -1,8 +1,6 @@
 package com.javalec.dao;
 
-import java.awt.TextArea;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -30,7 +28,7 @@ public class O_NoticeDao {
 		}
 	}
 	
-	public int getNoticeCount(){ // 전체 게시물의 카운트 구하기.
+	public int getNoticeCount(String queryName, String queryContent){ // 검색된 게시물의 카운트 구하기.
 
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -38,11 +36,16 @@ public class O_NoticeDao {
 		
 		int count = 0;
 		
+		if(queryName == null){ // 화면이 처음 열릴 때
+			queryName = "n_title";
+			queryContent = "";
+		}
 		
 		try {
 			connection = dataSource.getConnection();
 			String query = "select count(*) from notice where category = '공지' and isdelete = 0";
-			ps = connection.prepareStatement(query);
+			String query2 = " and " + queryName + " like '%" + queryContent + "%'";
+			ps = connection.prepareStatement(query + query2);
 			rs = ps.executeQuery();
 			
 			
@@ -165,8 +168,6 @@ public class O_NoticeDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		
 		try {
 			connection = dataSource.getConnection();
 			String query = "select * from notice where isdelete = 0 and category = 'FAQ' order by n_title;";
@@ -205,8 +206,6 @@ public class O_NoticeDao {
 		Connection connection = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
 			connection = dataSource.getConnection();

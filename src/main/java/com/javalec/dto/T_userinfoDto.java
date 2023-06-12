@@ -9,25 +9,30 @@ public class T_userinfoDto {
     private String userpostcode;
     private String useraddress;
     private String userdetailaddress;
+    private int mileage;
+    private int usedmileage;
 
     // Constructors
     public T_userinfoDto() {
     }
 
-    public T_userinfoDto(String username, String userpostcode, String useraddress, String userdetailaddress, String usertel, String useremail) {
+    public T_userinfoDto(String username, String userpostcode, String useraddress, String userdetailaddress, String usertel, String useremail, int mileage, int usedmileage) {
         this.username = username;
         this.userpostcode = userpostcode;
         this.useraddress = useraddress;
         this.userdetailaddress = userdetailaddress;
         this.usertel = usertel;
         this.useremail = useremail;
+        this.mileage = mileage;
+        this.usedmileage = usedmileage;
     }
 
     // Getters and Setters
     
  
     
-    public String getUserid() {
+
+	public String getUserid() {
         return userid;
     }
 
@@ -81,5 +86,21 @@ public class T_userinfoDto {
 
     public void setUseremail(String useremail) {
         this.useremail = useremail;
+    }
+    
+    public int getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
+    }
+
+    public int getUsedmileage() {
+    	return usedmileage;
+    }
+    
+    public void setUsedmileage(int usedmileage) {
+    	this.usedmileage = usedmileage;
     }
 }
