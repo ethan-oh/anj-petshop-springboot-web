@@ -89,7 +89,7 @@
 					      <li><a href="W_SalesDaily.jsp">매출현황</a>
 					      <ul>
 					      		<li><a href="W_SalesDaily.jsp">일별 매출</a></li>
-					      		<li><a href="W_Salesmonthly.jsp">월별 매출</a></li>
+					      		<li><a href="W_SalesMonthly.jsp">월별 매출</a></li>
 					      	</ul>
 					      </li>
 					    </ul>
@@ -99,7 +99,7 @@
   	<div class="sidebar">
 			<form action="W_SalesDaily.jsp"><input type="submit" value="일별 매출"></form>
 			<br />
-			<form action="W_Salesmonthly.jsp"><input type="submit" value="월별 매출"></form>
+			<form action="W_SalesMonthly.jsp"><input type="submit" value="월별 매출"></form>
 			<br />
 		</div> <!-- sidebar -->
 		
