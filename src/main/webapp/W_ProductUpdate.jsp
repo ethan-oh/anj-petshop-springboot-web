@@ -181,7 +181,6 @@ function readURL2(input) {
 	    reader.readAsDataURL(input.files[0]);
 	  } else {
 	    document.getElementById('preview2').src = pthumbnailValue2;
-	    reader.readAsDataURL(input.files[0]);
 	  }
 	}
 function readURL3(input) {

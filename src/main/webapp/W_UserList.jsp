@@ -112,7 +112,7 @@
 <div class="rowdata">
 
 		<div class="sidebar">
-			<form action="W_ProductList.jsp"><input type="submit" value="회원 정보"></form>
+			<form action="W_UserList.jsp"><input type="submit" value="회원 정보"></form>
 			<br />
 		</div>
 	<div class="container">
