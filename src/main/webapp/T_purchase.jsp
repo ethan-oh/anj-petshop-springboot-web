@@ -37,6 +37,7 @@
 
 		  var pidInputs = document.getElementsByName("pid");
 		  var countInputs = document.getElementsByName("count");
+		  var pnameInputs = document.getElementsByName("pname");
 
 		  // 추가 정보 가져오기
 		  var usernameInput = document.getElementsByName("username")[0];
@@ -147,6 +148,12 @@
 		    countInput.name = "count";
 		    countInput.value = countInputs[i].value;
 		    form.appendChild(countInput);
+		    
+		    var pnameInput = document.createElement("input");
+		    pnameInput.type = "hidden";
+		    pnameInput.name = "pname";
+		    pnameInput.value = pnameInputs[i].value;
+		    form.appendChild(pnameInput);
 		  }
 
 		  document.body.appendChild(form);
@@ -371,6 +378,7 @@ fillUserInfo(document.getElementById("checkboxId"));
 
 			<input type="hidden" name="count" value="${dto.count}">
 			<input type="hidden" name="pid" value="${dto.pid}">
+			<input type="hidden" name="pname" value="${dto.pname}">
 		</c:forEach>
 
 		<table border="0">
@@ -422,13 +430,13 @@ fillUserInfo(document.getElementById("checkboxId"));
 				<td>
 					<div style="text-align: left;">
 						<input type="text" id="sample6_postcode" placeholder="우편번호"
-							name="userpostcode" 
+							name="userpostcode" readonly 
 							style="height: 30px; background-color: #DFE9E8; border-color: white; border-color: white;">
 						<input type="button" onclick="sample6_execDaumPostcode()"
 							value="우편번호 찾기"
 							style="height: 30px; background-color: #477a7b; border: none; color: white;"><br>
 						<input type="text" id="sample6_address" placeholder="주소"
-							name="useraddress"
+							name="useraddress" readonly
 							style="height: 30px; background-color: #DFE9E8; border-color: white;"
 							size="50"><br> <input type="text"
 							id="sample6_detailAddress" placeholder="상세주소"
@@ -717,16 +725,7 @@ fillUserInfo(document.getElementById("checkboxId"));
 		document.getElementById("mileageInput").addEventListener("input",
 				checkEnteredmileages);
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
 	</script>
 
 </html>

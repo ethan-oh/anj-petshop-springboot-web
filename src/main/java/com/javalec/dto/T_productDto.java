@@ -1,14 +1,25 @@
 package com.javalec.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 public class T_productDto {
 
 	// Field
+	String ordernum;
 	int seq;
 	int count;
 	String userid;
 	String pid;
 	String pname;
 	int pprice;
+	int orderprice;
+	List<String> pidList = new ArrayList<>();
+    List<String> pnameList = new ArrayList<>();
+    List<Integer> orderpriceList = new ArrayList<>();
+    List<Integer> countList = new ArrayList<>();
 	
 	// Constructor
 	public T_productDto() {
@@ -23,6 +34,47 @@ public class T_productDto {
 		this.pname = pname;
 		this.pprice = pprice;
 		this.count = count;
+	}
+	
+	//, HttpServletRequest request
+	public T_productDto(String pid, String pname, int count, int orderprice) {
+		super();
+		this.pid = pid;
+		this.pname = pname;
+		this.count = count;
+		this.orderprice = orderprice;
+	}
+	
+	public List<String> getPidList() {
+		return pidList;
+	}
+
+	public List<String> getPnameList() {
+		return pnameList;
+	}
+
+	public List<Integer> getOrderpriceList() {
+		return orderpriceList;
+	}
+
+	public List<Integer> getCountList() {
+		return countList;
+	}
+
+	public void setPidList(List<String> pidList) {
+		this.pidList = pidList;
+	}
+
+	public void setPnameList(List<String> pnameList) {
+		this.pnameList = pnameList;
+	}
+
+	public void setOrderpriceList(List<Integer> orderpriceList) {
+		this.orderpriceList = orderpriceList;
+	}
+
+	public void setCountList(List<Integer> countList) {
+		this.countList = countList;
 	}
 
 	public int getSeq() {
@@ -71,6 +123,22 @@ public class T_productDto {
 
 	public void setPprice(int pprice) {
 		this.pprice = pprice;
+	}
+	
+	public int getOrderprice() {
+		return orderprice;
+	}
+
+	public void setOrderprice(int orderprice) {
+		this.orderprice = orderprice;
+	}
+	
+	public String getOrdernum() {
+		return ordernum;
+	}
+
+	public void setOrdernum(String ordernum) {
+		this.ordernum = ordernum;
 	}
 	
 	

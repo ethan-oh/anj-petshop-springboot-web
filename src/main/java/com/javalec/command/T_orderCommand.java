@@ -12,12 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.javalec.dao.T_Dao;
 import com.javalec.dto.T_ordersDto;
+import com.javalec.dto.T_productDto;
 
 public class T_orderCommand implements Acommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         // 필수 필드 검사 로직 추가
+    
+    	
         String username = request.getParameter("username");
         String userpostcode = request.getParameter("userpostcode");
         String useraddress = request.getParameter("useraddress");
@@ -25,41 +28,48 @@ public class T_orderCommand implements Acommand {
         String phone1 = request.getParameter("phone1");
         String phone2 = request.getParameter("phone2");
         String phone3 = request.getParameter("phone3");
-        
 
-        //List<Integer> countList = new ArrayList<>();
         List<String> pidList = new ArrayList<>();
+        List<String> pnameList = new ArrayList<>();
+        List<Integer> orderpriceList = new ArrayList<>();
         List<Integer> countList = new ArrayList<>();
 
         T_Dao dao = new T_Dao();
-        //int count = 0;
+
         String ordermessage = request.getParameter("ordermessage");
         String payment = request.getParameter("payment");
         String userid = "do";
         
-        
-        
-        String enteredmileageParameter = request.getParameter("enteredmileage"); // 수정: "enteredmileage"로 변경
-        int enteredmileage = 0; // 기본값 설정
+        String enteredmileageParameter = request.getParameter("enteredmileage");
+        int enteredmileage = 0;
         if (enteredmileageParameter != null && !enteredmileageParameter.isEmpty()) {
             enteredmileage = Integer.parseInt(enteredmileageParameter);
         } else {
             System.out.println("null");
         }
         
-        
         String usedmileageParameter = request.getParameter("usedmileage");
-        int usedmileage = 0; // 기본값 설정
+        int usedmileage = 0;
         if (usedmileageParameter != null && !usedmileageParameter.isEmpty()) {
-        	usedmileage = Integer.parseInt(usedmileageParameter);
+            usedmileage = Integer.parseInt(usedmileageParameter);
         } else {
-        	System.out.println("null");
+            System.out.println("null");
         }
 
         if (request.getParameter("pid") != null) {
             String[] pidArray = request.getParameterValues("pid");
             for (String pid : pidArray) {
                 pidList.add(pid);
+            }
+        } else {
+            System.out.println("null");
+        }
+        
+        if (request.getParameter("pname") != null) {
+            String[] pnameArray = request.getParameterValues("pname");
+            for (String pname : pnameArray) {
+            	pnameList.add(pname);
+            	System.out.println("pname = " + pname);
             }
         } else {
             System.out.println("null");
@@ -80,27 +90,30 @@ public class T_orderCommand implements Acommand {
             System.out.println("count is null");
             // 적절한 기본값 또는 오류 처리를 수행하세요.
         }
-
-        System.out.println("enteredmileage = " + enteredmileage);
         
-//        System.out.println("username = " + username);
-//        System.out.println("userpostcode = " + userpostcode);
-//        System.out.println("useraddress = " + useraddress);
-//        System.out.println("userdetailaddress = " + userdetailaddress);
-//        System.out.println("phone1 = " + phone1);
-//        System.out.println("phone2 = " + phone2);
-//        System.out.println("phone3 = " + phone3);
-//        System.out.println("ordermessage = " + ordermessage);
-//        System.out.println("payment = " + payment);
-//        System.out.println("usedmileage = " + usedmileage);
+        System.out.println("enteredmileage = " + enteredmileage);        
+        
+        String ordernum = request.getParameter("ordernum");
+        List<T_productDto> productList = new ArrayList<>();
 
-        // 주문하면 order로 넘기기
-        dao.orders(pidList, countList, username, userpostcode, useraddress, userdetailaddress, phone1, phone2, phone3, ordermessage, payment, usedmileage, enteredmileage);
-        // pstock업데이트
+
+        ArrayList<T_productDto> orderList = new ArrayList<>();
+        request.setAttribute("orderList", orderList);
+        // T_ordersDto 객체 생성 및 속성 설정
+        T_ordersDto dto = new T_ordersDto();
+        dto.setProductList(productList);
+
+        // T_ordersDto 객체를 request 속성에 저장
+        request.setAttribute("content_View", dto);
+        
+        
+        
+        
+        
+        dao.orders(pidList, countList, pnameList, orderpriceList, username, userpostcode, useraddress, userdetailaddress, phone1, phone2, phone3, ordermessage, payment, usedmileage, enteredmileage, request);
         dao.updatePstock(pidList, countList);
-       
-        // 주문 처리 로직 실행 후의 코드
-        // 성공적으로 주문되었다는 메시지 등을 설정하거나 리디렉션할 수 있습니다.
+        
+        System.out.println("ordernum@#@%!%@$@!%@! = " + ordernum);
         try {
             response.getWriter().println("주문이 성공적으로 완료되었습니다.");
         } catch (IOException e) {
@@ -108,3 +121,4 @@ public class T_orderCommand implements Acommand {
         }
     }
 }
+
