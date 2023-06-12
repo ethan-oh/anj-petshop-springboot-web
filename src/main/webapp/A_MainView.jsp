@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+  <%
+	String userid = request.getParameter("id");
+	session.setAttribute("USERID", userid);   
+ %>
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>MainView</title>
 <link rel="stylesheet" href="A_heardCss.css">
@@ -12,18 +17,9 @@
 <style>
 </style>
 </head>
+<script src="js/O_ScrollTop.js"></script>
 <script type="text/javascript">
-$(function(){
-	   var $firstmenu = $('nav > ul > li'),
-	       $header = $('header');
-	    $firstmenu.mouseenter(function(){
-	       $header.stop().animate({height:'300px'},200);
-	    })
-	    .mouseleave(function(){
-	        $header.stop().animate({height:'50px'},200);
-	    }) 
-		});
-		
+
 		
 //(1) 검색 및 가격정렬-------------------------------------------
 
@@ -56,35 +52,77 @@ function removeSortOrderParameter(url) {
 	return url;
 }
 
+
+// 드롭다운 
+$(function(){
+	   var $firstmenu = $('nav > ul > li'),
+	       $header = $('header');
+	    $firstmenu.mouseenter(function(){
+	       $header.stop().animate({height:'300px'},200);
+	    })
+	    .mouseleave(function(){
+	        $header.stop().animate({height:'50px'},200);
+	    }) 
+		});
+		
+
+$(document).ready(function() {
+	$(".dropdown").hover(
+		function() {
+			$(this).find(".dropdown-content").css("display", "block");
+			$("header").addClass("fixed-header"); // 헤더에 fixed-header 클래스 추가
+		},
+		function() {
+			$(this).find(".dropdown-content").css("display", "none");
+			$("header").removeClass("fixed-header"); // 헤더에서 fixed-header 클래스 제거
+		}
+	);
+});
 </script>
 <body>
 
-
-
-			 <header>
-		        <div class="head-wrap">
-		            <div class="head-wrap-inner">
-		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
-		            	</div>
-		           	 <div class="head-wrap-sub">
-		           	    
-		                <nav class="head-menu-main-nav">
-		                    <ul> 
-		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
-		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
-		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
-		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
-		                        <li class="main-nav04"><a href="#">CART</a></li>        
-		                        <li class="right-align">
-						        <button class="btn-login">Abandoned dog</button>
-						        <button class="btn-login">Login</button>
-						        <button class="btn-new">New MEMBERS</button>	
-		                    </ul>
-			            </nav>
-			            </div>
-		       		 </div>
-   	 			</header>
-     <br><br> <br> <br><br><br>
+			<header>
+				<div class="head-wrap">
+					<div class="head-wrap-inner">
+						<a href="A_MainView.do?id=${sessionScope.USERID}"><img class="head-logo" src="LOGO.png"></a>  
+					</div>
+					<div class="head-wrap-sub">
+						<nav class="head-menu-main-nav">
+							<ul> 
+								<li class="main-nav02 dropdown">
+									<a href="#">ANJLIFE</a>
+											<div class="dropdown-content">
+												<a href="A_introduction.jsp">introduction</a>
+												<a href="#">BRAND</a>
+												<a href="#">Part</a>
+											</div>
+								</li>
+								<li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
+									<li class="main-nav02 dropdown">
+										<a href="#">COMMUNITY</a>
+											<div class="dropdown-content">
+												<a href="#">review</a>
+												<a href="#">Q&A</a>
+											<!-- <a href="#">Part</a> -->
+											</div>
+								</li>
+								
+								<li class="main-nav04"><a href="#">NOTICE</a></li>         
+								<li class="main-nav04"><a href="#">CART</a></li>        
+								<li class="right-align" id="loginContainer">
+									<li><button class="btn-login btn-dog" onclick="location.href='A_loginView.jsp'">Login</button></li>
+									<li><button class="btn-login btn-dog" onclick="location.href='A_JoinView.jsp'">New</button></li>
+									<li><button class="btn-login btn-dog" onclick="location.href='A_loginView.jsp'">Logout</button></li>
+									<li style="font-size: 11px; margin-top: 10px;">${sessionScope.USERID}님</li>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</header><br><br> <br> <br><br><br>
+     				
+     				
+     				<!-- 오더량 순으로 상품노출  -->
      				
      				 <form action="A_ProductView.do" class="search-form">
               	 		 <select name="query">
@@ -141,9 +179,7 @@ function removeSortOrderParameter(url) {
 						    </li>
 						</ul>
 							<br/><br/><br/>
-	
-	
-				
+
 					
 				<!--(2) 판매량 순으로 데이터 베이스 가져오기 -------------------------------------------->
 
@@ -183,8 +219,7 @@ function removeSortOrderParameter(url) {
 						</style><hr><br>
 			
   				<!-- (1) 전체상품 목록 데이터 베이스 가져오기  ------------------------------------------>
-					
-				
+
 					<div style="text-align: left;">
    				 <img src="image_16.png" alt="My Image" style="width: 90%; height: 100%;">
 					</div><br><br>	
@@ -199,9 +234,6 @@ function removeSortOrderParameter(url) {
     				<button class="button-style">Abandoned dog</button>
 				</div>
 					<br><br>
-			
-			
-
 
 				<!-- (3) 랜덤으로 데이터 베이스 가져오기 ------------------------------------------------>
 				
@@ -225,8 +257,9 @@ function removeSortOrderParameter(url) {
 						  </c:forEach>
 						</div>
 					
-			
+					<!-- 탑 -->
 					
+					<button class="top-button" onclick="scrollToTop()">top</button>
 				
 
 				 <footer>
@@ -263,5 +296,6 @@ function removeSortOrderParameter(url) {
                 </p>   
             </div>
         </footer>
+        
 </body>
 </html>

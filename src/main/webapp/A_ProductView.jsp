@@ -1,15 +1,11 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@ page import="com.javalec.dto.A_dto"%>
 <%@ page import="com.javalec.dao.A_dao"%>
-
-
-
 <!DOCTYPE html>
 <html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -20,69 +16,105 @@
 </head>
 <script type="text/javascript">
 
-
-	// (1) 검색 및 가격정렬-------------------------------------------
+	// 가격정렬 및 검색
 	
-	function handleSortOrderChange() {
-		var selectElement = document.getElementById("sortOrder");
-		var selectedValue = selectElement.value;
-
-		// 현재 페이지 URL에서 정렬 파라미터 제거
-		var url = removeSortOrderParameter(window.location.href);
-
-		// 선택된 정렬 파라미터 추가
-		if (selectedValue !== '') {
-			url += url.indexOf('?') === -1 ? '?sortOrder=' + selectedValue
-					: '&sortOrder=' + selectedValue;
-		}
-		
-		// 페이지 리로드
-		window.location.href = url;
+	function removeSortOrderParameter(url) {
+	    var regex = /[?&]sortOrder=[^&]+(&|$)/i;
+	    return url.replace(regex, '$1');
 	}
 
+	function handleSortOrderChange() {
+	    var selectElement = document.getElementById("sortOrder");
+	    var selectedValue = selectElement.value;
+
+	    // 현재 페이지 URL에서 정렬 파라미터 제거
+	    var url = removeSortOrderParameter(window.location.href);
+
+	    // 선택된 정렬 파라미터 추가
+	    if (selectedValue !== '') {
+	        url += url.indexOf('?') === -1 ? '?sortOrder=' + selectedValue
+	            : '&sortOrder=' + selectedValue;
+	    }
+
+	    // 페이지 리로드
+	    window.location.href = url;
+	}
 	
 	
+	// 드롭다운 ----
+	$(function(){
+		   var $firstmenu = $('nav > ul > li'),
+		       $header = $('header');
+		    $firstmenu.mouseenter(function(){
+		       $header.stop().animate({height:'300px'},200);
+		    })
+		    .mouseleave(function(){
+		        $header.stop().animate({height:'50px'},200);
+		    }) 
+			});
+			
 	
+	$(document).ready(function() {
+		$(".dropdown").hover(
+			function() {
+				$(this).find(".dropdown-content").css("display", "block");
+				$("header").addClass("fixed-header"); // 헤더에 fixed-header 클래스 추가
+			},
+			function() {
+				$(this).find(".dropdown-content").css("display", "none");
+				$("header").removeClass("fixed-header"); // 헤더에서 fixed-header 클래스 제거
+			}
+		);
+	});
 	
 </script>
 <body>
 
-				
-				
-						 <header>
-						        <div class="head-wrap">
-						            <div class="head-wrap-inner">
-						               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>    
-				            		</div>
-				           		 <div class="head-wrap-sub">
-				      			    
-				                <nav class="head-menu-main-nav">
-				                    <ul>	
-				                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
-				                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
-				                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
-				                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
-				                        <li class="main-nav04"><a href="#">CART</a></li>         
-				                        <li class="right-align">
-								        <button class="btn-login">Abandoned dog</button>
-								        <button class="btn-login">Login</button>
-								        <button class="btn-new">New MEMBERS</button>
-								      </li>
-				                    </ul>
-				            	</nav>
-				         	  </div>
-				       	 	</div>
-				    	</header>
-											
-			
-				
+			<header>
+				<div class="head-wrap">
+					<div class="head-wrap-inner">
+						<a href="A_MainView.do?id=${sessionScope.USERID}"><img class="head-logo" src="LOGO.png"></a>  
+					</div>
+					<div class="head-wrap-sub">
+						<nav class="head-menu-main-nav">
+							<ul> 
+								<li class="main-nav02 dropdown">
+									<a href="#">ANJLIFE</a>
+											<div class="dropdown-content">
+												<a href="#">introduction</a>
+												<a href="#">BRAND</a>
+												<a href="#">Part</a>
+											</div>
+								</li>
+								<li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
+									<li class="main-nav02 dropdown">
+										<a href="#">COMMUNITY</a>
+											<div class="dropdown-content">
+												<a href="#">review</a>
+												<a href="#">Q&A</a>
+												<!-- <a href="#">Part</a> -->
+											</div>
+								</li>
+								
+								<li class="main-nav04"><a href="#">NOTICE</a></li>         
+								<li class="main-nav04"><a href="#">CART</a></li>        
+								<li class="right-align" id="loginContainer">
+									<li><button class="btn-login btn-dog" onclick="location.href='A_loginView.jsp'">Login</button></li>
+									<li><button class="btn-login btn-dog" onclick="location.href='A_JoinView.jsp'">New</button></li>
+									<li style="font-size: 11px; margin-top: 10px;">${sessionScope.USERID}님</li>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</header>
+
 							<img src="image_05.png" alt="My Image">
 							<br />
 							<br />
 
 
-				<!-- 검색 및 상품정렬 -->
-			
+						<!-- 검색 및 상품정렬 -->
 						<div style="text-align: right;">
 						  <form class="search-form">
               	  		<select name="query">
@@ -107,7 +139,7 @@
 						        <a href="A_ProductView.do?pcategory=living" class="btn-login btn-dog">Living</a> 
                              </li><br><br>
 				
-				<!-- 전체 상품목록 -->
+						<!-- 전체 상품목록 -->
 							<h1 style="text-align: center; color: #477A7B;">ANJ's Pick</h1><br>
 						
 							<div class="product-grid">
@@ -123,6 +155,7 @@
 				
 				
 			  
+			  			
 						<div class="pagination">
   							<button onclick="goToPreviousPage()">Back</button>
   						<div id="pageNumbers">
@@ -130,6 +163,8 @@
 						  </div>
 						  <button onclick="goToNextPage()">Next</button>
 						</div>
+			
+			
 			
 			
 						<script>
@@ -197,7 +232,8 @@
 						      updatePage();
 						    }
 						  }
-
+						  
+						  
 						</script>
 
 						<footer>
