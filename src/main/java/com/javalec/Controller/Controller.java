@@ -26,6 +26,7 @@ import com.javalec.command.T_userinfoCommand;
 import com.javalec.command.W_ProductInsertCommand;
 import com.javalec.command.W_ProductUpdataActionCommand;
 import com.javalec.command.W_ProductUpdateCommand;
+import com.javalec.command.W_SalesTodayCommand;
 import com.javalec.dao.T_Dao;
 
 /**
@@ -178,6 +179,12 @@ public class Controller extends HttpServlet {
 			command = new W_ProductUpdataActionCommand();
 			command.execute(request, response);
 			viewPage = "W_ProductList.jsp";
+			break;
+		
+		case ("/W_Home.do"):
+			command = new W_SalesTodayCommand();
+			command.execute(request, response);
+			viewPage = "W_Home.jsp";
 			break;
 		}
 

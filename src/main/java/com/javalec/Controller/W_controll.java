@@ -43,20 +43,7 @@ public class W_controll extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String uri = request.getRequestURI();
-		String conPath = request.getContextPath();
-		String com = uri.substring(conPath.length());
-		switch (com) {
-		case ("/selectChange.do"):
-			selectChangeDo(request, response);
-			break;
-		case ("/selectUser.do"):
-			selectUserDo(request, response);
-			break;
-		
-		default:
 			actionDo(request, response);
-		}
 	}
 	
 
@@ -72,11 +59,6 @@ public class W_controll extends HttpServlet {
 		String com = uri.substring(conPath.length());
 		// 각 조원 별 컨트롤러 추가
 		switch (com) {
-		case ("/W_ProductList.do"):
-			command = new W_ProductLIstCommand();
-			command.execute(request, response);
-			viewPage = "W_ProductList.jsp";
-			break;
 		case ("/W_ProductUpdate.do"):
 			command = new W_ProductUpdateCommand();
 			command.execute(request, response);
@@ -98,20 +80,5 @@ public class W_controll extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	
-	private void selectChangeDo(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		Acommand command = null;
-		command = new W_ProductLIstCommand();
-		command.execute(request, response);
-	}
-	
-	private void selectUserDo(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		Acommand command = null;
-		command = new W_UserLIstCommand();
-		command.execute(request, response);
-	}
 		
 }//end

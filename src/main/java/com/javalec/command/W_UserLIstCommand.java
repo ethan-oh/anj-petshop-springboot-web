@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.javalec.dao.W_ProductList_Dao;
 import com.javalec.dao.W_UserList_Dao;
-import com.javalec.dto.W_ProductList_Dto;
 import com.javalec.dto.W_UserList_Dto;
 
 public class W_UserLIstCommand implements Acommand {

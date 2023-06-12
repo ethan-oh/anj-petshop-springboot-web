@@ -82,7 +82,7 @@
 <header>
 					  <nav>
 					    <ul>
-					      <li><a href="W_AdminMain.jsp">HOME</a></li>
+					      <li><a href="W_Home.do">HOME</a></li>
 					      <li><a href="W_ProductList.jsp">상품 관리</a>
 					      	<ul>
 					      		<li><a href="W_ProductList.jsp">상품 목록</a></li>
@@ -91,17 +91,22 @@
 					      </li>
 					      <li><a href="A_introduction.jsp">주문 관리</a></li>
 					      <li><a href="W_UserList.jsp">회원 관리</a></li>
-					      <li><a href="A_introduction.jsp">게시판 관리</a>
+					      <li><a href="">게시판 관리</a>
 					      	<ul>
-					      		<li><a href="A_ProductView.do">공지사항</a></li>
-					      		<li><a href="A_ProductView.do">Q & A</a></li>
-					      		<li><a href="A_ProductView.do">리뷰</a></li>
+					      		<li><a href="">공지사항</a></li>
+					      		<li><a href="">Q & A</a></li>
+					      		<li><a href="">리뷰</a></li>
 					      	</ul>
 					      	</li>
-					      <li><a href="W_Sales.jsp">매출현황</a></li>
+					      <li><a href="W_SalesDaily.jsp">매출현황</a>
+					      <ul>
+					      		<li><a href="W_SalesDaily.jsp">일별 매출</a></li>
+					      		<li><a href="W_Salesmonthly.jsp">월별 매출</a></li>
+					      	</ul>
+					      </li>
 					    </ul>
 					  </nav>
-				</header>
+</header>
 				
 				
 
@@ -189,7 +194,7 @@
 					item = currentItem;
 					str += '<tr>';
 					str += '<td>' + (pagestart++) + '</td>';
-					str += '<td><img src="images/thumbnail/'+ item.pthumbnail+'.png"></td>';
+					str += '<td><img style="width: 70px; height: 40px" src="images/thumbnail/'+ item.pthumbnail+'.png"></td>';
 					str += '<td>' + item.pid + '</td>';
 					str += '<td><a href="W_ProductUpdate.do?pid=' + item.pid + '">' + item.pname + '</a></td>';
 					str += '<td>' + item.pcategory + '</td>';
