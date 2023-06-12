@@ -38,13 +38,6 @@ public class J_userOrderDto {  		// order table의 데이터 가져오기
 		this.totalPrice = totalPrice;
 	}
 
-	public int getTotalUsedMileage() {
-		return totalUsedMileage;
-	}
-
-	public void setTotalUsedMileage(int totalUsedMileage) {
-		this.totalUsedMileage = totalUsedMileage;
-	}
 
 	// order 테이블의 모든것 
 	public J_userOrderDto(String ordernum, int count, int orderprice, String username, String userpostcode,
@@ -104,6 +97,14 @@ public class J_userOrderDto {  		// order table의 데이터 가져오기
 
 	public void setUserpostcode(String userpostcode) {
 		this.userpostcode = userpostcode;
+	}
+	
+	public int getTotalUsedMileage() {
+		return totalUsedMileage;
+	}
+	
+	public void setTotalUsedMileage(int totalUsedMileage) {
+		this.totalUsedMileage = totalUsedMileage;
 	}
 
 	public String getShipaddress() {

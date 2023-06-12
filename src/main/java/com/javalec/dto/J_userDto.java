@@ -11,6 +11,7 @@ public class J_userDto {		// user table dto
 	String userpostcode;
 	String useraddress;
 	String userdetailaddress;
+	String deletedate;
 	int mileage; 		// 사용자가 사용 가능한 적립금
 	
 	public J_userDto() {
@@ -32,6 +33,7 @@ public class J_userDto {		// user table dto
 		this.mileage = mileage;
 	}
 
+	// 유저가 사용 가능한 마일리지 불러오기 
 	public J_userDto(String userid, int mileage) {
 		super();
 		this.userid = userid;
