@@ -120,7 +120,7 @@ $(document).ready(function() {
 				<input type="button" onclick="resetSelection()" value="♺" style="font-size: 19px; color: #477A7B; background-color: #DFE9E8; border: none; ">
 				<h3 style="text-align: right;">TOTAL </h3>
 				<h3 style="text-align: right;"> <span id="resultPrice"><fmt:formatNumber value="${productDetail.pprice }" pattern="#,###" /> 원</span></h3>
-				<h5 style="text-align: right;"> <span id="resultRewards"> (적립금 : + ${productDetail.pprice * 0.01 } 원) </span></h5>
+				<h5 style="text-align: right;"> <span id="resultRewards"> (적립금 : + ${productDetail.pprice * 0.01 } 원) </span></h5><br/><br/>
 				
 				<div style="display: flex;">
 					<form action="j_insertCart.do" name="basket" method="get" style="display: inline; width: 50%;">

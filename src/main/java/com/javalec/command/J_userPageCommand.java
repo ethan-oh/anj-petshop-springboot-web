@@ -2,6 +2,7 @@ package com.javalec.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.javalec.dao.J_Dao;
 import com.javalec.dto.J_userDto;
@@ -12,8 +13,12 @@ public class J_userPageCommand implements Acommand { 			// orders 테이블 관�
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		String userid = request.getParameter("userid");
+//		String userid = request.getParameter("userid");
 //		String userid = "do";
+		
+		HttpSession session = request.getSession();
+	 	
+	 	String userid = (String) session.getAttribute("USERID");
 		
 		J_Dao dao = new J_Dao();
 		J_userOrderDto orderdto = dao.userOrderMileage(userid);
