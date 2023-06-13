@@ -2,6 +2,7 @@ package com.javalec.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.javalec.dao.T_Dao;
 import com.javalec.dto.T_userinfoDto;
@@ -11,7 +12,11 @@ public class T_userinfoCommand implements Acommand {
 	 @Override
 	 public void execute(HttpServletRequest request, HttpServletResponse response) {
 		 
-		 	String userid = request.getParameter("userid");
+		 
+		 	HttpSession session = request.getSession();
+		 	
+		 	String userid = (String) session.getAttribute("USERID");
+		 	System.out.println("userid = " + userid);
 		 	
 	        T_Dao dao = new T_Dao();
 	        T_userinfoDto dto = dao.userlist(userid);

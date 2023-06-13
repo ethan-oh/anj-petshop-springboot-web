@@ -9,13 +9,17 @@ public class T_cartDeleteCommand implements Acommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		
-		String pid = request.getParameter("pid");
-		System.out.println(pid);
-		T_Dao dao = new T_Dao();
-		dao.delete(pid);
-		
-		
+	    T_Dao dao = new T_Dao();
+	    String[] pidParams = request.getParameterValues("pid");
+	    if (pidParams != null) {
+	      for (String pidParam : pidParams) {
+	        if (!pidParam.isEmpty()) {
+	          dao.delete(pidParam);
+	        }
+	      }
+	    } else {
+	      System.out.println("매개변수 비어 있음");
+	    }
 	}
 }
 //		String seqParam = request.getParameter("seq");

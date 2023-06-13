@@ -13,8 +13,35 @@
 <link rel="stylesheet" href="T_cartCss.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>주문/결제</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 <script type="text/javascript">
+//드롭다운 
+$(function(){
+	   var $firstmenu = $('nav > ul > li'),
+	       $header = $('header');
+	    $firstmenu.mouseenter(function(){
+	       $header.stop().animate({height:'300px'},200);
+	    })
+	    .mouseleave(function(){
+	        $header.stop().animate({height:'50px'},200);
+	    }) 
+		});
+		
+
+$(document).ready(function() {
+	$(".dropdown").hover(
+		function() {
+			$(this).find(".dropdown-content").css("display", "block");
+			$("header").addClass("fixed-header"); // 헤더에 fixed-header 클래스 추가
+		},
+		function() {
+			$(this).find(".dropdown-content").css("display", "none");
+			$("header").removeClass("fixed-header"); // 헤더에서 fixed-header 클래스 제거
+		}
+	);
+});
 	// 숫자 단위정리
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -324,32 +351,57 @@ fillUserInfo(document.getElementById("checkboxId"));
 
 <body>
 
-	<!-- <header>
-				  <nav>
-				    <ul>
-				      <li><a href="A_MainView.do"><img src="LOGO.png" alt="logo"></a></li>
-				      <li><a href="A_ProductView.do">SHOP</a></li>
-				      <li><a href="#">ANJLIFE</a></li>
-				      <li><a href="#">COMMUNITY</a></li>
-				      <li><a href="#">CART</a></li>
-				      <li class="right-align"><a href="A_introduction.jsp">Login</a></li>
-				      <li class="right-align"><a href="A_introduction.jsp">New</a></li>
-				    </ul>
-				  </nav>
-				</header>
-				<br/><br/><br/><br/><br/>
-				<img src="image_08.png" alt="My Image"> -->
+	<header>
+				<div class="head-wrap">
+					<div class="head-wrap-inner">
+						<a href="A_MainView.do?id=${sessionScope.USERID}"><img class="head-logo" src="LOGO.png"></a>  
+					</div>
+					<div class="head-wrap-sub">
+						<nav class="head-menu-main-nav">
+							<ul> 
+								<li class="main-nav02 dropdown">
+									<a href="#">ANJLIFE</a>
+											<div class="dropdown-content">
+												<a href="A_introduction.jsp">introduction</a>
+												<a href="#">BRAND</a>
+												<a href="#">Part</a>
+											</div>
+								</li>
+								<li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
+									<li class="main-nav02 dropdown">
+										<a href="#">COMMUNITY</a>
+											<div class="dropdown-content">
+												<a href="#">review</a>
+												<a href="#">Q&A</a>
+											<!-- <a href="#">Part</a> -->
+											</div>
+								</li>
+								
+								<li class="main-nav04"><a href="#">NOTICE</a></li>         
+								<li class="main-nav04"><a href="#">CART</a></li>        
+								<li class="right-align" id="loginContainer">
+									<li><button class="btn-login btn-dog" onclick="location.href='A_loginView.jsp'">Login</button></li>
+									<li><button class="btn-login btn-dog" onclick="location.href='A_JoinView.jsp'">New</button></li>
+									<li><button class="btn-login btn-dog" onclick="location.href='A_loginView.jsp'">Logout</button></li>
+									<li style="font-size: 11px; margin-top: 10px;">${sessionScope.USERID}님</li>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</header><br><br> <br> <br><br><br>
 
 	<main class="main">
 
 		<h1
-			style="font-family: 'font-family: ' Nanum Pen Script ', cursive; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); height: 500px; /* 원하는 높이 값으로 변경 */ color: #477a7b;">ORDER</h1>
-		<br> <br> <br> <br> <br> <br> <br>
-		<br> <br>
+			style="font-family: 'font-family: ' Nanum Pen Script ', cursive; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); height: 100px; /* 원하는 높이 값으로 변경 */ color: #477a7b;">ORDER</h1>
+		<!-- <br> <br> <br> <br> <br> -->
 	</main>
 
 	<form id="orderForm" action="order.do" method="post">
-		<hr width="80%" color="#477a7b" size="2">
+		<div style="display: flex; justify-content: center;">
+		  <hr style="width: 80%; color: #477a7b; height: 2px;">
+		</div>
 		<table border="0">
 			<tr>
 				<td
@@ -363,10 +415,16 @@ fillUserInfo(document.getElementById("checkboxId"));
 		<c:forEach items="${list}" var="dto">
 			<table border="0" style="border-top: 1px solid #E8E8E8;">
 				<tr>
-					<td style="width: 200px; height: 100px; text-align: left;">image</td>
-					<td style="width: 180px; text-align: left;"><span class="pid">${dto.pid}</span><br>
-						<span class="pname">${dto.pname}</span><br> <fmt:formatNumber
-							value="${dto.pprice}" pattern="#,##0" />원</td>
+				<!-- 이미지 -->
+					<td style="width: 150px; height: 50px; text-align: left;">
+						<img alt="제품 이미지를 준비중 입니다." src="images/thumbnail/${dto.pthumbnail}.png">
+					</td>
+				<!-- 상품정보 -->	
+					<td style="width: 750px; text-align: left;">&emsp;&emsp;
+						<span class="pid" style="font-size: 33px;">${dto.pname}</span><br>&emsp;&emsp;
+						<span class="pname">${dto.pid}</span><br>&emsp;&emsp;
+						<fmt:formatNumber value="${dto.pprice}" pattern="#,##0" />원</td>
+							
 					<td style="width: 130px;">${dto.count}개</td>
 					<td id="total_${dto.pid}" style="width: 100px;"><fmt:formatNumber
 							value="${dto.pprice * dto.count}" pattern="#,##0" />원</td>
@@ -379,6 +437,7 @@ fillUserInfo(document.getElementById("checkboxId"));
 			<input type="hidden" name="count" value="${dto.count}">
 			<input type="hidden" name="pid" value="${dto.pid}">
 			<input type="hidden" name="pname" value="${dto.pname}">
+			<input type="hidden" name="userid" value="${sessionScope.USERID}">
 		</c:forEach>
 
 		<table border="0">
@@ -394,11 +453,12 @@ fillUserInfo(document.getElementById("checkboxId"));
 	<!-- 누적된 값을 출력 -->
 
 	<br>
-	<br>
-	<hr width="80%" color="#477a7b" size="2">
+	<br> 
+		<div style="display: flex; justify-content: center;">
+	  <hr style="width: 80%; color: #477a7b; height: 2px;">
+	</div>
 
 	<!-- 주문자 정보 -->
-	<!-- 배송지 정보 -->
 		<table border="0" id="userDeliveryTable">
 			<tr>
 				<td
@@ -495,7 +555,9 @@ fillUserInfo(document.getElementById("checkboxId"));
 		<br>
 
 
-	<hr width="80%" color="#477a7b" size="2">
+	<div style="display: flex; justify-content: center;">
+	  <hr style="width: 80%; color: #477a7b; height: 2px;">
+	</div>
 	<!-- <form action="order.do" method="get"> -->
 		<table border="0">
 			<tr>
@@ -545,7 +607,9 @@ fillUserInfo(document.getElementById("checkboxId"));
 
 
 
-	<hr width="80%" color="#477a7b" size="2">
+	<div style="display: flex; justify-content: center;">
+	  <hr style="width: 80%; color: #477a7b; height: 2px;">
+	</div>
 	<table border="0">
 		<tr>
 			<td colspan="2"

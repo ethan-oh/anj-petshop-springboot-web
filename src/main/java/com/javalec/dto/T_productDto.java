@@ -9,6 +9,7 @@ public class T_productDto {
 
 	// Field
 	String ordernum;
+	String pthumbnail;
 	int seq;
 	int count;
 	String userid;
@@ -26,9 +27,10 @@ public class T_productDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public T_productDto(int seq, String pid, String pname, int pprice, int count) {
+	public T_productDto(int seq, String pthumbnail, String pid, String pname, int pprice, int count) {
 		super();
 		this.seq = seq;
+		this.pthumbnail = pthumbnail;
 		//this.userid = userid;
 		this.pid = pid;
 		this.pname = pname;
@@ -36,13 +38,24 @@ public class T_productDto {
 		this.count = count;
 	}
 	
+	
+
 	//, HttpServletRequest request
-	public T_productDto(String pid, String pname, int count, int orderprice) {
+	public T_productDto(String pthumbnail, String pid, String pname, int orderprice, int count) {
 		super();
+		this.pthumbnail = pthumbnail;
 		this.pid = pid;
 		this.pname = pname;
-		this.count = count;
 		this.orderprice = orderprice;
+		this.count = count;
+	}
+	
+	public String getPthumbnail() {
+		return pthumbnail;
+	}
+
+	public void setPthumbnail(String pthumbnail) {
+		this.pthumbnail = pthumbnail;
 	}
 	
 	public List<String> getPidList() {

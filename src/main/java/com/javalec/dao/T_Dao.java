@@ -37,8 +37,11 @@ public class T_Dao {
 		}
 	}
 	
+	
+	
+	
 	// 장바구니에 담긴 상품 보여주기
-	public ArrayList<T_productDto> list(){
+	public ArrayList<T_productDto> list(String userid){
 		ArrayList<T_productDto> dtos = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -46,15 +49,16 @@ public class T_Dao {
 		
 		 try {
 		        connection = dataSource.getConnection();
-		        String sql = "SELECT c.seq, c.count, c.userid, c.pid, p.pname, p.pprice " +
+		        String sql = "SELECT c.seq, p.pthumbnail, c.count, c.userid, c.pid, p.pname, p.pprice " +
 	                     "FROM user u, cart c, product p " +
-	                     "WHERE u.userid = c.userid AND p.pid = c.pid"; // AND u.userid = ?";
+	                     "WHERE u.userid = c.userid AND p.pid = c.pid AND u.userid = ?";
 		        preparedStatement = connection.prepareStatement(sql);
-		       // preparedStatement.setString(1, userid);
+		        preparedStatement.setString(1, userid);
 		        resultSet = preparedStatement.executeQuery();
 
 		        while (resultSet.next()) {
 		        	int seq = resultSet.getInt("seq");
+		        	String pthumbnail = resultSet.getString("pthumbnail");
 		            String pid = resultSet.getString("pid");
 		            String pname = resultSet.getString("pname");
 		            int pprice = resultSet.getInt("pprice");
@@ -62,7 +66,7 @@ public class T_Dao {
 		            //int pstock = resultSet.getInt("pstock");
 		           // String pimage = resultSet.getString("pimage");
 
-		            T_productDto dto = new T_productDto(seq, pid, pname, pprice, count);
+		            T_productDto dto = new T_productDto(seq, pthumbnail, pid, pname, pprice, count);
 		            dtos.add(dto);
 		        }
 		    } catch (Exception e) {
@@ -113,13 +117,14 @@ public class T_Dao {
 		public void delete(String pid) {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
-
+			System.out.println("삭제 pid = @@@@@ = " + pid);
 			try {
 				connection = dataSource.getConnection();
 				String query = "delete from cart where pid = ?";
 				preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, pid);
 				preparedStatement.executeUpdate();
+				
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -142,13 +147,13 @@ public class T_Dao {
 		    Connection connection = null;
 		    PreparedStatement preparedStatement = null;
 		    ResultSet resultSet = null;
-		    String fixedUserId = "do"; // userid를 고정값으로 설정
+		    //String fixedUserId = "do"; // userid를 고정값으로 설정
 
 		    try {
 		        connection = dataSource.getConnection();
 		        String query = "SELECT * FROM user WHERE userid = ?";
 		        preparedStatement = connection.prepareStatement(query);
-		        preparedStatement.setString(1, fixedUserId); // 고정값으로 설정된 변수를 사용
+		        preparedStatement.setString(1, userid); // 고정값으로 설정된 변수를 사용
 		        resultSet = preparedStatement.executeQuery();
 
 		        if (resultSet.next()) {
@@ -163,7 +168,7 @@ public class T_Dao {
 		            int mileage = resultSet.getInt("mileage");
 
 		            dto = new T_userinfoDto();
-		            dto.setUserid(fixedUserId); // 고정값으로 설정된 변수를 사용
+		            dto.setUserid(userid); // 고정값으로 설정된 변수를 사용
 		            dto.setUsername(username);
 		            dto.setUserpostcode(userpostcode);
 		            dto.setUseraddress(useraddress);
@@ -395,6 +400,7 @@ public class T_Dao {
 		            dto = new T_ordersDto();
 		            dto.setOrdernum(resultSet.getString("ordernum"));
 		            dto.setOrderdate(resultSet.getString("orderdate"));
+		            dto.setOrderprice(resultSet.getInt("orderprice"));
 		            dto.setUsedmileage(resultSet.getInt("usedmileage"));
 		            dto.setPayment(resultSet.getString("payment"));
 		            dto.setUsername(resultSet.getString("username"));
@@ -431,20 +437,24 @@ public class T_Dao {
 
 		    try {
 		        connection = dataSource.getConnection();
-		        String query = "SELECT pid, pname, orderprice, count FROM orders WHERE ordernum = ?";
+		        String query = "SELECT p.pthumbnail, o.pid, p.pname, o.orderprice, o.count "
+		                + "FROM orders o "
+		                + "JOIN product p ON o.pid = p.pid "
+		                + "WHERE o.ordernum = ?";
 		        preparedStatement = connection.prepareStatement(query);
 		        preparedStatement.setString(1, ordernum);
 		        resultSet = preparedStatement.executeQuery();
 
 		        this.ordernum = ordernum;
 
-		        while (resultSet.next()) {
+		        while (resultSet.next()) {		        	
+		        	String pthumbnail = resultSet.getString("pthumbnail");
 		            String pid = resultSet.getString("pid");
 		            String pname = resultSet.getString("pname");
 		            int orderprice = resultSet.getInt("orderprice");
 		            int count = resultSet.getInt("count");
 
-		            T_productDto dto = new T_productDto(pid, pname, orderprice, count);
+		            T_productDto dto = new T_productDto(pthumbnail, pid, pname, orderprice, count);
 		            dtos.add(dto);
 		        }
 		        System.out.println("dao ordernum222 = " + ordernum);
