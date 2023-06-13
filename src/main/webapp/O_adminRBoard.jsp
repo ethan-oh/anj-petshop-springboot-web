@@ -112,8 +112,8 @@
 
     // 이전 버튼
     if (currentPage > 1) {
-      document.write('<span><a href="O_Review.do?page=' + 1 + '&query=' + query + '&content=${content}"><<</a></span>');
-      document.write('<span><a href="O_Review.do?page=' + (currentPage - 1) + '&query=' + query + '&content=${content}"><</a></span>');
+      document.write('<span><a href="O_adminReview.do?page=' + 1 + '&query=' + query + '&content=${content}"><<</a></span>');
+      document.write('<span><a href="O_adminReview.do?page=' + (currentPage - 1) + '&query=' + query + '&content=${content}"><</a></span>');
     } else {
       document.write('<span class="empty"><a><<</a></span>');
       document.write('<span class="empty"><a><</a></span>');
@@ -131,17 +131,17 @@
 
       for (let i = startPage; i <= startPage + numPagesToShow - 1; i++) {
         if (i === currentPage) {
-          document.write('<span class="current"><a href="O_Review.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
+          document.write('<span class="current"><a href="O_adminReview.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
         } else {
-          document.write('<span><a href="O_Review.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
+          document.write('<span><a href="O_adminReview.do?page=' + i + '&query=' + query + '&content=${content}">' + i + '</a></span>');
         }
       }
     }
 
     // 다음 버튼
     if (currentPage != totalPages && totalPages != 1) {
-      document.write('<span><a href="O_Review.do?page=' + (currentPage + 1) + '&query=' + query + '&content=${content}">></a><span>');
-      document.write('<span><a href="O_Review.do?page=' + totalPages + '&query=' + query + '&content=${content}">>></a><span>');
+      document.write('<span><a href="O_adminReview.do?page=' + (currentPage + 1) + '&query=' + query + '&content=${content}">></a><span>');
+      document.write('<span><a href="O_adminReview.do?page=' + totalPages + '&query=' + query + '&content=${content}">>></a><span>');
     } else {
       document.write('<span class="empty"><a>></a><span>');
       document.write('<span class="empty"><a>>></a><span>');

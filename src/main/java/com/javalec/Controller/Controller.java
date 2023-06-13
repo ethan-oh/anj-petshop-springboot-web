@@ -213,17 +213,17 @@ public class Controller extends HttpServlet {
 		case ("/O_writeNotice.do"):
 			command = new O_writeNoticeCommand();
 			command.execute(request, response);
-			viewPage = "O_Notice.do";
+			viewPage = "O_adminNotice.do";
 			break;
 		case ("/O_updateNotice.do"):
 			command = new O_updateNoticeCommand();
 			command.execute(request, response);
-			viewPage = "O_Notice.do";
+			viewPage = "O_adminNotice.do";
 			break;
 		case ("/O_changeNoticeStatus.do"): // FAQ 삭제 및 복구 db에서 수정 후 목록 페이지 연결
 			command = new O_changeFAQStatusCommand();
 			command.execute(request, response);
-			viewPage = "O_Notice.do";
+			viewPage = "O_adminNotice.do";
 			break;
 		case ("/O_FAQ.do"):
 			command = new O_getFAQCommand();
@@ -241,7 +241,7 @@ public class Controller extends HttpServlet {
 		case ("/O_writeFAQ.do"): // 작성한 FAQ db insert 후 목록 페이지 연결
 			command = new O_writeFAQCommand();
 			command.execute(request, response);
-			viewPage = "O_FAQ.do";
+			viewPage = "O_adminFAQ.do";
 			break;
 		case ("/O_updateViewFAQ.do"): // FAQ 수정 페이지
 			command = new O_getFAQCommand();
@@ -256,7 +256,7 @@ public class Controller extends HttpServlet {
 		case ("/O_changeFAQStatus.do"): // FAQ 삭제 및 복구 db에서 수정 후 목록 페이지 연결
 			command = new O_changeFAQStatusCommand();
 			command.execute(request, response);
-			viewPage = "O_FAQ.do";
+			viewPage = "O_adminFAQ.do";
 			break;
 		case ("/O_QNA.do"): // qna 목록 들고와 순서대로 보여줌
 			command = new O_getQnaCommand();
