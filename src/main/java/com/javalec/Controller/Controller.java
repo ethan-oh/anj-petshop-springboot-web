@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.javalec.command.A_IdCheckCommand;
 import com.javalec.command.A_LoginCommand;
+import com.javalec.command.A_LogoutCommand;
 import com.javalec.command.A_MainCommand;
 import com.javalec.command.A_ProductCommand;
 import com.javalec.command.A_joinCommand;
@@ -118,6 +119,11 @@ public class Controller extends HttpServlet {
 			command = new A_joinCommand(); // DB에서 불러오는 것 ( 메인데이터베이스 전
 			command.execute(request, response);
 			viewPage = "A_loginView.jsp"; // 화면을 보여주는 곳
+			break;
+		case ("/A_logout.do"): // 최초 접속시 실행할 주소
+			command = new A_LogoutCommand(); // DB에서 불러오는 것 ( 메인데이터베이스 전
+			command.execute(request, response);
+			viewPage = "A_MainView.do"; // 화면을 보여주는 곳
 			break;
 		case ("/A_MainView.do"): // 최초 접속시 실행할 주소
 			command = new A_MainCommand(); // DB에서 불러오는 것 ( 메인데이터베이스 전

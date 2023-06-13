@@ -40,7 +40,7 @@ function loginCheck() {
 		data:{"id":id,"pw":passwd},
 		success:function(data){
 		if(data=="admin"){ 
-			location.href = 'o_adminMain.do?adminid='+id;
+			location.href = 'W_Home.do?adminid='+id;
 		}else if(data=="user"){
 			location.href = 'A_Main.do?userid='+id;
 			form.submit()
@@ -84,38 +84,50 @@ function loginCheck() {
 </script>
 <body>
 
-		 		<header>
+		 	<header>
 				<div class="head-wrap">
 					<div class="head-wrap-inner">
-						<a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
+						<a href="A_MainView.do?id=${sessionScope.USERID}"><img class="head-logo" src="LOGO.png"></a>  
 					</div>
 					<div class="head-wrap-sub">
 						<nav class="head-menu-main-nav">
 							<ul> 
-							
 								<li class="main-nav02 dropdown">
 									<a href="#">ANJLIFE</a>
 											<div class="dropdown-content">
-												<a href="#">introduction</a>
-												<a href="#">BRAND</a>
-												<a href="#">Part</a>
+												<a href="A_introduction.jsp">introduction</a>
+												<a href="A_Part.jsp">Part</a>
 											</div>
 								</li>
 								<li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
 									<li class="main-nav02 dropdown">
 										<a href="#">COMMUNITY</a>
 											<div class="dropdown-content">
-												<a href="#">review</a>
-												<a href="#">Q&A</a>
-											<!-- <a href="#">Part</a> -->
+												<a href="O_Review.do">review</a>
+												<a href="O_QNA.do">Q&A</a>
 											</div>
-								</li>
-								
-								<li class="main-nav04"><a href="#">NOTICE</a></li>         
+								  </li>
+								<li class="main-nav02 dropdown">
+										<a href="#">NOTICE</a>
+								      <div class="dropdown-content">
+								      <a href="O_FAQ.do">FAQ</a>
+									  <a href="O_Notice.do">Notice</a>
+									 </div>
+								        
 								<li class="main-nav04"><a href="#">CART</a></li>        
 								<li class="right-align" id="loginContainer">
-									<li><button class="btn-login btn-dog" onclick="location.href='A_loginView.jsp'">Login</button></li>
-									<li><button class="btn-login btn-dog" onclick="location.href='A_JoinView.jsp'">New</button></li>
+									<c:choose>
+										  <c:when test="${empty sessionScope.USERID}">
+										    <!-- 세션 값이 비어있을 때 -->
+										    <li><button class="btn-login btn-dog" onclick="location.href='A_loginView.jsp'">Login</button></li>
+										    <li><button class="btn-login btn-dog" onclick="location.href='A_JoinView.jsp'">New</button></li>
+										  </c:when>
+										  <c:otherwise>
+										    <!-- 세션 값이 있을 때 -->
+										    <li><button class="btn-login btn-dog" onclick="location.href='A_logout.do'">Logout</button></li>
+										    <li><button class="btn-login btn-dog" onclick="location.href='A_loginView.jsp'">MyPage</button></li>
+										  </c:otherwise>
+										</c:choose>
 									<li style="font-size: 11px; margin-top: 10px;">${sessionScope.USERID}님</li>
 								</li>
 							</ul>
