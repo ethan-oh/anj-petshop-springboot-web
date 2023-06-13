@@ -113,7 +113,7 @@ public class Controller extends HttpServlet {
 		switch (com) {
 		case ("/"):
 			viewPage = "A_mainView.do";
-			 break;	
+			break;
 		case ("/A_JoinView.do"): // 최초 접속시 실행할 주소
 			command = new A_joinCommand(); // DB에서 불러오는 것 ( 메인데이터베이스 전
 			command.execute(request, response);
@@ -130,7 +130,6 @@ public class Controller extends HttpServlet {
 			viewPage = "A_ProductView.jsp";
 			break;
 
-		
 		////////////////////////////////////////////
 		//////////////////////////////////////////// 여기서부터 진영
 		case ("/j_productClicked.do"): // 상품목록 페이지에서 상품 선택할 때
@@ -156,13 +155,13 @@ public class Controller extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "J_userMyPage.jsp";
 			break;
-		
-		case ("/J_userProfilePage.do") : 
+
+		case ("/J_userProfilePage.do"):
 			command = new J_userPageCommand();
 			command.execute(request, response);
 			viewPage = "J_userProfilePage.jsp";
 			break;
-		case ("/j_userUpdate.do") :	
+		case ("/j_userUpdate.do"):
 			command = new J_userUpdateCommand();
 			command.execute(request, response);
 			command = new J_userPageCommand();
@@ -170,163 +169,204 @@ public class Controller extends HttpServlet {
 			System.out.println("왜그럴까나..");
 			viewPage = "J_userProfilePage.jsp";
 			break;
-			
-		case("/j_userUpdateCancel.do") : 
+
+		case ("/j_userUpdateCancel.do"):
 			viewPage = "A_MainView.jsp";
 			break;
-		case("/j_userDelete.do"): 
+		case ("/j_userDelete.do"):
 			command = new J_userDeleteCommand();
 			command.execute(request, response);
 			viewPage = "A_MainView.jsp";
-			break;	
+			break;
 		////////////////////////////////////////////
 		//////////////////////////////////////////// 여기서부터 성민
 		case ("/O_Notice.do"):
-	         command = new O_getNoticeCommand();
-	         command.execute(request, response);
-	         viewPage = "O_NBoard.jsp";
-	         break;
-	      case ("/O_NDetail.do"):
-	         command = new O_getNDetailCommand();
-	         command.execute(request, response);
-	         viewPage = "O_NDetail.jsp";
-	         break;
-	      case ("/O_writeNoticeView.do"):
-	         viewPage = "O_writeNoticeView.jsp";
-	         break;
-	      case ("/O_writeNotice.do"):
-	         command = new O_writeNoticeCommand();
-	         command.execute(request, response);
-	         viewPage = "O_Notice.do";
-	         break;
-	      case ("/O_updateNotice.do"):
-	         command = new O_updateNoticeCommand();
-	         command.execute(request, response);
-	         viewPage = "O_Notice.do";
-	         break;
-	      case ("/O_changeNoticeStatus.do"): // FAQ 삭제 및 복구 db에서 수정 후 목록 페이지 연결
-	         command = new O_changeFAQStatusCommand();
-	         command.execute(request, response);
-	         viewPage = "O_Notice.do";
-	         break;
-	      case ("/O_FAQ.do"):
-	         command = new O_getFAQCommand();
-	         command.execute(request, response);
-	         viewPage = "O_FBoard.jsp";
-	         break;
-	      case ("/O_writeViewFAQ.do"): // FAQ 작성 페이지
-	         viewPage = "O_writeFAQ.jsp";
-	         break;
-	      case ("/O_writeFAQ.do"): // 작성한 FAQ db insert 후 목록 페이지 연결
-	         command = new O_writeFAQCommand();
-	         command.execute(request, response);
-	         viewPage = "O_FAQ.do";
-	         break;
-	      case ("/O_updateViewFAQ.do"): // FAQ 수정 페이지
-	         command = new O_getFAQCommand();
-	         command.execute(request, response);
-	         viewPage = "O_updateFAQ.jsp";
-	         break;
-	      case ("/O_deleteViewFAQ.do"):   // FAQ 삭제 페이지
-	         command = new O_getFAQCommand();
-	         command.execute(request, response);
-	         viewPage = "O_deleteFAQ.jsp";
-	         break;
-	      case ("/O_changeFAQStatus.do"): // FAQ 삭제 및 복구 db에서 수정 후 목록 페이지 연결
-	         command = new O_changeFAQStatusCommand();
-	         command.execute(request, response);
-	         viewPage = "O_FAQ.do";
-	         break;
-	      case ("/O_QNA.do"): // qna 목록 들고와 순서대로 보여줌
-	         command = new O_getQnaCommand();
-	         command.execute(request, response);
-	         viewPage = "O_QBoard.jsp";
-	         break;
-	      case ("/O_getQnaDetail.do"): // 작성된 qna 의 내용 볼 수 있음
-	         command = new O_getQnaDetailCommand();
-	         command.execute(request, response);
-	         viewPage = "O_QnaDetail.jsp";
-	         break;
-	      case ("/O_writeQuestionView.do"):   // qna 작성 view 오픈
-	         viewPage = "O_writeQuestionView.jsp";
-	         break;
-	      case ("/O_writeQuestion.do"):   // qna insert
-	         command = new O_writeQuestionCommand();
-	         command.execute(request, response);
-	         viewPage = "O_QNA.do";
-	         break;
-	      case ("/O_writeAnswerView.do"):   // 답변 작성 뷰
-	         command = new O_getQnaDetailCommand();
-	         command.execute(request, response);
-	         viewPage = "O_writeAnswerView.jsp";
-	         break;
-	      case ("/O_writeAnswer.do"):   // qna insert
-	         command = new O_writeAnswerCommand();
-	         command.execute(request, response);
-	         viewPage = "O_QNA.do";
-	         break;
-	      case ("/O_updateQnA.do"):   // qna update
-	         viewPage = "O_QNA.do";
-	         break;
-	      case ("/O_deleteQuestion.do"):   //질문에 대한 답변까지 모두 삭제
-	         command = new O_deleteQuestionCommand();
-	         command.execute(request, response);
-	         viewPage = "O_QNA.do";
-	         break;
-	      case ("/O_deleteAnswer.do"):   // 답변만 삭제
-	         command = new O_deleteAnswerCommand();
-	         command.execute(request, response);
-	         viewPage = "O_QNA.do";
-	         break;
-	      case ("/O_Review.do"):   // 답변만 삭제
-	         command = new O_getReviewCommand();
-	         command.execute(request, response);
-	         viewPage = "O_RBoard.jsp";
-	         break;   
-	      case ("/O_RDetail.do"):
-	         command = new O_getRDetailCommand();
-	         command.execute(request, response);
-	         viewPage = "O_RDetail.jsp";
-	         break;
-	      case ("/O_writeComment.do"):
-	         command = new O_writeCommentCommand();
-	         command.execute(request, response);
-	         viewPage = "O_RDetail.do";
-	         break;
+			command = new O_getNoticeCommand();
+			command.execute(request, response);
+			viewPage = "O_NBoard.jsp";
+			break;
+		case ("/O_adminNotice.do"):
+			command = new O_getNoticeCommand();
+			command.execute(request, response);
+			viewPage = "O_adminNBoard.jsp";
+			break;
+		case ("/O_NDetail.do"):
+			command = new O_getNDetailCommand();
+			command.execute(request, response);
+			viewPage = "O_NDetail.jsp";
+			break;
+		case ("/O_adminNDetail.do"):
+			command = new O_getNDetailCommand();
+			command.execute(request, response);
+			viewPage = "O_adminNDetail.jsp";
+			break;
+
+		case ("/O_writeNoticeView.do"):
+			viewPage = "O_writeNoticeView.jsp";
+			break;
+		case ("/O_writeNotice.do"):
+			command = new O_writeNoticeCommand();
+			command.execute(request, response);
+			viewPage = "O_Notice.do";
+			break;
+		case ("/O_updateNotice.do"):
+			command = new O_updateNoticeCommand();
+			command.execute(request, response);
+			viewPage = "O_Notice.do";
+			break;
+		case ("/O_changeNoticeStatus.do"): // FAQ 삭제 및 복구 db에서 수정 후 목록 페이지 연결
+			command = new O_changeFAQStatusCommand();
+			command.execute(request, response);
+			viewPage = "O_Notice.do";
+			break;
+		case ("/O_FAQ.do"):
+			command = new O_getFAQCommand();
+			command.execute(request, response);
+			viewPage = "O_FBoard.jsp";
+			break;
+		case ("/O_adminFAQ.do"):
+			command = new O_getFAQCommand();
+			command.execute(request, response);
+			viewPage = "O_adminFBoard.jsp";
+			break;
+		case ("/O_writeViewFAQ.do"): // FAQ 작성 페이지
+			viewPage = "O_writeFAQ.jsp";
+			break;
+		case ("/O_writeFAQ.do"): // 작성한 FAQ db insert 후 목록 페이지 연결
+			command = new O_writeFAQCommand();
+			command.execute(request, response);
+			viewPage = "O_FAQ.do";
+			break;
+		case ("/O_updateViewFAQ.do"): // FAQ 수정 페이지
+			command = new O_getFAQCommand();
+			command.execute(request, response);
+			viewPage = "O_updateFAQ.jsp";
+			break;
+		case ("/O_deleteViewFAQ.do"): // FAQ 삭제 페이지
+			command = new O_getFAQCommand();
+			command.execute(request, response);
+			viewPage = "O_deleteFAQ.jsp";
+			break;
+		case ("/O_changeFAQStatus.do"): // FAQ 삭제 및 복구 db에서 수정 후 목록 페이지 연결
+			command = new O_changeFAQStatusCommand();
+			command.execute(request, response);
+			viewPage = "O_FAQ.do";
+			break;
+		case ("/O_QNA.do"): // qna 목록 들고와 순서대로 보여줌
+			command = new O_getQnaCommand();
+			command.execute(request, response);
+			viewPage = "O_QBoard.jsp";
+			break;
+		case ("/O_adminQNA.do"): // qna 목록 들고와 순서대로 보여줌
+			command = new O_getQnaCommand();
+			command.execute(request, response);
+			viewPage = "O_adminQBoard.jsp";
+			break;
+		case ("/O_getQnaDetail.do"): // 작성된 qna 의 내용 볼 수 있음
+			command = new O_getQnaDetailCommand();
+			command.execute(request, response);
+			viewPage = "O_QnaDetail.jsp";
+			break;
+		case ("/O_adminGetQnaDetail.do"): // 작성된 qna 의 내용 볼 수 있음
+			command = new O_getQnaDetailCommand();
+			command.execute(request, response);
+			viewPage = "O_adminQnaDetail.jsp";
+			break;
+		case ("/O_writeQuestionView.do"): // qna 작성 view 오픈
+			viewPage = "O_writeQuestionView.jsp";
+			break;
+		case ("/O_writeQuestion.do"): // qna insert
+			command = new O_writeQuestionCommand();
+			command.execute(request, response);
+			viewPage = "O_QNA.do";
+			break;
+		case ("/O_writeAnswerView.do"): // 답변 작성 뷰
+			command = new O_getQnaDetailCommand();
+			command.execute(request, response);
+			viewPage = "O_writeAnswerView.jsp";
+			break;
+		case ("/O_writeAnswer.do"): // qna insert
+			command = new O_writeAnswerCommand();
+			command.execute(request, response);
+			viewPage = "O_adminQNA.do";
+			break;
+		case ("/O_updateQnA.do"): // qna update
+			viewPage = "O_adminQNA.do";
+			break;
+		case ("/O_deleteQuestion.do"): // 질문에 대한 답변까지 모두 삭제
+			command = new O_deleteQuestionCommand();
+			command.execute(request, response);
+			viewPage = "O_adminQNA.do";
+			break;
+		case ("/O_deleteAnswer.do"): // 답변만 삭제
+			command = new O_deleteAnswerCommand();
+			command.execute(request, response);
+			viewPage = "O_adminQNA.do";
+			break;
+		case ("/O_Review.do"): // 답변만 삭제
+			command = new O_getReviewCommand();
+			command.execute(request, response);
+			viewPage = "O_RBoard.jsp";
+			break;
+		case ("/O_adminReview.do"): // 답변만 삭제
+			command = new O_getReviewCommand();
+			command.execute(request, response);
+			viewPage = "O_adminRBoard.jsp";
+			break;
+		case ("/O_RDetail.do"):
+			command = new O_getRDetailCommand();
+			command.execute(request, response);
+			viewPage = "O_RDetail.jsp";
+			break;
+		case ("/O_adminRDetail.do"):
+			command = new O_getRDetailCommand();
+			command.execute(request, response);
+			viewPage = "O_adminRDetail.jsp";
+			break;
+		case ("/O_writeComment.do"):
+			command = new O_writeCommentCommand();
+			command.execute(request, response);
+			viewPage = "O_RDetail.do";
+			break;
+		case ("/O_adminWriteComment.do"):
+			command = new O_writeCommentCommand();
+			command.execute(request, response);
+			viewPage = "O_adminRDetail.do";
+			break;
 		////////////////////////////////////////////
 		//////////////////////////////////////////// 여기서부터 태영
-	      case ("/cart.do"):
-	          command = new T_cartlistCommnd();
-	          command.execute(request, response);
-	          viewPage = "/T_cart.jsp";
-	          break;
-	       case "/T_cart.do":
-	          command = new T_cartUpdateCommand();
-	          command.execute(request, response);
-	          viewPage = "cart.do";
-	          break;
-	       // cart테이블에서 삭제하기
-	       case "/delete.do":
-	          command = new T_cartlistCommnd();
-	          command.execute(request, response);
-	          viewPage = "cart.do";
-	          break;
-	       // 주문하기 누르면 purchase페이지로 가기
-	       case "/purchase.do":
-	          command = new T_userinfoCommand();
-	          command1 = new T_purchaseCommand();
-	          command.execute(request, response);
-	          command1.execute(request, response);
-	          viewPage = "T_purchase.jsp";
-	          break;
-	       // 구매하기 누르기
-	       case "/order.do":
-	          command = new T_orderCommand();
-	          command1 = new T_orderlistCommand();
-	          command.execute(request, response);
-	          command1.execute(request, response);
-	          viewPage = "T_purchaseComplete.jsp";
-	          break;
+		case ("/cart.do"):
+			command = new T_cartlistCommnd();
+			command.execute(request, response);
+			viewPage = "/T_cart.jsp";
+			break;
+		case "/T_cart.do":
+			command = new T_cartUpdateCommand();
+			command.execute(request, response);
+			viewPage = "cart.do";
+			break;
+		// cart테이블에서 삭제하기
+		case "/delete.do":
+			command = new T_cartlistCommnd();
+			command.execute(request, response);
+			viewPage = "cart.do";
+			break;
+		// 주문하기 누르면 purchase페이지로 가기
+		case "/purchase.do":
+			command = new T_userinfoCommand();
+			command1 = new T_purchaseCommand();
+			command.execute(request, response);
+			command1.execute(request, response);
+			viewPage = "T_purchase.jsp";
+			break;
+		// 구매하기 누르기
+		case "/order.do":
+			command = new T_orderCommand();
+			command1 = new T_orderlistCommand();
+			command.execute(request, response);
+			command1.execute(request, response);
+			viewPage = "T_purchaseComplete.jsp";
+			break;
 		////////////////////////////////////////////
 		//////////////////////////////////////////// 여기서부터 종욱
 		case ("/W_ProductUpdate.do"):
@@ -344,7 +384,7 @@ public class Controller extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "W_ProductList.jsp";
 			break;
-		
+
 		case ("/W_Home.do"):
 			command = new W_SalesTodayCommand();
 			command.execute(request, response);
@@ -355,7 +395,7 @@ public class Controller extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}
-	
+
 	private void idCheckDo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
@@ -363,8 +403,7 @@ public class Controller extends HttpServlet {
 		command = new A_IdCheckCommand();
 		command.execute(request, response);
 	}
-	
-	
+
 	private void loginCheckdo(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
@@ -372,11 +411,5 @@ public class Controller extends HttpServlet {
 		command = new A_LoginCommand();
 		command.execute(request, response);
 	}
-	
 
-	
-	
-	
-	
-	
 }

@@ -19,7 +19,7 @@ public class O_getReviewCommand implements Acommand {
 		String queryName = request.getParameter("query");
 		String queryContent = request.getParameter("content");
 		
-		int itemsPerPage = 8; // 한 페이지당 출력할 게시글 수
+		int itemsPerPage = 4; // 한 페이지당 출력할 게시글 수
 		// O_Notice.do에서 page값을 전달하지 않았을 때는 default로 1로 세팅해주기 위한 3항 연산자
 		int currentPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
 		int totalCount = dao.getReviewCount(queryName, queryContent); // 검색된 게시물 수 검색
@@ -29,15 +29,15 @@ public class O_getReviewCommand implements Acommand {
 		int pageSize = 5; // 한 번에 보여줄 페이지의 개수
 		int startIndex = (currentPage - 1) * itemsPerPage;
 		
-//		System.out.println(" itemsPerPage:" + itemsPerPage);
-//		System.out.println(" currentPage:" + currentPage);
-//		System.out.println(" totalCount:" + totalCount);
-//		System.out.println(" totalPages:" + totalPages);
-//		System.out.println(" pageSize:" + pageSize);
-//		System.out.println(" startIndex:" + startIndex);
-//		System.out.println(" queryName:" + queryName);
-//		System.out.println(" queryContent:" + queryContent);
-//		System.out.println("---------------------------");
+		System.out.println(" itemsPerPage:" + itemsPerPage);
+		System.out.println(" currentPage:" + currentPage);
+		System.out.println(" totalCount:" + totalCount);
+		System.out.println(" totalPages:" + totalPages);
+		System.out.println(" pageSize:" + pageSize);
+		System.out.println(" startIndex:" + startIndex);
+		System.out.println(" queryName:" + queryName);
+		System.out.println(" queryContent:" + queryContent);
+		System.out.println("---------------------------");
 		
 		
 		ArrayList<O_ReviewDto> dtos = dao.getReviewList(queryName, queryContent, startIndex, itemsPerPage); // 검색결과 불러와 저장

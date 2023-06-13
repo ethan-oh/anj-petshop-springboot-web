@@ -101,7 +101,7 @@
    	 			</header>
      <br><br> <br> <br><br><hr>
 	<!-- ---------------------- -->
-	<div class="page-title" style="background-color: #DFE9E8;">
+	<div class="page-title">
 		<br><br><br>
 		<h3>COMMUNITY</h3>
 		<br><br>

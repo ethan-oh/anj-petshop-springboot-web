@@ -45,56 +45,19 @@
 			form.submit();
 			}
 	}
-	
-	function writeAction(){
-		const form = document.writeComment
-		if(form.userid.value == ""){
-			alert("로그인이 필요한 페이지입니다.");
-			return
-		}else{
-			form.action = "O_writeComment.do";
-			form.submit
-		}
-		
-	}
 </script>
 
 </head>
 <body>
-	<header>
-		        <div class="head-wrap">
-		            <div class="head-wrap-inner">
-		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
-		            	</div>
-		           	 <div class="head-wrap-sub">
-		           	  <h3>ANJ PET SHOP</h3>
-		                <nav class="head-menu-main-nav">
-		                    <ul>
-		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
-		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
-		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
-		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
-		                        <li class="main-nav04"><a href="#">CART</a></li>         
-		                        <li class="right-align">
-						        <button class="btn-login">Abandoned dog</button>
-						        <button class="btn-login">Login</button>
-						        <button class="btn-new">New MEMBERS</button>
-						      </li>
-		                    </ul>
-			            </nav>
-			            </div>
-		       		 </div>
-   	 			</header>
-     <br><br> <br> <br><br><hr>
 	<!-- ---------------------- -->
 	<div class="page-title">
 		<br><br><br>
 		<h3>COMMUNITY</h3>
 		<br><br>
-			<a href="O_Notice.do">NOTICE</a> 
-			<a href="O_FAQ.do">FAQ</a> 
-			<a href="O_QNA.do">Q&A</a> 
-			<span class="selected"><a href="O_Review.do">REVIEW</a></span>
+			<a href="O_adminNotice.do">NOTICE</a> 
+			<a href="O_adminFAQ.do">FAQ</a> 
+			<a href="O_adminQNA.do">Q&A</a> 
+			<span class="selected"><a href="O_adminReview.do">REVIEW</a></span>
 		<br><br>
 	</div>
 	<div class="page-title">
@@ -140,7 +103,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="th-wnum"><span class="list-button"><a href="O_Review.do">목록</a></span></td>
+						<td class="th-wnum"><span class="list-button"><a href="O_adminReview.do">목록</a></span></td>
 						<td class="th-right">
 							<input type="submit" class="list-button" value="수정" onclick="updateCheck()">
 							<input type="submit" class="list-button" value="삭제" onclick="deleteCheck()">
@@ -149,18 +112,18 @@
 				</tbody>
 			</table>
 		</form>
-		<form name="writeComment">
-		<input type="hidden" name="userid" value="${sessionScope.USERID}">
+		<form action="O_adminWriteComment.do">
+		<input type="hidden" name="userid" value="관리자">
 		<input type="hidden" name="seq" value="${seq }">
 			<table class="board-table">
 				<thead>
 					<tr>
-						<th class="th-id">${sessionScope.USERID}</th>
+						<th class="th-id">관리자</th>
 						<th scope="col" colspan="3">
 							<span class="comment"><input type="text" name="comment" placeholder="댓글을 입력하세요."></span>
 						</th>
 						<th><input class="comment-button" type="reset" value="취소"></th>
-						<th><input class="cancel-button" type="button" value="댓글" onclick="writeAction()"></th>
+						<th><input class="cancel-button" type="submit" value="댓글"></th>
 					</tr>
 				</thead>
 			</table>
@@ -172,9 +135,9 @@
 			<table class="comment-table">
 				<tbody>
 					<c:forEach items="${CommentList}" var="dto">
-						<c:set var="indentationSize" value="12" />
+						<c:set var="indentationSize" value="12" /> <!-- 들여쓰기 사이즈 -->
 						<c:set var="indentation" value="&nbsp;" />
-						<c:forEach begin="1" end="${dto.step * indentationSize}" var="i">
+						<c:forEach begin="1" end="${dto.step * indentationSize}" var="i"> <!-- step만큼 들여쓰기 반복 -->
 							<c:set var="indentation" value="${indentation}&nbsp;" />
 						</c:forEach>
 						<c:set var="indentation1Size" value="10" />
@@ -183,10 +146,28 @@
 							<c:set var="indentation1" value="${indentation1}&nbsp;" />
 						</c:forEach>
 						<tr>
-							<td style="text-align: left; font-size: 14px;"><input style="font-size: 14px; border-bottom: none;" type="text" value="${indentation}&nbsp;&nbsp;&nbsp;작성자: ${dto.writer }&nbsp;&nbsp;&nbsp;작성일: ${dto.writedate }" readonly="readonly"></td>
+							<td style="text-align: left; font-size: 14px;">
+								<c:choose>
+										<c:when test="${dto.writer eq '관리자'}">
+											<input style="font-size: 14px; font-weight:bold; border-bottom: none;" type="text" value="${indentation}&nbsp;&nbsp;&nbsp;작성자: 관리자&nbsp;&nbsp;&nbsp;작성일: ${dto.writedate }" readonly="readonly">
+										</c:when>
+										<c:otherwise>
+											<input style="font-size: 14px; border-bottom: none;" type="text" value="${indentation}&nbsp;&nbsp;&nbsp;작성자: ${dto.writer }&nbsp;&nbsp;&nbsp;작성일: ${dto.writedate }" readonly="readonly">
+										</c:otherwise>
+								</c:choose>
+							</td>
 						</tr>
 						<tr>
-							<td style="text-align: left;"><input style="font-size: 17px; border-top: none;" type="text" readonly="readonly" value=" ${indentation1}&nbsp;&nbsp;${dto.comments}&nbsp;&nbsp;&nbsp;&nbsp;"> <input type="button" class="comment-button" value="댓글"></td>
+							<td style="text-align: left;">
+							<c:choose>
+										<c:when test="${dto.writer eq '관리자'}">
+											<input style="font-size: 17px; font-weight:bold; border-top: none;" type="text" readonly="readonly" value=" ${indentation1}&nbsp;&nbsp;${dto.comments}&nbsp;&nbsp;&nbsp;&nbsp;"> <input type="button" class="comment-button" value="댓글">
+										</c:when>
+										<c:otherwise>
+											<input style="font-size: 17px; border-top: none;" type="text" readonly="readonly" value=" ${indentation1}&nbsp;&nbsp;${dto.comments}&nbsp;&nbsp;&nbsp;&nbsp;"> <input type="button" class="comment-button" value="댓글">
+										</c:otherwise>
+								</c:choose>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>

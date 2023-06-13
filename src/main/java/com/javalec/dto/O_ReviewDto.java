@@ -10,6 +10,7 @@ public class O_ReviewDto {
 	int isdelete;
 	String userid;
 	int orderseq;
+	String filename;
 	String pname;
 	String pthumbnail;
 	
@@ -18,21 +19,10 @@ public class O_ReviewDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public O_ReviewDto(int seq, String r_title, String r_content, String writedate, int isdelete, String userid,
-			int orderseq) {
-		super();
-		this.seq = seq;
-		this.r_title = r_title;
-		this.r_content = r_content;
-		this.writedate = writedate;
-		this.isdelete = isdelete;
-		this.userid = userid;
-		this.orderseq = orderseq;
-	}
 	
-	// 상품 이름 같이 가지고 오기 위한 생성자
+	// 상품 이름과 썸네일 같이 가지고 오기 위한 생성자
 	public O_ReviewDto(int seq, String r_title, String r_content, String writedate, int isdelete, String userid,
-			int orderseq, String pname, String pthumbnail) {
+			int orderseq, String filename, String pname, String pthumbnail) {
 		super();
 		this.seq = seq;
 		this.r_title = r_title;
@@ -41,9 +31,25 @@ public class O_ReviewDto {
 		this.isdelete = isdelete;
 		this.userid = userid;
 		this.orderseq = orderseq;
+		this.filename = filename;
 		this.pname = pname;
 		this.pthumbnail = pthumbnail;
 	}
+
+	// 리스트 들고오기 위한 생성자
+	public O_ReviewDto(int seq, String r_title, String r_content, String writedate, int isdelete, String userid,
+			int orderseq, String filename) {
+		super();
+		this.seq = seq;
+		this.r_title = r_title;
+		this.r_content = r_content;
+		this.writedate = writedate;
+		this.isdelete = isdelete;
+		this.userid = userid;
+		this.orderseq = orderseq;
+		this.filename = filename;
+	}
+
 
 	// Getter And Setter
 	public int getSeq() {
@@ -117,7 +123,13 @@ public class O_ReviewDto {
 	public void setPthumbnail(String pthumbnail) {
 		this.pthumbnail = pthumbnail;
 	}
-	
 
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 	
 } // End

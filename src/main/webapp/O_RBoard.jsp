@@ -44,7 +44,7 @@
    	 			</header>
      <br><br> <br> <br><br><hr>
 
-	<div class="page-title" style="background-color: #DFE9E8;">
+	<div class="page-title">
 		<br>
 		<br>
 		<br>
@@ -80,7 +80,7 @@
 		<div class="review-grid">
 			<c:forEach items="${reviewList}" var="dto">
 				<div class="product-item">
-					<a href="O_RDetail.do?seq=${dto.seq }"><img src="" alt="이미지 준비 중"></a>
+					<a href="O_RDetail.do?seq=${dto.seq }"><img src="images/review/${dto.filename }.png" alt="이미지 준비 중"></a>
 					<!-- 제목 길이가 13자 이상이면 ...으로 표시 -->
 					<c:set var="trimedTitle" value="${dto.r_title}" />
 					<c:if test="${fn:length(trimedTitle) > 13}">
@@ -97,13 +97,18 @@
 		</div>
 	</div>
 
+	<div class="container" style="text-align: right;">
+		<br> <span class="list-button"><a href="O_writeNoticeView.do">글쓰기</a></span>
+	</div>
+
+	<br><br><br>
 	<div class="container pagination" style="text-align: center;">
 		<script>
     let pageSize = ${p.pageSize}; // 한 페이지당 보여줄 최대 페이지 개수
     let itemsPerPage = ${p.itemsPerPage}; // 한 페이지당 보여줄 게시물의 수
     let totalCount = ${p.totalCount}; // 전체 게시물의 수
     let currentPage = ${p.currentPage}; // 현재 페이지
-    let totalPages = ${p0.totalPages}; // 전체 페이지의 수
+    let totalPages = ${p.totalPages}; // 전체 페이지의 수
     let calcPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1; // 현재 페이지에서 보여질 페이지의 시작값 계산
 
     // query가 null일 때 query를 n_content로 설정

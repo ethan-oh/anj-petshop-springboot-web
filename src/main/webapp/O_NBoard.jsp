@@ -18,35 +18,74 @@ session.setAttribute("ADMINID", "admin");
 <link rel="stylesheet" href="CSS/O_Common.css">
 <script src="JS/O_ScrollTop.js"></script>
 </head>
+<script type="text/javascript">
+$(function(){
+	   var $firstmenu = $('nav > ul > li'),
+	       $header = $('header');
+	    $firstmenu.mouseenter(function(){
+	       $header.stop().animate({height:'300px'},200);
+	    })
+	    .mouseleave(function(){
+	        $header.stop().animate({height:'50px'},200);
+	    }) 
+		});
+		
 
+$(document).ready(function() {
+	$(".dropdown").hover(
+		function() {
+			$(this).find(".dropdown-content").css("display", "block");
+			$("header").addClass("fixed-header"); // 헤더에 fixed-header 클래스 추가
+		},
+		function() {
+			$(this).find(".dropdown-content").css("display", "none");
+			$("header").removeClass("fixed-header"); // 헤더에서 fixed-header 클래스 제거
+		}
+	);
+});
+</script>
 <body>
-	<header>
-		        <div class="head-wrap">
-		            <div class="head-wrap-inner">
-		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
-		            	</div>
-		           	 <div class="head-wrap-sub">
-		           	  <h3>ANJ PET SHOP</h3>
-		                <nav class="head-menu-main-nav">
-		                    <ul>
-		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
-		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
-		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
-		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
-		                        <li class="main-nav04"><a href="#">CART</a></li>         
-		                        <li class="right-align">
-						        <button class="btn-login">Abandoned dog</button>
-						        <button class="btn-login">Login</button>
-						        <button class="btn-new">New MEMBERS</button>
-						      </li>
-		                    </ul>
-			            </nav>
-			            </div>
-		       		 </div>
-   	 			</header>
-     <br><br> <br> <br><br><hr>
+			<header>
+				<div class="head-wrap">
+					<div class="head-wrap-inner">
+						<a href="A_MainView.do?id=${sessionScope.USERID}"><img class="head-logo" src="LOGO.png"></a>  
+					</div>
+					<div class="head-wrap-sub">
+						<nav class="head-menu-main-nav">
+							<ul> 
+								<li class="main-nav02 dropdown">
+									<a href="#">ANJLIFE</a>
+											<div class="dropdown-content">
+												<a href="A_introduction.jsp">introduction</a>
+												<a href="#">BRAND</a>
+												<a href="#">Part</a>
+											</div>
+								</li>
+								<li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
+									<li class="main-nav02 dropdown">
+										<a href="#">COMMUNITY</a>
+											<div class="dropdown-content">
+												<a href="#">review</a>
+												<a href="#">Q&A</a>
+											<!-- <a href="#">Part</a> -->
+											</div>
+								</li>
+								
+								<li class="main-nav04"><a href="#">NOTICE</a></li>         
+								<li class="main-nav04"><a href="#">CART</a></li>        
+								<li class="right-align" id="loginContainer">
+									<li><button class="btn-login btn-dog" onclick="location.href='A_loginView.jsp'">Login</button></li>
+									<li><button class="btn-login btn-dog" onclick="location.href='A_JoinView.jsp'">New</button></li>
+									<li><button class="btn-login btn-dog" onclick="location.href='A_loginView.jsp'">Logout</button></li>
+									<li style="font-size: 11px; margin-top: 10px;">${sessionScope.USERID}님</li>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</header><br><br> <br> <br><br><br>
 
-	<div class="page-title" style="background-color: #DFE9E8;">
+	<div class="page-title">
 		<br>
 		<br>
 		<br>

@@ -36,7 +36,7 @@
 </head>
 <body>
 	<!----------------------------------------------------------------------------------------------------->
-	<div class="page-title" style="background-color: #DFE9E8;">
+	<div class="page-title">
 		<br>
 		<br>
 		<br>

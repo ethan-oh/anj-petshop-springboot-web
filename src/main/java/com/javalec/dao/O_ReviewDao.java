@@ -135,10 +135,11 @@ public class O_ReviewDao {
 				int isdelete = rs.getInt(5);
 				String userid = rs.getString(6);
 				int orderseq = rs.getInt(7);
+				String filename = rs.getString(8);
 				
 				String writedate = format.format(tmp_writedate);
 				
-				O_ReviewDto dto = new O_ReviewDto(seq, r_title, r_content, writedate, isdelete, userid, orderseq);
+				O_ReviewDto dto = new O_ReviewDto(seq, r_title, r_content, writedate, isdelete, userid, orderseq, filename);
 				dtos.add(dto);
 			}
 			
@@ -188,13 +189,14 @@ public class O_ReviewDao {
 				int isdelete = rs.getInt(5);
 				String userid = rs.getString(6);
 				int orderseq = rs.getInt(7);
-				String pname = rs.getString(8);
-				String pthumbnail = rs.getString(9);
+				String filename = rs.getString(8);
+				String pname = rs.getString(9);
+				String pthumbnail = rs.getString(10);
 				
 				String writedate = format.format(tmp_writedate);
 				
 				
-				dto = new O_ReviewDto(seq, r_title, r_content, writedate, isdelete, userid, orderseq, pname, pthumbnail);
+				dto = new O_ReviewDto(seq, r_title, r_content, writedate, isdelete, userid, orderseq, filename, pname, pthumbnail);
 			}
 			
 		}catch (Exception e) {
