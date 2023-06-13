@@ -70,7 +70,7 @@ $(document).ready(function() {
 											</div>
 								  </li>
 								<li class="main-nav02 dropdown">
-										<a href="#">NOTICE</a>
+										<a href="cart.do">NOTICE</a>
 								      <div class="dropdown-content">
 								      <a href="O_FAQ.do">FAQ</a>
 									  <a href="O_Notice.do">Notice</a>

@@ -135,7 +135,7 @@
 									  <a href="O_Notice.do">Notice</a>
 									 </div>
 								        
-								<li class="main-nav04"><a href="#">CART</a></li>        
+								<li class="main-nav04"><a href="cart.do">CART</a></li>        
 								<li class="right-align" id="loginContainer">
 									<c:choose>
 										  <c:when test="${empty sessionScope.USERID}">

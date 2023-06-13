@@ -97,7 +97,7 @@ $(document).ready(function() {
 						<nav class="head-menu-main-nav">
 							<ul> 
 								<li class="main-nav02 dropdown">
-									<a href="#">ANJLIFE</a>
+									<a href="cart.do">ANJLIFE</a>
 											<div class="dropdown-content">
 												<a href="A_introduction.jsp">introduction</a>
 												<a href="A_Part.jsp">Part</a>

@@ -61,7 +61,7 @@ $(document).ready(function() {
 								</li>
 								<li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
 									<li class="main-nav02 dropdown">
-										<a href="#">COMMUNITY</a>
+										<a href="cart.do">COMMUNITY</a>
 											<div class="dropdown-content">
 												<a href="O_Review.do">review</a>
 												<a href="O_QNA.do">Q&A</a>
