@@ -59,7 +59,7 @@
 	<div id="board-search">
 		<div class="container">
 			<div class="search-window">
-				<form action="O_Review.do" method="post">
+				<form action="O_adminReview.do" method="post">
 					<div class="search-wrap">
 						<select name="query">
 							<option value="r_title">제목</option>

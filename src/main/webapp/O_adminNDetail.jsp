@@ -114,7 +114,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="th-wnum"><span class="list-button"><a href="O_Notice.do">목록</a></span></td>
+						<td class="th-wnum"><span class="list-button"><a href="O_adminNotice.do">목록</a></span></td>
 						<td class="th-right">
 							<input type="submit" class="list-button" value="수정" onclick="updateCheck()">
 							<input type="submit" class="list-button" value="삭제" onclick="deleteCheck()">

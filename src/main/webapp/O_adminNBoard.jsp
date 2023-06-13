@@ -62,7 +62,7 @@
 	<div id="board-search">
 		<div class="container">
 			<div class="search-window">
-				<form action="O_Notice.do" method="post">
+				<form action="O_adminNotice.do" method="post">
 					<div class="search-wrap">
 						<select name="query">
 							<option value="n_title">제목</option>
@@ -90,7 +90,7 @@
 				<c:forEach items="${noticeList}" var="dto">
 					<tr>
 						<td><span class="notice-button">공지</span></td>
-						<td><a href="O_NDetail.do?seq=${dto.seq}">${dto.n_title}</a></td>
+						<td><a href="O_adminNDetail.do?seq=${dto.seq}">${dto.n_title}</a></td>
 						<td>${dto.adminid}</td>
 						<td>${dto.writedate}</td>
 					</tr>
