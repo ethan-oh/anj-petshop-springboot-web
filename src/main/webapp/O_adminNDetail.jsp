@@ -46,32 +46,31 @@
 </script>
 
 </head>
+	<link rel="stylesheet" href="W_Header.css">
 <body>
-	<header>
-		        <div class="head-wrap">
-		            <div class="head-wrap-inner">
-		               <a href="A_MainView.do"><img class="head-logo" src="LOGO.png"></a>  
-		            	</div>
-		           	 <div class="head-wrap-sub">
-		           	  <h3>ANJ PET SHOP</h3>
-		                <nav class="head-menu-main-nav">
-		                    <ul>
-		                        <li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
-		                        <li class="main-nav02"><a href="#">ANJLIFE</a></li>
-		                        <li class="main-nav03"><a href="#">COMMUNITY</a></li>
-		                        <li class="main-nav04"><a href="#">NOTICE</a></li>         
-		                        <li class="main-nav04"><a href="#">CART</a></li>         
-		                        <li class="right-align">
-						        <button class="btn-login">Abandoned dog</button>
-						        <button class="btn-login">Login</button>
-						        <button class="btn-new">New MEMBERS</button>
-						      </li>
-		                    </ul>
-			            </nav>
-			            </div>
-		       		 </div>
-   	 			</header>
-     <br><br> <br> <br><br><hr>
+<header>
+					  <nav>
+					    <ul>
+					      <li><a href="W_Home.do">HOME</a></li>
+					      <li><a href="W_ProductList.jsp">상품 관리</a>
+					      	<ul>
+					      		<li><a href="W_ProductList.jsp">상품 목록</a></li>
+					      		<li><a href="W_ProductInsert.jsp">상품 등록</a></li>
+					      	</ul>
+					      </li>
+					      <li><a href="W_UserList.jsp">회원 관리</a></li>
+					      <li><a href="O_adminNotice.do">게시판 관리</a>
+					      	
+					      	</li>
+					      <li><a href="W_SalesDaily.jsp">매출현황</a>
+					      <ul>
+					      		<li><a href="W_SalesDaily.jsp">일별 매출</a></li>
+					      		<li><a href="W_SalesMonthly.jsp">월별 매출</a></li>
+					      	</ul>
+					      </li>
+					    </ul>
+					  </nav>
+</header>
 	<!-- ---------------------- -->
 	<div class="page-title">
 		<br><br><br>

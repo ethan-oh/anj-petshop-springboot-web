@@ -67,14 +67,8 @@
 					      		<li><a href="W_ProductInsert.jsp">상품 등록</a></li>
 					      	</ul>
 					      </li>
-					      <li><a href="A_introduction.jsp">주문 관리</a></li>
 					      <li><a href="W_UserList.jsp">회원 관리</a></li>
-					      <li><a href="">게시판 관리</a>
-					      	<ul>
-					      		<li><a href="">공지사항</a></li>
-					      		<li><a href="">Q & A</a></li>
-					      		<li><a href="">리뷰</a></li>
-					      	</ul>
+					     <li><a href="O_adminNotice.do">게시판 관리</a>
 					      	</li>
 					      <li><a href="W_SalesDaily.jsp">매출현황</a>
 					      <ul>
