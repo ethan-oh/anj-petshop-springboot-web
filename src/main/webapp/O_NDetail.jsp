@@ -12,8 +12,10 @@
 <link rel="stylesheet" href="A_heardCss.css">
 <link rel="stylesheet" href="A_MainCss.css">
 <link rel="stylesheet" href="CSS/O_Common.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="JS/O_ScrollTop.js"></script>
 <script type="text/javascript">
+
 // 드롭다운
 $(function(){
 		   var $firstmenu = $('nav > ul > li'),

@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="CSS/O_Common.css">
 <link rel="stylesheet" href="CSS/O_RBoardStyle.css">
 <link rel="stylesheet" href="CSS/O_CommentStyle.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="JS/O_ScrollTop.js"></script>
 
 <script type="text/javascript">
