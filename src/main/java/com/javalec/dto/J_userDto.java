@@ -8,7 +8,7 @@ public class J_userDto {		// user table dto
 	String username;
 	String usertel;
 	String useremail;
-	String userpostcode;
+	int userpostcode;
 	String useraddress;
 	String userdetailaddress;
 	String deletedate;
@@ -20,7 +20,7 @@ public class J_userDto {		// user table dto
 	
 	// 사용자의 모든 정보 불러오기
 	public J_userDto(String userid, String userpasswd, String username, String usertel, String useremail,
-			String userpostcode, String useraddress, String userdetailaddress, int mileage) {
+			int userpostcode, String useraddress, String userdetailaddress, int mileage) {
 		super();
 		this.userid = userid;
 		this.userpasswd = userpasswd;
@@ -80,11 +80,11 @@ public class J_userDto {		// user table dto
 		this.useremail = useremail;
 	}
 
-	public String getUserpostcode() {
+	public int getUserpostcode() {
 		return userpostcode;
 	}
 
-	public void setUserpostcode(String userpostcode) {
+	public void setUserpostcode(int userpostcode) {
 		this.userpostcode = userpostcode;
 	}
 

@@ -185,6 +185,9 @@ public class Controller extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "A_MainView.jsp";
 			break;
+		case ("/j_userpage.do") : 
+			viewPage = "J_userMyPage.jsp";
+			break;
 		////////////////////////////////////////////
 		//////////////////////////////////////////// 여기서부터 성민
 		case ("/O_Notice.do"):

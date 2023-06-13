@@ -8,7 +8,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.javalec.dto.J_pdExplainDto;
 import com.javalec.dto.J_pdPageDto;
 import com.javalec.dto.J_userDto;
 import com.javalec.dto.J_userOrderDto;
@@ -28,7 +27,7 @@ public class J_Dao {
 		}
 	}
 	
-	// 1. 사용자가 선택한 제품 상세정보 페이지 : product 테이블의 모든 데이터 불러와서 상세정보 상단 섹션에 띄우기
+	// 1. 사용자가 선택한 제품 상세정보 페이지 : product 테이블의 모든 데이터 불러오기
 	public J_pdPageDto productDetailView(String getPid) {
 		J_pdPageDto dto = null;
 		
@@ -52,9 +51,9 @@ public class J_Dao {
 				String pthumbnail = resultSet.getString("pthumbnail");
 				String pth2 = resultSet.getString("pth2");
 				String pth3 = resultSet.getString("pth3");
+				String pfilename = resultSet.getString("pfilename");
 				
-				dto = new J_pdPageDto(pid, pname, pcategory, pprice, pstock, available, pthumbnail, pth2, pth3);
-				
+				dto = new J_pdPageDto(pid, pname, pcategory, pprice, pstock, available, pthumbnail, pth2, pth3, pfilename);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,48 +71,8 @@ public class J_Dao {
 		
 	}
 	
-	// 2. 사용자가 선택한 제품 상세정보 설명 : product 테이블의 모든 데이터 불러와서 상세정보 하단 섹션에 띄우기
-	public J_pdExplainDto productExplainView(String getPid) {
-		J_pdExplainDto dto = null;
-		
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		
-		try {
-			connection = dataSource.getConnection();
-			String query = "select * from productimage where pid = '" + getPid + "'";
-			preparedStatement = connection.prepareStatement(query);
-			resultSet = preparedStatement.executeQuery();
-			
-			while(resultSet.next()) { 		// db에서 한 줄에 있는 데이터를 열마다 분리해서 할당하는 과정.
-				String pid = resultSet.getString("pid");
-				String p_filename = resultSet.getString("p_filename");
-				String p_filename2 = resultSet.getString("p_filename2");
-				String p_filename3 = resultSet.getString("p_filename3");
-				String p_filename4 = resultSet.getString("p_filename4");
-				String p_filename5 = resultSet.getString("p_filename5");
-				
-				dto = new J_pdExplainDto(pid, p_filename, p_filename2, p_filename3, p_filename4, p_filename5);
-				
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(resultSet != null) resultSet.close(); 	// ResultSet이 비면 닫아.
-				if(preparedStatement != null) preparedStatement.close();
-				if(connection != null) connection.close();
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return dto;
-		
-	} 
 	
-	// 3. 장바구니에 사용지가 선택한 옵션들 넘겨주기 
+	// 2. 장바구니에 사용지가 선택한 옵션들 넘겨주기 
 	public void insertcart(String uid, String pid, int qty) {
 		
 		Connection connection = null;
@@ -202,7 +161,7 @@ public class J_Dao {
 				String username = resultSet.getString("username");
 				String usertel = resultSet.getString("usertel");
 				String useremail = resultSet.getString("useremail");
-				String userpostcode = resultSet.getString("userpostcode");
+				int userpostcode = resultSet.getInt("userpostcode");
 				String useraddress = resultSet.getString("useraddress");
 				String userdetailaddress = resultSet.getString("userdetailaddress");
 				int mileage = resultSet.getInt("mileage");
@@ -227,7 +186,7 @@ public class J_Dao {
 	}
 		
 	// 6. user 테이블의 모든 데이터들 불러오기 : 프로필 변경 1) 회원 정보 수정
-	public void updateUser(String userid,String userpasswd, String userpostcode, String useraddress, String userdetailaddress, String usertel, String useremail) {
+	public void updateUser(String userid,String userpasswd, int userpostcode, String useraddress, String userdetailaddress, String usertel, String useremail) {
 		System.out.println(userid);
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -238,7 +197,7 @@ public class J_Dao {
 			preparedStatement.setString(1, userpasswd);
 			preparedStatement.setString(2, usertel);
 			preparedStatement.setString(3, useremail);
-			preparedStatement.setString(4, userpostcode);
+			preparedStatement.setInt(4, userpostcode);
 			preparedStatement.setString(5, useraddress);
 			preparedStatement.setString(6, userdetailaddress);
 			

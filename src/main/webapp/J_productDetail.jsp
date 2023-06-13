@@ -5,22 +5,92 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <meta charset="UTF-8">
 <title>${productDetail.pname }</title> 					<!--  상품 페이지에서 선택한 제품의 상세 페이지입니다. -->
+<!-- <link rel="stylesheet" href="A_heardCss.css"> -->
 <link rel="stylesheet" href="J_productDetail.css">
 
+<script type="text/javascript">
+// 드롭다운 
+$(function(){
+	   var $firstmenu = $('nav > ul > li'),
+	       $header = $('header');
+	    $firstmenu.mouseenter(function(){
+	       $header.stop().animate({height:'300px'},200);
+	    })
+	    .mouseleave(function(){
+	        $header.stop().animate({height:'50px'},200);
+	    }) 
+		});
+		
+
+$(document).ready(function() {
+	$(".dropdown").hover(
+		function() {
+			$(this).find(".dropdown-content").css("display", "block");
+			$("header").addClass("fixed-header"); // 헤더에 fixed-header 클래스 추가
+		},
+		function() {
+			$(this).find(".dropdown-content").css("display", "none");
+			$("header").removeClass("fixed-header"); // 헤더에서 fixed-header 클래스 제거
+		}
+	);
+});
+</script>
 </head>
 <body>
-						<!-- <header>
-							<nav>
-								<ul>
-									<li><a href="A_mainView.do">SHOP</a></li>
-								    <li><a href="A_ProductView.do">ANJLIFE</a></li>
-								    <li><a href="A_introduction.jsp">COMMUNITY</a></li>
-								    <li><a href="A_introduction.jsp">CART</a></li>
-								</ul>
-							</nav>
-						</header> -->
+			<header>
+				<div class="head-wrap">
+					<div class="head-wrap-inner">
+						<a href="A_MainView.do?id=${sessionScope.USERID}"><img class="head-logo" src="LOGO.png"></a>  
+					</div>
+					<div class="head-wrap-sub">
+						<nav class="head-menu-main-nav">
+							<ul> 
+								<li class="main-nav02 dropdown">
+									<a href="#">ANJLIFE</a>
+											<div class="dropdown-content">
+												<a href="A_introduction.jsp">introduction</a>
+												<a href="A_Part.jsp">Part</a>
+											</div>
+								</li>
+								<li class="main-nav01"><a href="A_ProductView.do">SHOP</a></li>
+									<li class="main-nav02 dropdown">
+										<a href="#">COMMUNITY</a>
+											<div class="dropdown-content">
+												<a href="O_Review.do">review</a>
+												<a href="O_QNA.do">Q&A</a>
+											</div>
+								  </li>
+								<li class="main-nav02 dropdown">
+										<a href="#">NOTICE</a>
+								      <div class="dropdown-content">
+								      <a href="O_FAQ.do">FAQ</a>
+									  <a href="O_Notice.do">Notice</a>
+									 </div>
+								        
+								<li class="main-nav04"><a href="cart.do">CART</a></li>        
+								<li class="right-align" id="loginContainer">
+									<c:choose>
+										  <c:when test="${empty sessionScope.USERID}">
+										    <!-- 세션 값이 비어있을 때 -->
+										    <li><button class="btn-login btn-dog" onclick="location.href='A_loginView.jsp'">Login</button></li>
+										    <li><button class="btn-login btn-dog" onclick="location.href='A_JoinView.jsp'">New</button></li>
+										  </c:when>
+										  <c:otherwise>
+										    <!-- 세션 값이 있을 때 -->
+										    <li><button class="btn-login btn-dog" onclick="location.href='A_logout.do'">Logout</button></li>
+										    <li><button class="btn-login btn-dog" onclick="location.href='A_loginView.jsp'">MyPage</button></li>
+										  </c:otherwise>
+										</c:choose>
+									<li style="font-size: 11px; margin-top: 10px;">${sessionScope.USERID}님</li>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</header>
 						<br/>
 						<br/><br/>
 	<main class="main">
@@ -31,10 +101,10 @@
 					
 				<!-- </div> -->
 				<div class="slide">
-					<img alt="제품 이미지를 준비중 입니다." src="${productDetail.pth2 }">
+					<img alt="" src="images/thumbnail/${productDetail.pth2 }.png">
 				</div>
 				<div class="slide">
-					<img alt="제품 이미지를 준비중 입니다." src="${productDetail.pth3 }">
+					<img alt="" src="images/thumbnail/${productDetail.pth3 }.png">
 				</div>
 			</div>
 			<div class="top-right">			<!-- 상품 상세 정보 뜨는 섹션 -->
@@ -51,24 +121,24 @@
 				<h3 style="text-align: right;">TOTAL </h3>
 				<h3 style="text-align: right;"> <span id="resultPrice"><fmt:formatNumber value="${productDetail.pprice }" pattern="#,###" /> 원</span></h3>
 				<h5 style="text-align: right;"> <span id="resultRewards"> (적립금 : + ${productDetail.pprice * 0.01 } 원) </span></h5>
+				
 				<div style="display: flex;">
-					
-					
 					<form action="j_insertCart.do" name="basket" method="get" style="display: inline; width: 50%;">
 						<input type="hidden" name="pid" value="${productDetail.pid}">
-						<input type="hidden" name="qty">
-						<button type="submit" id="btnCart" value="장바구니 담기" onclick="sendToCart(); openCartModal();" style="font-size: 25px; color: #477A7B; background-color: #DFE9E8; border: none; width: 100%; height: 60px">장바구니 담기</button>
+						<input type="hidden" name="qty" >
+						<button type="submit" id="btnCart" value="장바구니 담기" onclick="sendToCart();" style="font-size: 25px; color: #477A7B; background-color: #DFE9E8; border: none; width: 100%; height: 60px">장바구니 담기</button>
 							
 					</form>
 					<form action="j_purchase.do" name="purchase" method="get" style="display: inline; width: 50%;">
 						<input type="hidden" name="pid" value="${productDetail.pid}">
-						<input type="hidden" name="qty">
-						<input type="submit" value="즉시 구매하기" onclick="sendToPay(); closeCartModal()" style="font-size: 25px; color: white; background-color: #477A7B; border: none; width: 100%; height: 60px">
+						<input type="hidden" name="qty" >
+						<input type="submit" value="즉시 구매하기" onclick="sendToPay();" style="font-size: 25px; color: white; background-color: #477A7B; border: none; width: 100%; height: 60px">
 					</form>
 				</div>
+				
 			</div>
 		</div>
-		<div id="cartModal" class="modal" style="display: none;"> 		<!-- 장바구니 클릭시 띄워줄 모달창 -->
+<!-- 		<div id="modal" class="modal" style="display: none;"> 		장바구니 클릭시 띄워줄 모달창
 			<div class="title" style="background-color: #477A7B">
 				<h2 style="font-size: 25px; color: white; display: inline;">장바구니 담기</h2>
 				<span id="closeModal" onclick="closeCartModal()" style="font-size: 30px; color: white; display: inline;">&times;</span>
@@ -78,15 +148,11 @@
 				<a href="cart.do"><button style="display:inline; font-size: 20px; color: white; background-color: #477A7B;"> 장바구니로 이동</button></a> 
 				<button onclick="closeCartModal()" style="display: inline; font-size: 20px; color: #477A7B; background-color: #DFE9E8;">계속 쇼핑하기</button>
 			</div>
-		</div>
+		</div> -->
+		
 		<div class="bottom-section-wrapper">
 			<div class="bottom-section">
-				<img alt="제품 사진을 준비 중 입니다." src="${pdExplain.p_filename }"><br/>
-				<img alt="제품 사진을 준비 중 입니다." src="${pdExplain.p_filename2 }"><br/>
-				<img alt="제품 사진을 준비 중 입니다." src="${pdExplain.p_filename3 }"><br/>
-				<img alt="제품 사진을 준비 중 입니다." src="${pdExplain.p_filename4 }"><br/>
-				<img alt="제품 사진을 준비 중 입니다." src="${pdExplain.p_filename5 }"><br/>
-				
+				<img alt="" src="images/filename/${productDetail.pfilename }.jpg"><br/>
 			</div>
 			
 			<!-- 고정된 구매하기 버튼 --><%-- 
@@ -95,18 +161,45 @@
 			</form> --%>
 		</div>
 		
-		
+		 <footer>
+            <ul>
+                <li><a href="#">Brand Story</a></li>
+                <li><a href="#">서비스이용약관</a></li>
+                <li><a href="#">개인정보처리방침</a></li>
+                <li><a href="#">전자금융거래약관</a></li>
+            </ul>
+            <div>
+            
+                <p>
+                    <strong>Corporation ANJ.industry</strong>
+                    <br>
+                    Gangnam-gu, Seoul (Yeoksam-dong The Joy Computer Academy)
+                    <br>
+                    CEO: Ahn Jae-won
+                    <br>   
+					Business registration number: 240-81-87676 Business information confirmation
+                    <br>
+                    Mail-order business report: Gangnam 10238 Fax: 02-000-1234
+                </p>
+                <p>
+                    <strong>customer service center</strong>
+                    <br>
+                    Tel : Representative number 1234-5678 (Weekdays 09:00~18:00)
+                    <br>
+                    Dedicated to the future: 1522-5700 (365 days 09:00-18:00)
+                    <br>
+                    Gangnam-gu, Seoul (Yeoksam-dong The Joy Computer Academy)
+                    <br>
+                    Fax : 02-000-1234 | Mail : ajw0376@gmail.com
+                    <br>
+                </p>   
+            </div>
+        </footer>
 	</main>
-	<!-- <footer>
-		<p>
-			<span>TEL. 1877-3228<br/>
-			E-MAIL. arrr@dongwon.com<br/>
-			ADDRESS. 10th floor, 68, Mabangro, Seocho-gu, Seoul, 
-			Republic of Korea, 06775<br/>
-			BUSINESS NO. 703-88-01843</span>
-		</p>
-			여기에다가는 마지막에 추가하는것으로 
-	</footer> -->
+
+	<script src="JS/O_ScrollTop.js"></script>
+	<button class="top-button" onclick="scrollToTop()">top</button>
+	
 
 </body>
 <script type="text/javascript" src="J_productDetail.js"></script>
@@ -167,11 +260,13 @@ function resetSelection() {
 		
 	}
 	
-	/* const modal = document.getElementById("modal")=
-	const btnCart = document.getElementById('btnCart')
-	btnCart.addEventListener("click", e => {
-		modal.style.display = "flex"
+/* 	const modal = document.getElementById("modal")=
+	window.addEventListener('load', function() {
+		const btnCart = document.getElementById('btnCart');
+		btnCart.addEventListener("click", openCartModal);
 	})
+		 modal.style.display = "flex" 
+	}) */
 	
 	function openCartModal() {
 		var cartModal = document.getElementById("cartModal");
@@ -185,7 +280,7 @@ function resetSelection() {
 	function closeCartModal() {
 		var cartModal = document.getElementById("cartModal");
 		cartModal.style.display = "none";
-} */
+} 
 
 	/* 사진 넘기는 효과주기 */
 	const slides = document.querySelectorAll('.slide');

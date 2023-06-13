@@ -12,8 +12,8 @@ public class J_userDeleteCommand implements Acommand {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		
-//		String uid = request.getParameter("userid");
-		String uid = "do";
+		String uid = request.getParameter("userid");
+//		String uid = "do";
 		
 		J_Dao dao = new J_Dao();
 		dao.deleteUser(uid);

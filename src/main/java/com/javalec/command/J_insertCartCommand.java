@@ -11,8 +11,8 @@ public class J_insertCartCommand implements Acommand {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		
-//		String uid = request.getParameter("userid");
-		String uid = "do";
+		String uid = request.getParameter("userid");
+//		String uid = "do";
 		String pid = request.getParameter("pid");
 		int qty = Integer.parseInt(request.getParameter("qty"));
 		

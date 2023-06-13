@@ -12,8 +12,8 @@ public class J_userPageCommand implements Acommand { 			// orders 테이블 관�
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-//		String userid = request.getParameter("userid");
-		String userid = "do";
+		String userid = request.getParameter("userid");
+//		String userid = "do";
 		
 		J_Dao dao = new J_Dao();
 		J_userOrderDto orderdto = dao.userOrderMileage(userid);

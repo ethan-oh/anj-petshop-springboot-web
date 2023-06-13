@@ -12,6 +12,7 @@ public class J_pdPageDto { 		// ANJ pet shop 프로젝트 - product table dto
 	String pthumbnail;
 	String pth2;
 	String pth3;
+	String pfilename;
 	
 	
 	// Constructor
@@ -20,8 +21,8 @@ public class J_pdPageDto { 		// ANJ pet shop 프로젝트 - product table dto
 	}
 
 	// J_Dao 1. 제품 페이지 - 사용자 보여주는 오른쪽 상단 구역에 정보 띄워주기
-	public J_pdPageDto(String pid, String pname, String pcategory, int pprice, int pstock, int available, String pthumbnail,
-			String pth2, String pth3) {
+	public J_pdPageDto(String pid, String pname, String pcategory, int pprice, int pstock, int available,
+			String pthumbnail, String pth2, String pth3, String pfilename) {
 		super();
 		this.pid = pid;
 		this.pname = pname;
@@ -32,12 +33,16 @@ public class J_pdPageDto { 		// ANJ pet shop 프로젝트 - product table dto
 		this.pthumbnail = pthumbnail;
 		this.pth2 = pth2;
 		this.pth3 = pth3;
+		this.pfilename = pfilename;
 	}
+
 
 
 	public String getPid() {
 		return pid;
 	}
+
+
 
 
 	public void setPid(String pid) {
@@ -124,6 +129,13 @@ public class J_pdPageDto { 		// ANJ pet shop 프로젝트 - product table dto
 		this.pth3 = pth3;
 	}
 	
+	public String getPfilename() {
+		return pfilename;
+	}
+	
+	public void setPfilename(String pfilename) {
+		this.pfilename = pfilename;
+	}
 	
 	
 	
