@@ -76,10 +76,10 @@
 		<br><br><br>
 		<h3>COMMUNITY</h3>
 		<br><br>
-			<span class="selected"><a href="O_Notice.do">NOTICE</a></span>
-			<a href="O_FAQ.do">FAQ</a> 
-			<a href="O_QNA.do">Q&A</a> 
-			<a href="O_Review.do">REVIEW</a> 
+			<span class="selected"><a href="O_adminNotice.do">NOTICE</a></span>
+			<a href="O_adminFAQ.do">FAQ</a> 
+			<a href="O_adminQNA.do">Q&A</a> 
+			<a href="O_adminReview.do">REVIEW</a> 
 		<br><br>
 	</div>
 	<div class="page-title">
