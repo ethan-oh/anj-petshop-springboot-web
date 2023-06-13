@@ -19,21 +19,14 @@
 <script src="JS/O_ScrollTop.js"></script>
 
 <script type="text/javascript">
-	function writeCheck(){
-		const form = document.writeFAQ
+	function updateCheck(){
+		const form = document.FAQ
 		const n_title = form.n_title.value
 		const n_content = form.n_content.value
 		
-		if(n_title == ""){
-			alert("제목을 입력해 주세요.")
-			return
-		}
-		if(n_content == ""){
-			alert("내용을 입력해 주세요.")
-			return
-		}
-		/* form.action = "O_WriteFAQ.do"; */
-		document.productinfo.submit();
+		alert("수정되었습니다.")
+		form.action = "O_updateFAQ.do";
+		form.submit();
 	}
 </script>
 <script type="text/javascript">
@@ -125,10 +118,11 @@
 	
 	<!-- board list area -->
 	<div class="page-title">
-		<h4>FAQ 수정아직구현안됨</h4>
+		<h4>FAQ 수정</h4>
 	</div>
 
 	<div class="container">
+	<form name="FAQ">
 		<table class="board-table">
 			<thead>
 				<tr>
@@ -137,9 +131,11 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${FAQList}" var="dto">
+				<input type="hidden" name="seq" value="${dto.seq}">
 					<!-- 제목 클릭 시 hidden_row 토글 -->
 					<tr class="tr-background" onclick="showHiddenRow('row_${dto.seq}');">
-						<td class="custom-padding th-left" data-padding="20">${dto.n_title}
+						<td class="custom-padding th-left" data-padding="20">
+						<input type="text" name="n_title" value="${dto.n_title}">
 							<span class="toggle-icon-wrapper">
 								<span class="toggle-icon" style="float: right;"></span>
 							</span>
@@ -147,11 +143,17 @@
 					</tr>
 					<!-- id를 게시글의 seq로 부여 -->
 					<tr id="row_${dto.seq}" class="hidden_row">
-						<td class="custom-padding th-left" data-padding="60"><pre>${dto.n_content}</pre></td>
+						<td class="custom-padding th-left" data-padding="60">
+							<input type="text" name="n_content" value="${dto.n_content}">
+						</td>
+					</tr>
+					<tr>
+						<td class="th-right"><input type="button" class="list-button" value="수정" onclick="updateCheck()"></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		</form>
 		<br><br><br>
 	</div>
 	

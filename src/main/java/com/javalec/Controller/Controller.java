@@ -31,6 +31,7 @@ import com.javalec.command.O_getQnaCommand;
 import com.javalec.command.O_getQnaDetailCommand;
 import com.javalec.command.O_getRDetailCommand;
 import com.javalec.command.O_getReviewCommand;
+import com.javalec.command.O_updateFAQCommand;
 import com.javalec.command.O_updateNoticeCommand;
 import com.javalec.command.O_writeAnswerCommand;
 import com.javalec.command.O_writeCommentCommand;
@@ -247,6 +248,11 @@ public class Controller extends HttpServlet {
 			command = new O_getFAQCommand();
 			command.execute(request, response);
 			viewPage = "O_updateFAQ.jsp";
+			break;
+		case ("/O_updateFAQ.do"): // FAQ 수정 페이지
+			command = new O_updateFAQCommand();
+			command.execute(request, response);
+			viewPage = "O_adminFAQ.do";
 			break;
 		case ("/O_deleteViewFAQ.do"): // FAQ 삭제 페이지
 			command = new O_getFAQCommand();

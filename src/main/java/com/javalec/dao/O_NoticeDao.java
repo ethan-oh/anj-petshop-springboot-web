@@ -355,4 +355,33 @@ public class O_NoticeDao {
 			}
 		}
 	} // deleteFAQ
+	
+	public void updateFAQ(int seq, String n_title, String n_content) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "update notice set n_title = ?, n_content = ?, writedate = now() where seq = ?";
+			preparedStatement = connection.prepareStatement(query);
+			
+			preparedStatement.setString(1, n_title);
+			preparedStatement.setString(2, n_content);
+			preparedStatement.setInt(3, seq);
+
+			preparedStatement.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				// 생성한 순서의 역순대로 닫아준다! -> 퍼포먼스가 좋아짐.
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	} // deleteFAQ
 }
