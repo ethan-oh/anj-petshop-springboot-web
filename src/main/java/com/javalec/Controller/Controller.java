@@ -38,6 +38,7 @@ import com.javalec.command.O_writeCommentCommand;
 import com.javalec.command.O_writeFAQCommand;
 import com.javalec.command.O_writeNoticeCommand;
 import com.javalec.command.O_writeQuestionCommand;
+import com.javalec.command.T_cartDeleteCommand;
 import com.javalec.command.T_cartUpdateCommand;
 import com.javalec.command.T_cartlistCommnd;
 import com.javalec.command.T_orderCommand;
@@ -348,34 +349,34 @@ public class Controller extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "O_adminRDetail.do";
 			break;
-		////////////////////////////////////////////
-		//////////////////////////////////////////// 여기서부터 태영
-		case ("/cart.do"):
+			////////////////////////////////////////////
+			//////////////////////////////////////////// 여기서부터 태영
+			case ("/cart.do"):
 			command = new T_cartlistCommnd();
 			command.execute(request, response);
 			viewPage = "/T_cart.jsp";
 			break;
-		case "/T_cart.do":
+			case "/T_cart.do":
 			command = new T_cartUpdateCommand();
 			command.execute(request, response);
 			viewPage = "cart.do";
 			break;
-		// cart테이블에서 삭제하기
-		case "/delete.do":
-			command = new T_cartlistCommnd();
+			// cart테이블에서 삭제하기
+			case "/delete.do":
+			command = new T_cartDeleteCommand();
 			command.execute(request, response);
 			viewPage = "cart.do";
 			break;
-		// 주문하기 누르면 purchase페이지로 가기
-		case "/purchase.do":
+			// 주문하기 누르면 purchase페이지로 가기
+			case "/purchase.do":
 			command = new T_userinfoCommand();
 			command1 = new T_purchaseCommand();
 			command.execute(request, response);
 			command1.execute(request, response);
 			viewPage = "T_purchase.jsp";
 			break;
-		// 구매하기 누르기
-		case "/order.do":
+			// 구매하기 누르기
+			case "/order.do":
 			command = new T_orderCommand();
 			command1 = new T_orderlistCommand();
 			command.execute(request, response);
